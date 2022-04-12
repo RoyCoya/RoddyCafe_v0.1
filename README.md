@@ -1,2 +1,2 @@
 # Roddy's Cafe
- A site with self collected web links, softwares, document, videos and etc.
+My personal blog, with several tools such as online notebook, plans and projects management and etc.

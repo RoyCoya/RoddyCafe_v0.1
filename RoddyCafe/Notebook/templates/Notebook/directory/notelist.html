@@ -1,0 +1,13 @@
+目录：{{ directory.directory_name }}
+<hr>
+{% if notes %}
+    {% for note in notes %}
+        <div>笔记id：{{ note.note_id }}</div>
+        <div>笔记标题：{{ note.note_title }}</div>
+        <div>所属目录：{{ note.note_directory}}</div>
+        <div>笔记内容：{{ note.note_content}}</div>
+        <div>笔记创建时间：{{ note.note_createDate}}</div>
+        <div>笔记修改时间：{{ note.note_editDate}}</div>
+        <hr>
+        {% endfor %}
+{% endif %}

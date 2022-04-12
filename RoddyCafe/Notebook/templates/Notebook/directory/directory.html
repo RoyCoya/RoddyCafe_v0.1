@@ -1,0 +1,8 @@
+目录页面
+{% if Directories %}
+    {% for dir in Directories %}
+        <div>
+            <a href="{% url 'Notebook_directory_notelist' dir.directory_id %}">{{ dir.directory_name }}</a>
+        </div>
+    {% endfor %}
+{% endif %}
