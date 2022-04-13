@@ -18,7 +18,7 @@ class notebook_directory(models.Model):
 class notebook_note(models.Model):
     note_id = models.AutoField(primary_key=True,verbose_name='笔记id')
     #注：交互页面中，标题是直接根据笔记中的标题块、副标题块、第一句正文前20字等的优先级自动进行设置
-    note_directory = models.ForeignKey(notebook_directory,on_delete=models.CASCADE,verbose_name='所属目录')
+    note_directory = models.ForeignKey(notebook_directory,blank=True,null=True,on_delete=models.CASCADE,verbose_name='所属目录')
     note_title = models.CharField(max_length=50,verbose_name='笔记标题')
     note_content = models.TextField(verbose_name='笔记内容')
     note_pinTop = models.BooleanField(default=False,verbose_name='置顶')

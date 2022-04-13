@@ -3,11 +3,14 @@
 {% if notes %}
     {% for note in notes %}
         <div>笔记id：{{ note.note_id }}</div>
-        <div>笔记标题：{{ note.note_title }}</div>
-        <div>所属目录：{{ note.note_directory}}</div>
-        <div>笔记内容：{{ note.note_content}}</div>
-        <div>笔记创建时间：{{ note.note_createDate}}</div>
-        <div>笔记修改时间：{{ note.note_editDate}}</div>
+        <div><a href="{% url 'Notebook_note_detail' note.note_id%}">笔记标题：{{ note.note_title }}</a></div>
+        <div><a href="{% url 'Notebook_note_edit' note.note_id %}">编辑</a></div>
+        <!-- 删除功能到时候用bootstrap的modal来做-->
+        <div><a href="{% url 'api_Notebook_note_delete' note.note_id %}">删除</a></div>
         <hr>
         {% endfor %}
 {% endif %}
+
+<!--用modal-->
+<div><a href="">新增笔记</a></div>
+<div><a href="">删除该目录</a></div>
