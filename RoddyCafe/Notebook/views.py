@@ -50,12 +50,14 @@ def note_edit(request,note_id):
 ###接口
 
 #删除目录
+#TODO：具体实现
 def api_directory_delete(request,directory_id):
     directory = notebook_directory.objects.get(directory_id=directory_id)
     directory.delete()
     return HttpResponse('delete directory success')
 
 #删除笔记
+#TODO：具体实现
 def api_note_delete(request,note_id):
     note = notebook_note.objects.get(note_id=note_id)
     note.delete()

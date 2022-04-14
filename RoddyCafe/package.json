@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@wangeditor/editor": "^5.0.0"
+  }
+}
