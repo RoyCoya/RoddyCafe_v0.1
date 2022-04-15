@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
-
-    <title>编辑 | {{ note.note_title}} | Roy's Cafe</title>
+    <title> —— Roy's Cafe</title>
     <!--css导入区-->
     {% load static %}
     <link rel="stylesheet" href="{% static '/bootstrap/bootstrap.min.css/' %}">
@@ -13,41 +12,21 @@
     <!--/css导入区-->
 </head>
 <body>
-    <div class="sticky-top">
-        <div id="note_toolbar" class="btn-group btn-block border-bottom border-bottom">
-            <button type="button" class="btn btn-secondary">
-                <i class="bi bi-backspace-fill"></i> 返回
-            </button>
-            <button type="button" class="btn btn-success">
-                <i class="bi bi-save2-fill"></i> 保存
-            </button>
-            <button type="button" class="btn btn-primary">
-                <i class="bi bi-layers-fill"></i> 模版
-            </button>
-            <button type="button" class="btn btn-info">
-                <i class="bi bi-alarm-fill"></i> 提醒
-            </button>
-            <button type="button" class="btn btn-danger">
-                <i class="bi bi-trash3-fill"></i> 删除
-            </button>
-        </div>
-        <div id="toolbar_container" class="border-bottom"></div>
-    </div>
-    <div>
-        <div id="editor_container" style="min-height: 20%;height: 80%"></div>
-    </div>
-    <i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
-    <textarea id="content_storage" class="invisible"></textarea>
+    <!--正文区-->
+
+    <!--/正文区-->
+
     <!--JS导入区-->
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
     <script src="{% static '/bootstrap/bootstrap.min.js' %}"></script>
     <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
+    <!--wangeditor初始化代码-->>
     <script>
         const { createEditor, createToolbar } = window.wangEditor
         const editorConfig = {}
         editorConfig.placeholder = '请输内容'
         editorConfig.autoFocus = true
-        editorConfig.scroll =true
+        editorConfig.scroll =false
         editorConfig.onChange = (editor) => {
             // 当编辑器选区、内容变化时，即触发
             const content = editor.children

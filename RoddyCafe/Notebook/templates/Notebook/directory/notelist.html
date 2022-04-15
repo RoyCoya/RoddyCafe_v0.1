@@ -1,16 +1,63 @@
-目录：{{ directory.directory_name }}
-<hr>
-{% if notes %}
-    {% for note in notes %}
-        <div>笔记id：{{ note.note_id }}</div>
-        <div><a href="{% url 'Notebook_note_detail' note.note_id%}">笔记id：{{ note.note_id }}</a></div>
-        <div><a href="{% url 'Notebook_note_edit' note.note_id %}">编辑</a></div>
-        <!-- 删除功能到时候用bootstrap的modal来做-->
-        <div><a href="{% url 'api_Notebook_note_delete' note.note_id %}">删除</a></div>
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
+    <title>目录 | {{ directory.directory_name }} | Roy's Cafe</title>
+    <!--css导入区-->
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/bootstrap/bootstrap.min.css/' %}">
+    <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+    <!--/css导入区-->
+</head>
+<body>
+    <!--正文区-->
+    <div class="sticky-top">
+        <nav class="navbar navbar-light bg-light">
+            <span class="col-4">笔记库</span>
+            <form class="form-inline align-content-right col-8" style="padding-right: 0px;">
+                <input class="form-control col-10 col-sm-11" type="search" placeholder="搜索笔记..." aria-label="Search">
+                <i class="bi bi-gear-wide-connected ml-auto" style="font-size: 1.5rem;"></i>
+            </form>
+        </nav>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
+                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
+                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
+                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
+                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
+                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ directory.directory_name }}</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container">
         <hr>
-        {% endfor %}
-{% endif %}
+        {% if notes %}
+        {% for note in notes %}
+            <div class="row">
+                <div class="col align-content-center ml-3">{{ note.note_title }}</div>
+                <div class="col-2 text-center nav align-content-center">
+                    <i class="bi bi-pen-fill"></i>
+                    <a href="{% url 'Notebook_note_edit' note.note_id %}">编辑</a>
+                </div>    
+                <div class="col-2 text-center nav align-content-center">
+                    <!-- 删除功能到时候用bootstrap的modal来做-->
+                    <i class="bi bi-trash3-fill"></i>
+                    <a href="{% url 'api_Notebook_note_delete' note.note_id %}">删除</a>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
+    <!--/正文区-->
 
-<!--用modal-->
-<div><a href="">新增笔记</a></div>
-<div><a href="">删除该目录</a></div>
+    <!--JS导入区-->
+    <script src="{% static '/jquery/jquery.min.js/' %}"></script>
+    <script src="{% static '/bootstrap/bootstrap.min.js' %}"></script>
+    <!--/JS导入区-->
+</body>
+</html>
