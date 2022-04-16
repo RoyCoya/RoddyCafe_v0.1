@@ -8,6 +8,9 @@
     {% load static %}
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
     <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+    <style>
+        :focus-visible{outline: none;}
+    </style>
     <!--/css导入区-->
 </head>
 <body>
@@ -34,7 +37,7 @@
         </div>
     </div>
 
-    <div class="offcanvas offcanvas-bottom" style="height: 50%;" tabindex="-1" id="offcanvasExample">
+    <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="offcanvasExample">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">还没写完的工具栏</h5>
         </div>
@@ -43,17 +46,27 @@
                 <div class="row">
                     <div class="col">
                         <ul class="list-group">
-                            <a href="{% url 'Notebook_note_edit' note.note_id %}" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <a href="{% url 'Notebook_note_edit' note.note_id%}" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
                                 <div class="d-flex justify-content-between">
                                     编辑
                                 </div>
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
                                 <div class="d-flex justify-content-between">
                                     设置提醒
                                 </div>
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    修改可见性
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    锁定笔记
+                                </div>
+                            </a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
                                 <div class="d-flex justify-content-between">
                                     删除
                                 </div>
@@ -64,6 +77,24 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="deleteConfirm" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">确认删除？</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                删除的笔记将在回收站中保留30天（注：还没做这个功能，删了就是真删了）。
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-danger" href="{% url 'api_Notebook_note_delete' note.note_id %}">确认</a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!--/正文区-->
 

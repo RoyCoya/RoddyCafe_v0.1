@@ -1,7 +1,9 @@
+import imp
 from multiprocessing import context
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from .models import notebook_directory, notebook_note
+from django.urls import reverse
 
 # Create your views here.
 
@@ -57,11 +59,12 @@ def api_directory_delete(request,directory_id):
     return HttpResponse('delete directory success')
 
 #删除笔记
-#TODO：具体实现
+#TODO：补充判断
 def api_note_delete(request,note_id):
     note = notebook_note.objects.get(note_id=note_id)
+    directory = note.note_directory
     note.delete()
-    return HttpResponse('delete directory success')
+    return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory.directory_id,)))
 
 ###
 
