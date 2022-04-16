@@ -1,5 +1,75 @@
-<div>笔记id：{{ note.note_id }}</div>
-<div>所属目录：{{ note.note_directory}}</div>
-<div>笔记创建时间：{{ note.note_createDate}}</div>
-<div>笔记修改时间：{{ note.note_editDate}}</div>
-<div>笔记内容{{ note.note_content|safe }}</div>
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
+    <title>笔记 | {{ note.note_title }} | Roy's Cafe</title>
+    <!--css导入区-->
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
+    <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+    <!--/css导入区-->
+</head>
+<body>
+    <!--正文区-->
+    <div class="sticky-top bg-light border-bottom">
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-light ">
+                    <a href="{% url 'Notebook_directory_notelist' note.note_directory.directory_id%}" class="col-1 text-center">
+                        <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                    </a>
+                    <span class="col-10 h5 text-center" style="margin: 0px;">{{ note.note_title }}</span>
+                    <a data-bs-toggle="offcanvas" href="#offcanvasExample" class="col-1 text-center">
+                        <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col">{{ note.note_content|safe }}</div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-bottom" style="height: 50%;" tabindex="-1" id="offcanvasExample">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">还没写完的工具栏</h5>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <ul class="list-group">
+                            <a href="{% url 'Notebook_note_edit' note.note_id %}" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    编辑
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    设置提醒
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    删除
+                                </div>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--/正文区-->
+
+    <!--JS导入区-->
+    <script src="{% static '/jquery/jquery.min.js/' %}"></script>
+    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--/JS导入区-->
+</body>
+</html>

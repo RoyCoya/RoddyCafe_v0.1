@@ -7,40 +7,38 @@
     <title>编辑 | {{ note.note_title}} | Roy's Cafe</title>
     <!--css导入区-->
     {% load static %}
-    <link rel="stylesheet" href="{% static '/bootstrap/bootstrap.min.css/' %}">
+    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
     <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
     <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
     <!--/css导入区-->
 </head>
 <body>
-    <div class="sticky-top">
-        <div id="note_toolbar" class="btn-group btn-block border-bottom border-bottom">
-            <button type="button" class="btn btn-secondary">
-                <i class="bi bi-backspace-fill"></i> 返回
-            </button>
-            <button type="button" class="btn btn-success">
-                <i class="bi bi-save2-fill"></i> 保存
-            </button>
-            <button type="button" class="btn btn-primary">
-                <i class="bi bi-layers-fill"></i> 模版
-            </button>
-            <button type="button" class="btn btn-info">
-                <i class="bi bi-alarm-fill"></i> 提醒
-            </button>
-            <button type="button" class="btn btn-danger">
-                <i class="bi bi-trash3-fill"></i> 删除
-            </button>
+    <div class="sticky-top bg-light border-bottom">
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-light border-bottom">
+                    <a href="{% url 'Notebook_note_detail' note.note_id %}" class="col-1 text-center">
+                        <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                    </a>
+                    <span class="col-8 h5 text-center" style="margin: 0px;">编辑：{{ note.note_title }}</span>
+                    <a href="#" class="col-1 text-center">
+                        <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
+                    </a>
+                </nav>
+            </div>
         </div>
-        <div id="toolbar_container" class="border-bottom"></div>
+        <div id="toolbar_container" class="hidden"></div>
     </div>
+
     <div>
         <div id="editor_container" style="min-height: 20%;height: 80%"></div>
     </div>
+
     <i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
     <textarea id="content_storage" class="invisible"></textarea>
     <!--JS导入区-->
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
-    <script src="{% static '/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
     <script>
         const { createEditor, createToolbar } = window.wangEditor

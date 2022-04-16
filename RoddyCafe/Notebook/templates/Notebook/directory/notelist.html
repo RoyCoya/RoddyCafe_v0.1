@@ -6,58 +6,85 @@
     <title>目录 | {{ directory.directory_name }} | Roy's Cafe</title>
     <!--css导入区-->
     {% load static %}
-    <link rel="stylesheet" href="{% static '/bootstrap/bootstrap.min.css/' %}">
+    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
     <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+    <style>
+        a{
+            color: rgb(0, 124, 77);
+        }
+    </style>
     <!--/css导入区-->
 </head>
-<body>
+<body class="bg-light">
     <!--正文区-->
-    <div class="sticky-top">
-        <nav class="navbar navbar-light bg-light">
-            <span class="col-4">笔记库</span>
-            <form class="form-inline align-content-right col-8" style="padding-right: 0px;">
-                <input class="form-control col-10 col-sm-11" type="search" placeholder="搜索笔记..." aria-label="Search">
-                <i class="bi bi-gear-wide-connected ml-auto" style="font-size: 1.5rem;"></i>
-            </form>
-        </nav>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
-                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
-                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
-                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
-                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
-                <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ directory.directory_name }}</li>
-            </ol>
-        </nav>
-    </div>
-    <div class="container">
-        <hr>
-        {% if notes %}
-        {% for note in notes %}
+    <div class="sticky-top bg-light border-bottom">
+        <div class="container">
             <div class="row">
-                <div class="col align-content-center ml-3">{{ note.note_title }}</div>
-                <div class="col-2 text-center nav align-content-center">
-                    <i class="bi bi-pen-fill"></i>
-                    <a href="{% url 'Notebook_note_edit' note.note_id %}">编辑</a>
-                </div>    
-                <div class="col-2 text-center nav align-content-center">
-                    <!-- 删除功能到时候用bootstrap的modal来做-->
-                    <i class="bi bi-trash3-fill"></i>
-                    <a href="{% url 'api_Notebook_note_delete' note.note_id %}">删除</a>
-                </div>
+                <nav class="navbar navbar-light ">
+                    <a href="#" class="col-1 text-center">
+                        <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                    </a>
+                    <span class="col-10 h5 text-center" style="margin: 0px;">{{ directory.directory_name }}</span>
+                    <a href="#" class="col-1 text-center">
+                        <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
+                    </a>
+                </nav>
             </div>
-            <hr>
-            {% endfor %}
-        {% endif %}
+        </div>
     </div>
-    <i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
-    <!--/正文区-->
 
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav>
+                    <ol class="breadcrumb ms-2 mt-2">
+                        <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
+                        <li class="breadcrumb-item"><a href="#">SC1 学习笔记</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ directory.directory_name }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <form class="col">
+                <input class="form-control" type="search" placeholder="搜索笔记..." aria-label="Search">
+            </form>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <ul class="list-group">
+                    {% if notes %}
+                        {% for note in notes %}
+                        <a href="{% url 'Notebook_note_detail' note.note_id %}" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <div class="col">
+                                <strong class="col align-self-center">{{ note.note_title }}</strong>
+                            </div>
+                            <div class="col">
+                                <small class="col align-self-center text-secondary">{{ note.note_editDate}}</small>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+            
+
+    
+
+    <div class="fixed-bottom border-top">
+        <nav class="navbar navbar-light bg-light">
+            <span class="col-2"></span>
+            <small class="col-8 text-center">共10条笔记</small>
+            <i class="text-success bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></i>
+        </nav>
+    </div>
+    <!--/正文区-->
+    
     <!--JS导入区-->
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
-    <script src="{% static '/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
     <!--/JS导入区-->
 </body>
 </html>
