@@ -1,2 +1,5 @@
 #Django ignore
 *.sqlite3
+*.pyc
+#MacOS ignore
+*.DS_Store
