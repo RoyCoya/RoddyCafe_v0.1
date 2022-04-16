@@ -80,19 +80,19 @@
 
     <div class="modal fade" id="deleteConfirm" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">确认删除？</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">确认删除？</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>删除的笔记将在回收站中保留30天（注：还没做这个功能，删了就是真删了）。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <a class="btn btn-danger" href="{% url 'api_Notebook_note_delete' note.note_id %}">确认</a>
+                </div>
             </div>
-            <div class="modal-body">
-                删除的笔记将在回收站中保留30天（注：还没做这个功能，删了就是真删了）。
-            </div>
-            <div class="modal-footer">
-              <a class="btn btn-danger" href="{% url 'api_Notebook_note_delete' note.note_id %}">确认</a>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-            </div>
-          </div>
         </div>
       </div>
 
