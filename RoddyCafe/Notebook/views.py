@@ -7,7 +7,9 @@ from django.urls import reverse
 
 # Create your views here.
 
-###静态页面
+'''
+静态页面
+'''
 
 #主页
 def index(request):
@@ -47,12 +49,16 @@ def note_edit(request,note_id):
     }
     return render(request,'Notebook/note/edit.html',context)
 
+def note_new(request,directory_id):
+    directory = notebook_directory.objects.get(directory_id=directory_id)
+    context = {
+        'directory':directory
+    }
+    return render(request,'Notebook/directory/newNote.html',context)
 
-
-
-###/静态页面
-
-###接口
+'''
+接口
+'''
 
 #删除目录
 #TODO：具体实现
@@ -62,7 +68,6 @@ def api_directory_delete(request,directory_id):
     return HttpResponse('delete directory success')
 
 #删除笔记
-#TODO：补充判断
 def api_note_delete(request,note_id):
     note = notebook_note.objects.get(note_id=note_id)
     directory = note.note_directory
@@ -77,8 +82,17 @@ def api_note_save(request,note_id):
     note.save()
     return HttpResponse('note saved successfully.')
 
-###/接口
+#新增笔记
+def api_note_new_save(request,directory_id):
+    directory = notebook_directory.objects.get(directory_id=directory_id)
+    note = notebook_note(
+        note_directory=directory,
+        note_title=request.POST['note_title'],
+        note_content=request.POST['note_content'],
+    )
+    note.save()
+    return HttpResponse(note.note_id)
 
-###通用方法
-
-###/通用方法
+'''
+通用方法
+'''

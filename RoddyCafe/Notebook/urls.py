@@ -8,6 +8,7 @@ urlpatterns = [
 	path('', views.index, name='Notebook_index'),
 	path('directory/', views.directory, name='Notebook_directory'),
 	path('directory/<int:directory_id>/', views.directory_notelist, name='Notebook_directory_notelist'),
+	path('directory/<int:directory_id>/newnote/', views.note_new, name='Notebook_note_new'),
 	#笔记相关
 	path('note/<int:note_id>/', views.note, name='Notebook_note_detail'),
 	path('note/<int:note_id>/edit/', views.note_edit, name='Notebook_note_edit'),
@@ -15,6 +16,7 @@ urlpatterns = [
 
 
 	#接口url
+	path('directory/<int:directory_id>/newnote/save/', views.api_note_new_save, name='api_Notebook_directory_newNote'),
 	path('directory/<int:directory_id>/delete/', views.api_directory_delete, name='api_Notebook_directory_delete'),
 	path('note/<int:note_id>/edit/save', views.api_note_save, name='api_Notebook_note_save'),
 	path('note/<int:note_id>/delete/', views.api_note_delete, name='api_Notebook_note_delete'),

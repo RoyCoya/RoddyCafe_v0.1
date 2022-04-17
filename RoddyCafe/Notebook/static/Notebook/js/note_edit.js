@@ -3,7 +3,7 @@
 */
 const { createEditor, createToolbar } = window.wangEditor
 const editorConfig = {}
-editorConfig.placeholder = '请输内容'
+editorConfig.placeholder = '请输入内容……'
 editorConfig.autoFocus = true
 // 当编辑器选区、内容变化时，即触发
 editorConfig.onChange = (editor) => {
