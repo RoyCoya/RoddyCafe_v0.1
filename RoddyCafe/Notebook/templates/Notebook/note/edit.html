@@ -16,56 +16,42 @@
     <div class="sticky-top bg-light border-bottom">
         <div class="container">
             <div class="row">
-                <nav class="navbar navbar-light border-bottom">
+                <nav class="navbar navbar-light">
                     <a href="{% url 'Notebook_note_detail' note.note_id %}" class="col-1 text-center">
                         <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                     </a>
                     <span class="col-8 h5 text-center" style="margin: 0px;">编辑：{{ note.note_title }}</span>
-                    <a href="#" class="col-1 text-center">
-                        <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
+                    <a id="save" href="#" class="col-1 text-center">
+                        <i class="text-success bi bi-check-circle" style="font-size: 1.5rem;"></i>
                     </a>
                 </nav>
             </div>
         </div>
-        <div id="toolbar_container" class="hidden"></div>
+        <div id="toolbar_container" class="border-top"></div>
     </div>
 
     <div>
-        <div id="editor_container" style="min-height: 20%;height: 80%"></div>
+        <div id="editor_container" style="min-height: 300px"></div>
     </div>
 
     <i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
-    <textarea id="content_storage" class="invisible"></textarea>
+    <form id="form_note" class="invisible" method="post">
+        {% csrf_token %}
+        <textarea name="note_content_edited" id="note_content"></textarea>
+    </form>
+
     <!--JS导入区-->
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
     <script>
-        const { createEditor, createToolbar } = window.wangEditor
-        const editorConfig = {}
-        editorConfig.placeholder = '请输内容'
-        editorConfig.autoFocus = true
-        editorConfig.scroll =true
-        editorConfig.onChange = (editor) => {
-            // 当编辑器选区、内容变化时，即触发
-            const content = editor.children
-            const html = editor.getHtml()
-            document.getElementById('content_storage').value = html
-        }
-        // 创建编辑器
-        const editor = createEditor({
-            selector: '#editor_container',
-            config: editorConfig,
-            mode: 'default',
-            html: '{{ note.note_content|safe }}'
-        })
-        // 创建工具栏
-        const toolbar = createToolbar({
-            editor,
-            selector: '#toolbar_container',
-            mode: 'default'
-        })
+        /* Django tag传递数据用*/
+        var note_id = {{note.note_id}}
+        var note_content = '{{ note.note_content|safe }}'
+        var url_api_note_save = "{% url 'api_Notebook_note_save' note.note_id  %}"
+        var url_note_detail = "{% url 'Notebook_note_detail' note.note_id %}"
     </script>
+    <script src="{% static '/Notebook/js/note_edit.js' %}"></script>
     <!--/JS导入区-->
 </body>
 </html>

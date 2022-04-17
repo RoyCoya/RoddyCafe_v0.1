@@ -66,6 +66,14 @@ def api_note_delete(request,note_id):
     note.delete()
     return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory.directory_id,)))
 
+#保存笔记编辑
+def api_note_save(request,note_id):
+    note = notebook_note.objects.get(note_id=note_id)
+    directory = note.note_directory
+    note.note_content = request.POST['note_content_edited']
+    note.save()
+    return HttpResponse('note saved successfully.')
+
 ###
 
 ###通用方法
