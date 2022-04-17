@@ -47,7 +47,10 @@ def note_edit(request,note_id):
     }
     return render(request,'Notebook/note/edit.html',context)
 
-###
+
+
+
+###/静态页面
 
 ###接口
 
@@ -74,8 +77,8 @@ def api_note_save(request,note_id):
     note.save()
     return HttpResponse('note saved successfully.')
 
-###
+###/接口
 
 ###通用方法
 
-###
+###/通用方法

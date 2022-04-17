@@ -21,7 +21,7 @@
         <div class="container">
             <div class="row">
                 <nav class="navbar navbar-light ">
-                    <a href="#" class="col-1 text-center">
+                    <a href="{% url 'Notebook_directory' %}" class="col-1 text-center">
                         <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                     </a>
                     <span class="col-10 h5 text-center" style="margin: 0px;">{{ directory.directory_name }}</span>
@@ -69,17 +69,17 @@
             </div>
         </div>
     </div>
-            
-
-    
 
     <div class="fixed-bottom border-top">
         <nav class="navbar navbar-light bg-light">
             <span class="col-2"></span>
             <small class="col-8 text-center">共10条笔记</small>
-            <i class="text-success bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></i>
+            <a href="{% url 'Notebook_note_new' directory.directory_id %}" class="text-success bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></a>
         </nav>
     </div>
+
+
+
     <!--/正文区-->
     
     <!--JS导入区-->

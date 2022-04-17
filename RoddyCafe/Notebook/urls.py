@@ -11,6 +11,7 @@ urlpatterns = [
 	#笔记相关
 	path('note/<int:note_id>/', views.note, name='Notebook_note_detail'),
 	path('note/<int:note_id>/edit/', views.note_edit, name='Notebook_note_edit'),
+	
 
 
 	#接口url
