@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import notebook_directory, notebook_note, notebook_note_alert
+from .models import *
 # Register your models here.
 
 #笔记目录
@@ -27,3 +27,5 @@ admin.site.register(notebook_note,admin_notebook_note)
 
 #笔记提醒
 admin.site.register(notebook_note_alert)
+#用户文件
+admin.site.register(notebook_userfile)

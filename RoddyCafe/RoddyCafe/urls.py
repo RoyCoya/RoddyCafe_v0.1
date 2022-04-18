@@ -15,6 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import re_path
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +34,12 @@ urlpatterns = [
     path('warehouse/', include('Warehouse.urls')),
     #工具库：其他小工具（不需要单独做成app的工具）
     path('lumberroom/', include('LumberRoom.urls')),
+    #用户上传文件
 ]
+if settings.DEBUG:
+    urlpatterns += [
+        re_path(r'^userfile/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]
+

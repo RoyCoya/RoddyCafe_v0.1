@@ -20,4 +20,5 @@ urlpatterns = [
 	path('directory/<int:directory_id>/delete/', views.api_directory_delete, name='api_Notebook_directory_delete'),
 	path('note/<int:note_id>/edit/save', views.api_note_save, name='api_Notebook_note_save'),
 	path('note/<int:note_id>/delete/', views.api_note_delete, name='api_Notebook_note_delete'),
+	path('note/uploadfile/', views.api_userfile_upload, name='api_Notebook_userfile_upload'),
 ]

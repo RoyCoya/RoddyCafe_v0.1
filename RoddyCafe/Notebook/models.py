@@ -41,3 +41,8 @@ class notebook_note_alert(models.Model):
     class Meta:
         verbose_name = '提醒'
         verbose_name_plural = '提醒'
+
+#用户文件（图片、视频等）
+class notebook_userfile(models.Model):
+    userfile_id = models.AutoField(primary_key=True,verbose_name='文件id')
+    userfile_content = models.FileField(upload_to='Notebook/%Y/%m/%d/',verbose_name='文件内容')

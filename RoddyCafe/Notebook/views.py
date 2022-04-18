@@ -2,8 +2,9 @@ import imp
 from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import notebook_directory, notebook_note
+from .models import notebook_directory, notebook_note, notebook_userfile
 from django.urls import reverse
+from django.core.files import File
 
 # Create your views here.
 
@@ -61,7 +62,7 @@ def note_new(request,directory_id):
 '''
 
 #删除目录
-#TODO：具体实现
+#TODO：删除后的跳转
 def api_directory_delete(request,directory_id):
     directory = notebook_directory.objects.get(directory_id=directory_id)
     directory.delete()
@@ -92,6 +93,18 @@ def api_note_new_save(request,directory_id):
     )
     note.save()
     return HttpResponse(note.note_id)
+
+#wangeditor上传文件
+def api_userfile_upload(request):
+    fileUploaded = File(request.FILES.get('wangeditor-uploaded-image'))
+    userfile = notebook_userfile(userfile_content=fileUploaded)
+    userfile.save()
+    return HttpResponse(
+        '{"errno": 0,"data": {"url": "'+ userfile.userfile_content.url +'","alt": "图片描述","href": "#"}}',
+        content_type='application/json'
+    )
+
+
 
 '''
 通用方法

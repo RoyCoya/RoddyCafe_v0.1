@@ -85,13 +85,14 @@
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
-    <script src="{% static '/Notebook/js/note_new.js' %}"></script>
     <script>
         /* Django tag传递数据用*/
         var directory_id = {{ diretory.directory_id}}
         url_api_note_new_save = "{% url 'api_Notebook_directory_newNote' directory.directory_id %}"
         url_note_detail = "/notebook/note/note_id/"
+        url_api_Notebook_userfile_upload = "{% url 'api_Notebook_userfile_upload' %}"
     </script>
+    <script src="{% static '/Notebook/js/note_new.js' %}"></script>
     <!--/JS导入区-->
 </body>
 </html>
