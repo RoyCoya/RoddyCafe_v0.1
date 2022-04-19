@@ -94,17 +94,25 @@ def api_note_new_save(request,directory_id):
     note.save()
     return HttpResponse(note.note_id)
 
-#wangeditor上传文件
-def api_userfile_upload(request):
-    fileUploaded = File(request.FILES.get('wangeditor-uploaded-image'))
+#wangeditor上传图片
+def api_userfile_upload_img(request):
+    fileUploaded = File(request.FILES.get('img_uploaded'))
     userfile = notebook_userfile(userfile_content=fileUploaded)
     userfile.save()
     return HttpResponse(
-        '{"errno": 0,"data": {"url": "'+ userfile.userfile_content.url +'","alt": "图片描述","href": "#"}}',
+        '{"errno": 0,"data": {"url": "'+ userfile.userfile_content.url +'","href": "'+ userfile.userfile_content.url +'"}}',
         content_type='application/json'
     )
 
-
+#wangeditor上传视频
+def api_userfile_upload_video(request):
+    fileUploaded = File(request.FILES.get('video_uploaded'))
+    userfile = notebook_userfile(userfile_content=fileUploaded)
+    userfile.save()
+    return HttpResponse(
+        '{"errno": 0,"data": {"url": "'+ userfile.userfile_content.url +'"}}',
+        content_type='application/json'
+    )
 
 '''
 通用方法

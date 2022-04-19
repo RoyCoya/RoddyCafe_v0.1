@@ -2,6 +2,8 @@
     wangeditor 相关 
 */
 const { createEditor, createToolbar } = window.wangEditor
+const getCookie = (name) => document.cookie.match(`[;\s+]?${name}=([^;]*)`)?.pop();
+const csrftoken = getCookie('csrftoken');
 //编辑器配置
 const editorConfig = {
     placeholder : '请输入内容……',
@@ -13,15 +15,20 @@ const editorConfig = {
     },
     MENU_CONF : {},
 }
-const getCookie = (name) => document.cookie.match(`[;\s+]?${name}=([^;]*)`)?.pop();
-const csrftoken = getCookie('csrftoken');
 editorConfig.MENU_CONF['uploadImage'] = {
     // 上传图片的配置
-    server : url_api_Notebook_userfile_upload,
-    headers: {
-        'X-CSRFToken': csrftoken
-    },
+    server : url_api_Notebook_userfile_upload_img,
+    fieldName: 'img_uploaded',
+    headers: {'X-CSRFToken': csrftoken},
     maxFileSize: 10 * 1024 * 1024,
+}
+editorConfig.MENU_CONF['uploadVideo'] = {
+    //上传视频的配置
+    server : url_api_Notebook_userfile_upload_video,
+    fieldName: 'video_uploaded',
+    maxFileSize: 100 * 1024 * 1024, 
+    maxNumberOfFiles: 10,
+    headers: {'X-CSRFToken': csrftoken},
 }
 const editor = createEditor({
     selector : '#editor_container',

@@ -31,7 +31,7 @@
     </div>
 
     <div>
-        <div id="editor_container" style="min-height: 300px"></div>
+        <div id="editor_container" class="container" style="min-height: 58px;border-bottom: 1px dotted rgb(0, 124, 77);"></div>
     </div>
 
     <i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
@@ -47,10 +47,11 @@
     <script>
         /* Django tag传递数据用*/
         var note_id = {{note.note_id}}
-        var note_content = '{{ note.note_content|safe }}'
+        var note_content = `{{ note.note_content|safe }}`
         var url_api_note_save = "{% url 'api_Notebook_note_save' note.note_id  %}"
         var url_note_detail = "{% url 'Notebook_note_detail' note.note_id %}"
-        url_api_Notebook_userfile_upload = "{% url 'api_Notebook_userfile_upload' %}"
+        url_api_Notebook_userfile_upload_img = "{% url 'api_Notebook_userfile_upload_img' %}"
+        url_api_Notebook_userfile_upload_video = "{% url 'api_Notebook_userfile_upload_video' %}"
     </script>
     <script src="{% static '/Notebook/js/note_edit.js' %}"></script>
     <!--/JS导入区-->
