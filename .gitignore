@@ -1,8 +1,8 @@
 #Django ignore
 *.sqlite3
 **/__pycache__
-static/:
-userfile/:
+static/
+userfile/
 
 #MacOS ignore
 *.DS_Store
