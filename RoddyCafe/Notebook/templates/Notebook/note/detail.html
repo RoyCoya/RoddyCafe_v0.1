@@ -8,6 +8,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
     <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
     <style>
         :focus-visible{outline: none;}
     </style>
@@ -30,12 +31,8 @@
             </div>
         </div>
     </div>
-
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col">{{ note.note_content|safe }}</div>
-        </div>
-    </div>
+    
+    <div id="editor_container" class="container"></div>
 
     <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
         <div class="offcanvas-header">
@@ -101,6 +98,12 @@
     <!--JS导入区-->
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
+    <script>
+        /* Django tag传递数据用*/
+        var note_content = `{{ note.note_content|safe }}`
+    </script>
+    <script src="{% static '/Notebook/js/note_detail.js' %}"></script>
     <!--/JS导入区-->
 </body>
 </html>
