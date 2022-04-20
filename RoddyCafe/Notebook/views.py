@@ -18,9 +18,10 @@ def index(request):
 
 #目录->所有目录
 def directory(request):
-    directories = notebook_directory.objects.all()
+    dirs = notebook_directory.objects.all()
+    root_dir = dirs[0]
     context = {
-        'Directories':directories
+        'root_dir':root_dir
     }
     return render(request,'Notebook/directory/allDirectories.html',context)
 
