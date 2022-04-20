@@ -2,12 +2,13 @@ from django.db import models
 # Create your models here.
 
 #目录
+#注意：本表采用森林转二叉树的数据结构存储，以便使目录能够手动排序而不用按标题字母等自动排序
 class notebook_directory(models.Model):
     directory_id = models.AutoField(primary_key=True,verbose_name='目录id')
-    directory_parentDir = models.ForeignKey('self',on_delete=models.CASCADE,blank=True,null=True,verbose_name='父目录')
     directory_name = models.CharField(max_length=20,verbose_name='目录名')
-    directory_discription = models.CharField(blank=True,null=True,max_length=100,verbose_name='目录描述')
-    directory_createdDate = models.DateTimeField(verbose_name='目录创建时间')
+    directory_discription = models.CharField(blank=True,null=True,max_length=200,verbose_name='目录描述')
+    directory_first_child = models.ForeignKey('self',related_name='first_child',on_delete=models.CASCADE,blank=True,null=True,verbose_name='第一个子目录（左子树）')
+    directory_next_brother = models.ForeignKey('self',related_name='next_brother',on_delete=models.CASCADE,blank=True,null=True,verbose_name='下一个同级目录（右子树）')
     def __str__(self):
         return str(self.directory_name)
     class Meta:

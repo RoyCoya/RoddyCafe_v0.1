@@ -5,10 +5,11 @@ from .models import *
 #笔记目录
 class admin_notebook_directory(admin.ModelAdmin):
 	list_display = [
+        'directory_id',
 		'directory_name',
-        'directory_parentDir',
         'directory_discription',
-        'directory_createdDate'
+        'directory_first_child',
+        'directory_next_brother',
 ]
 admin.site.register(notebook_directory,admin_notebook_directory)
 
@@ -21,7 +22,7 @@ class admin_notebook_note(admin.ModelAdmin):
         'note_pinTop',
         'note_pending',
         'note_createDate',
-        'note_editDate'
+        'note_editDate',
 ]
 admin.site.register(notebook_note,admin_notebook_note)
 
