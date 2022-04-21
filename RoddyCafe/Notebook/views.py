@@ -5,6 +5,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from .models import notebook_directory, notebook_note, notebook_userfile
 from django.urls import reverse
 from django.core.files import File
+from django.db.models import Q
 
 # Create your views here.
 
@@ -28,9 +29,38 @@ def directory(request):
 #目录->目录内笔记列表详情
 def directory_notelist(request,directory_id):
     directory = notebook_directory.objects.get(directory_id=directory_id)
-    notes = notebook_note.objects.filter(note_directory=directory)
+    dir = directory
+    #拉取所有父目录
+    directory_parent = False
+    try:
+        directory_parent = notebook_directory.objects.get(Q(directory_first_child=directory)|Q(directory_next_brother=directory))
+    except Exception as e:
+        pass
+    parents_directories = []
+    while(directory_parent):
+        if directory == directory_parent.directory_first_child:
+            parents_directories.append(directory_parent)
+        directory = directory_parent
+        try:
+            directory_parent = notebook_directory.objects.get(Q(directory_first_child=directory)|Q(directory_next_brother=directory))
+        except Exception as e:
+            break
+    notes = notebook_note.objects.filter(note_directory=dir)
+    parents_directories.reverse()
+    #拉取所有子目录
+    children_directories = []
+    try:
+        directory = dir
+        directory_child = directory.directory_first_child
+        while(directory_child):
+            children_directories.append(directory_child)
+            directory_child = directory_child.directory_next_brother
+    except Exception as e:
+        pass
     context = {
-        'directory' : directory,
+        'directory' : dir,
+        'directory_parents' : parents_directories,
+        'directory_children' : children_directories,
         'notes' : notes,
     }
     return render(request,'Notebook/directory/notelist.html',context)
@@ -51,6 +81,7 @@ def note_edit(request,note_id):
     }
     return render(request,'Notebook/note/edit.html',context)
 
+#笔记->新增
 def note_new(request,directory_id):
     directory = notebook_directory.objects.get(directory_id=directory_id)
     context = {

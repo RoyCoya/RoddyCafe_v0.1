@@ -62,10 +62,11 @@ $('#save').click(function (e) {
     titlePriorityCheckList.push($($('#note_content').val()).filter('h3').first().text())
     titlePriorityCheckList.push($($('#note_content').val()).filter('h2').first().text())
     titlePriorityCheckList.push($($('#note_content').val()).filter('h1').first().text())
-    finalTitle = ''
+    finalTitle = '未命名笔记'
     $.each(titlePriorityCheckList, function (index, value) { 
          if (value != '') finalTitle = value;
     });
+    console.log(finalTitle)
     //组装post内容
     var postData = $('#form_note').serializeArray()
     postData.push({'name': 'note_title','value':finalTitle})
