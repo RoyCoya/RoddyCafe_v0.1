@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
     <style>
         .list-group-item-action a{color: rgb(25, 27, 30);text-decoration: none;}
+        .list-group-item-action i{color: rgb(28, 119, 66);}
         .list-group-item-action:focus, .list-group-item-action:hover{color:white;background-color: rgb(0, 124, 77);}
         .list-group-item-action:focus, .list-group-item-action:hover a{color:white;}
+        .list-group-item-action:focus, .list-group-item-action:hover i{color:white;}
     </style>
     <!--/css导入区-->
 </head>
@@ -36,20 +38,76 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col">
-                <ul class="ps-3 list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between" style="border-color: rgb(0, 124, 77);">所有笔记</a>
+                <ul class="list-group list-group-flush">
                     {% if root_dir.directory_first_child %}
+                        <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <i class="bi bi-box-seam"></i> 所有笔记
+                        </a>
                         {% with dir=root_dir.directory_first_child %}
                             {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir %}
                         {% endwith%}
+                        <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <i class="bi bi-files"></i> 未分类
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <i class="bi bi-trash"></i> 最近删除
+                        </a>
                     {% else %}
-                        暂无目录
+                        暂无目录，<a href="#">点击添加</a>
                     {% endif %}
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between" style="border-color: rgb(0, 124, 77);">最近删除</a>
                 </ul>
             </div>
         </div>
     </div>
+    <div class="fixed-bottom border-top">
+        <nav class="navbar navbar-light bg-light">
+            <a href="#" class="text-success text-center col-2 bi bi-journal-plus" style="font-size:1.5rem;"></a>
+            <small class="col-8 text-center">共10条笔记</small>
+            <a href="{% url 'Notebook_note_new' root_dir.directory_next_brother.directory_id %}" class="text-success bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></a>
+        </nav>
+    </div>
+
+    <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="toolbarBottomLabel">还没写完的工具栏</h5>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <ul class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    添加目录
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    模版
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    设置提醒
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    修改可见性
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    锁定笔记
+                                </div>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
 
     <!--/正文区-->
