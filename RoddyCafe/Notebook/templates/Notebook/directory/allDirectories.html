@@ -30,7 +30,9 @@
                         <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                     </a>
                     <span class="col-10 h5 text-center" style="margin: 0px;">目录</span>
-                    <span class="col-1"></span>
+                    <span class="col-1 text-center">
+                        <a class="text-success bi bi-question-circle" style="font-size: 1.5rem;" data-bs-toggle="offcanvas" href="#info"></a>
+                    </span>
                 </nav>
             </div>
         </div>
@@ -60,21 +62,74 @@
             </div>
         </div>
     </div>
+
     <div class="fixed-bottom border-top">
         <nav class="navbar navbar-light bg-light">
-            <a href="#" class="text-success text-center col-2 bi bi-journal-plus" style="font-size:1.5rem;"></a>
+            <a href="#" class="text-success text-center col-2 bi bi-journal-plus" data-bs-toggle="modal" data-bs-target="#modal_new_directory" style="font-size:1.5rem;"></a>
             <small class="col-8 text-center">这里写点啥？没想好</small>
             <a href="{% url 'Notebook_note_new' root_dir.directory_next_brother.directory_id %}" class="text-success bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></a>
         </nav>
     </div>
     
+    <div class="modal fade" id="modal_new_directory" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新增目录</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form_new_directory">
+                        <div class="col mb-3">
+                            <label class="form-label"><span class="text-danger">*</span>目录名</label>
+                            <input class="form-control" name="directory_name" type="text" maxlength="20" required>
+                            <div class="invalid-feedback">
+                                请输入目录名
+                            </div>
+                        </div>
+                        <div class="col mb-3">
+                            <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：包含语法、单词、习惯用语等内容"></i></label>
+                            <input class="form-control" name="directory_discription" type="text" maxlength="200">
+                        </div>
+                        <div class="col mb-3">
+                            <button class="btn btn-danger" type="submit" href="#">确认</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="info">
+        <div class="offcanvas-header">
+            <h3 class="offcanvas-title container" id="toolbarBottomLabel">使用提示</h3>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container">
+                <h5>关于新建笔记：</h5>
+                <p>在本页面新建笔记时，笔记会默认收纳至《未分类》目录。以后再更新手动选目录的功能，咕。</p>
+                <p>或者，你可以直接进入想要的目录下，再新建笔记。这时，笔记会直接分配到该目录下。</p>
+                <h5>关于新建目录：</h5>
+                <p>在任何目录页面中新建一个目录时，只能选择深度为1的位置。比如在总目录下创建时，只能创建第一层（而不能创建它的子目录）。要创建更深层次的子目录时，请直接到需要创建子目录的目录页面里去。</p>
+                <p>别问，问就是懒得做拖动列表。（会做，但要很久，别人的也不好用，所以咕）</p>
+            </div>
+        </div>
+    </div>
 
 
     <!--/正文区-->
     
     <!--JS导入区-->
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
+    <script src="{% static '/bootstrap/js/popover.js' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script>
+        var tooltipTriggerList = Array.prototype.slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
     <!--/JS导入区-->
 </body>
 </html>
