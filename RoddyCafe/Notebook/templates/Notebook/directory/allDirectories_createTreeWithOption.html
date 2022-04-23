@@ -5,11 +5,11 @@
     </div>
     <ul id="choiceGroupOfDir{{dir.directory_id}}" class="ps-3 list-group list-group-flush collapse">
         <a id="insert_between_{{dir.directory_id}}_{{dir.directory_first_child.directory_id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 7px;">
-            <i class="bi bi-plus align-self-center" style="font-size: 0.8rem;"><span class="invisible">在此处添加</span></i>
+            <i class="bi bi-journal-plus align-self-center" style="font-size: 0.8rem;"><span class="invisible">在此处添加</span></i>
         </a>
         {% include 'Notebook/directory/allDirectories_createTreeWithOption.html' with dir=dir.directory_first_child %}
         <a id="insert_after_{{dir.directory_first_child.directory_id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 7px;">
-            <i class="bi bi-plus align-self-center" style="font-size: 0.8rem;"><span class="invisible">在此处添加</span></i>
+            <i class="bi bi-journal-plus align-self-center" style="font-size: 0.8rem;"><span class="invisible">在此处添加</span></i>
         </a>
     </ul>
 {% else %}
@@ -21,7 +21,7 @@
 {% endif %}
 {% if dir.directory_next_brother %}
     <a id="insert_between_{{dir.directory_id}}_{{dir.directory_next_brother.directory_id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 7px;">
-        <i class="bi bi-plus align-self-center" style="font-size: 0.8rem;"><span class="invisible">在此处添加</span></i>
+        <i class="bi bi-journal-plus align-self-center" style="font-size: 0.8rem;"><span class="invisible">在此处添加</span></i>
     </a>
     {% include 'Notebook/directory/allDirectories_createTreeWithOption.html' with dir=dir.directory_next_brother %}
 {% endif %}
