@@ -18,8 +18,9 @@ urlpatterns = [
 	#接口url
 	path('directory/<int:directory_id>/newnote/save/', views.api_note_new_save, name='api_Notebook_directory_newNote'),
 	path('directory/<int:directory_id>/delete/', views.api_directory_delete, name='api_Notebook_directory_delete'),
+	path('directory/new/save', views.api_directory_new_save, name='api_Notebook_directory_new_save'),
 	path('note/<int:note_id>/edit/save', views.api_note_save, name='api_Notebook_note_save'),
 	path('note/<int:note_id>/delete/', views.api_note_delete, name='api_Notebook_note_delete'),
 	path('note/uploadimg/', views.api_userfile_upload_img, name='api_Notebook_userfile_upload_img'),
-	path('note/uploadvideo/', views.api_userfile_upload_video, name='api_Notebook_userfile_upload_video')
+	path('note/uploadvideo/', views.api_userfile_upload_video, name='api_Notebook_userfile_upload_video'),
 ]

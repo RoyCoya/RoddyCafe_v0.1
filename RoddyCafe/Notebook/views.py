@@ -1,7 +1,6 @@
-import imp
-from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
+from numpy import equal
 from .models import notebook_directory, notebook_note, notebook_userfile
 from django.urls import reverse
 from django.core.files import File
@@ -45,7 +44,7 @@ def directory_notelist(request,directory_id):
             directory_parent = notebook_directory.objects.get(Q(directory_first_child=directory)|Q(directory_next_brother=directory))
         except Exception as e:
             break
-    notes = notebook_note.objects.filter(note_directory=dir)
+    notes = notebook_note.objects.filter(note_directory=dir).order_by('note_title')
     parents_directories.reverse()
     #拉取所有子目录
     children_directories = []
@@ -100,6 +99,45 @@ def api_directory_delete(request,directory_id):
     directory.delete()
     return HttpResponse('delete directory success')
 
+#新增目录
+def api_directory_new_save(request):
+    new_directory = notebook_directory(
+        directory_name = request.POST['directory_name'],
+        directory_discription = request.POST['directory_discription']
+    )
+    new_directory.save()
+    postion = str(request.POST['directory_position']).split('_')
+    parent = notebook_directory.objects.get(directory_id=postion[1])
+    child = None
+    if postion[2]:
+        child = notebook_directory.objects.get(directory_id=postion[2])
+    if child:
+        isFirstChild = True if parent.directory_first_child == child else False
+        if isFirstChild:
+            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+            parent.directory_first_child = inserted_newDir
+            parent.save()
+            inserted_newDir.directory_next_brother = child
+            inserted_newDir.save()
+        else:
+            print("#执行：插入为中间目录")
+            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+            parent.directory_next_brother = inserted_newDir
+            parent.save()
+            inserted_newDir.directory_next_brother = child
+            inserted_newDir.save()
+    else:
+        isFirstChild = True if postion[3] == 'left' else False
+        if isFirstChild:
+            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+            parent.directory_first_child = inserted_newDir
+            parent.save()
+        else:
+            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+            parent.directory_next_brother = inserted_newDir
+            parent.save()
+    return HttpResponse('directory saved successfully')
+
 #删除笔记
 def api_note_delete(request,note_id):
     note = notebook_note.objects.get(note_id=note_id)
@@ -118,13 +156,13 @@ def api_note_save(request,note_id):
 #新增笔记
 def api_note_new_save(request,directory_id):
     directory = notebook_directory.objects.get(directory_id=directory_id)
-    note = notebook_note(
+    new_note = notebook_note(
         note_directory=directory,
         note_title=request.POST['note_title'],
         note_content=request.POST['note_content'],
     )
-    note.save()
-    return HttpResponse(note.note_id)
+    new_note.save()
+    return HttpResponse(new_note.note_id)
 
 #wangeditor上传图片
 def api_userfile_upload_img(request):

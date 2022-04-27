@@ -90,11 +90,6 @@
                                             <i class="bi bi-pen text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="待编辑"></i>
                                         {% endif %}
                                         <strong class="col align-self-center">{{ note.note_title }}</strong>
-                                        {% if note.note_content|striptags|cut:note.note_title|length > 20 %}
-                                            <span class="text-secondary">{{ note.note_content|striptags|cut:note.note_title|truncatechars:20 }}...</span>
-                                        {% else %}
-                                            <span class="text-secondary">{{ note.note_content|striptags|cut:note.note_title }}</span>
-                                        {% endif %}
                                     </div>
                                     <div class="col">
                                         <small class="col align-self-center text-secondary">{{ note.note_editDate}}</small>
@@ -110,11 +105,6 @@
                                             <i class="bi bi-pen text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="待编辑"></i>
                                         {% endif %}
                                         <strong class="col align-self-center">{{ note.note_title }}</strong>
-                                        {% if note.note_content|striptags|cut:note.note_title|length > 20 %}
-                                            <span class="text-secondary">{{ note.note_content|striptags|cut:note.note_title|truncatechars:20 }}...</span>
-                                        {% else %}
-                                            <span class="text-secondary">{{ note.note_content|striptags|cut:note.note_title }}</span>
-                                        {% endif %}
                                     </div>
                                     <div class="col">
                                         <small class="col align-self-center text-secondary">{{ note.note_editDate}}</small>
