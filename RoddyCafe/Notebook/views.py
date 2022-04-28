@@ -1,6 +1,8 @@
+from tkinter import W
+from xmlrpc.client import Boolean
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
-from numpy import equal
+from numpy import delete, equal
 from .models import notebook_directory, notebook_note, notebook_userfile
 from django.urls import reverse
 from django.core.files import File
@@ -93,13 +95,27 @@ def note_new(request,directory_id):
 '''
 
 #删除目录
-#TODO：删除后的跳转
 def api_directory_delete(request,directory_id):
     directory = notebook_directory.objects.get(directory_id=directory_id)
-    directory.delete()
-    return HttpResponse('delete directory success')
+    parent = notebook_directory.objects.get(Q(directory_first_child=directory)|Q(directory_next_brother=directory))
+    isFirstChild = False if parent.directory_first_child != directory else True
+    if isFirstChild:
+        parent.directory_first_child = directory.directory_next_brother
+        parent.save()
+        delete_list = [directory]
+        if directory.directory_first_child:
+            delete_list = func_getDirsToDelete_list(directory.directory_first_child,delete_list)
+        for dir in delete_list: dir.delete()
+    else:
+        parent.directory_next_brother = directory.directory_next_brother
+        parent.save()
+        delete_list = [directory]
+        if directory.directory_first_child:
+            delete_list = func_getDirsToDelete_list(directory.directory_first_child,delete_list)
+        for dir in delete_list: dir.delete()      
+    return HttpResponseRedirect(reverse('Notebook_directory'))
 
-#新增目录
+#根目录下新增目录
 def api_directory_new_save(request):
     new_directory = notebook_directory(
         directory_name = request.POST['directory_name'],
@@ -107,36 +123,43 @@ def api_directory_new_save(request):
     )
     new_directory.save()
     postion = str(request.POST['directory_position']).split('_')
-    parent = notebook_directory.objects.get(directory_id=postion[1])
-    child = None
-    if postion[2]:
-        child = notebook_directory.objects.get(directory_id=postion[2])
-    if child:
-        isFirstChild = True if parent.directory_first_child == child else False
-        if isFirstChild:
-            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
-            parent.directory_first_child = inserted_newDir
-            parent.save()
-            inserted_newDir.directory_next_brother = child
-            inserted_newDir.save()
+    print(Boolean(postion))
+    if len(postion)>1:
+        parent = notebook_directory.objects.get(directory_id=postion[1])
+        child = None
+        if postion[2]:
+            child = notebook_directory.objects.get(directory_id=postion[2])
+        if child:
+            isFirstChild = True if parent.directory_first_child == child else False
+            if isFirstChild:
+                inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+                parent.directory_first_child = inserted_newDir
+                parent.save()
+                inserted_newDir.directory_next_brother = child
+                inserted_newDir.save()
+            else:
+                inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+                parent.directory_next_brother = inserted_newDir
+                parent.save()
+                inserted_newDir.directory_next_brother = child
+                inserted_newDir.save()
         else:
-            print("#执行：插入为中间目录")
-            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
-            parent.directory_next_brother = inserted_newDir
-            parent.save()
-            inserted_newDir.directory_next_brother = child
-            inserted_newDir.save()
+            isFirstChild = True if postion[3] == 'left' else False
+            if isFirstChild:
+                inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+                parent.directory_first_child = inserted_newDir
+                parent.save()
+            else:
+                inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+                parent.directory_next_brother = inserted_newDir
+                parent.save()
     else:
-        isFirstChild = True if postion[3] == 'left' else False
-        if isFirstChild:
-            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
-            parent.directory_first_child = inserted_newDir
-            parent.save()
-        else:
-            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
-            parent.directory_next_brother = inserted_newDir
-            parent.save()
-    return HttpResponse('directory saved successfully')
+        dirs = notebook_directory.objects.all()
+        inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+        root_dir = dirs[0]
+        root_dir.directory_first_child = inserted_newDir
+        root_dir.save()
+    return HttpResponse('new directory created successfully')
 
 #删除笔记
 def api_note_delete(request,note_id):
@@ -187,3 +210,10 @@ def api_userfile_upload_video(request):
 '''
 通用方法
 '''
+def func_getDirsToDelete_list(dir,deleteList):
+    deleteList.append(dir)
+    if dir.directory_first_child:
+        func_getDirsToDelete_list(dir.directory_first_child,deleteList)
+    if dir.directory_next_brother:
+        func_getDirsToDelete_list(dir.directory_next_brother,deleteList)
+    return deleteList

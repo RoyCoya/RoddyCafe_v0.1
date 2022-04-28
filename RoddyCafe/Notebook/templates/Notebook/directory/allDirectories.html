@@ -18,8 +18,6 @@
 <body>
     <!--正文区-->
 
-
-
     <div class="sticky-top bg-light border-bottom">
         <div class="container">
             <div class="row">
@@ -35,7 +33,7 @@
             </div>
         </div>
     </div>
-    {% if root_dir.directory_first_child %}
+
     <div class="container">
         <div class="row mt-3">
             <div class="col">
@@ -43,28 +41,27 @@
                         <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
                             <i class="bi bi-box-seam"></i> 所有笔记
                         </a>
-                        {% with dir=root_dir.directory_first_child %}
-                            {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir %}
-                        {% endwith%}
+                        {% if root_dir.directory_first_child %}
+                            {% with dir=root_dir.directory_first_child %}
+                                {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir %}
+                            {% endwith%}
+                        {% endif %}
                         <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
                             <i class="bi bi-files"></i> 未分类
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
-                            <i class="bi bi-trash"></i> 最近删除
+                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                            <i class="bi bi-trash"></i> 最近删除（还没做）
                         </a>
                 </ul>
             </div>
         </div>
     </div>
-    {% else %}
-        <div class="alert alert-success" role="alert">暂无目录，<a href="#" data-bs-toggle="modal" data-bs-target="#modal_new_directory">点击添加</a></div>
-    {% endif %}
 
     <div class="fixed-bottom border-top">
         <nav class="navbar navbar-light bg-light">
             <a href="#" class="text-success text-center col-2 bi bi-journal-plus" data-bs-toggle="modal" data-bs-target="#modal_new_directory" style="font-size:1.5rem;"></a>
             <small class="col-8 text-center">这里写点啥？没想好</small>
-            <a href="{% url 'Notebook_note_new' root_dir.directory_id %}" class="text-success bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></a>
+            <a href="{% url 'Notebook_note_new' root_dir.directory_next_brother.directory_id %}" class="text-success bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></a>
         </nav>
     </div>
     
@@ -86,7 +83,7 @@
                             </div>
                         </div>
                         <div class="col mb-3">
-                            <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：包含语法、单词、习惯用语等内容"></i></label>
+                            <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：“包含语法、单词、习惯用语等内容”"></i></label>
                             <input id="form_new_directory_discription" class="form-control" name="directory_discription" type="text" maxlength="200">
                         </div>
                         {% if root_dir.directory_first_child %}
@@ -105,7 +102,7 @@
                                 </div>
                             </div>
                         {% endif %}
-                        <input id="form_new_directory_position" class="invisible" name="directory_position" type="text" required>
+                        <input id="form_new_directory_position" class="invisible" name="directory_position" type="text" {% if root_dir.directory_first_child %}required{% endif %}>
                         <div class="col mb-3">
                             <button class="btn btn-danger" method ="post" type="submit" href="#">确认</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -140,6 +137,7 @@
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
     <script>
         var url_api_directory_new_save = "{% url 'api_Notebook_directory_new_save' %}"
+        var url_page_all_directory = "{% url 'Notebook_directory' %}"
     </script>
     <script src="{% static '/Notebook/js/directory_new.js' %}"></script>
     <!--/JS导入区-->

@@ -27,7 +27,7 @@
                         <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                     </a>
                     <span class="col-10 h5 text-center" style="margin: 0px;">{{ directory.directory_name }}</span>
-                    <a href="#" class="col-1 text-center">
+                    <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-1 text-center">
                         <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
                     </a>
                 </nav>
@@ -114,6 +114,76 @@
                         <small class="text-secondary text-center col mt-2 mb-2">无笔记</small>
                     {% endif %}
                 </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
+        <div class="offcanvas-header row border-bottom d-flex justify-content-between">
+            <h4 class="offcanvas-title col-10" id="toolbarBottomLabel">{{ directory.directory_name }}</h4>
+            <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <ul class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    重命名
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    修改描述
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    重命名
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    视图
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    排序
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    添加子目录
+                                </div>
+                            </a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    删除目录
+                                </div>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteConfirm" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">确认删除？</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    所有子目录和笔记都将被删除。
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="{% url 'api_Notebook_directory_delete' directory.directory_id %}">确认</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
             </div>
         </div>
     </div>

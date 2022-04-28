@@ -27,7 +27,7 @@ $('#form_new_directory').submit(function (e) {
         url_api_directory_new_save,
         postData,
         function (data, textStatus, jqXHR) {
-            
+            window.location.replace(url_page_all_directory);
         },
     );
 });
