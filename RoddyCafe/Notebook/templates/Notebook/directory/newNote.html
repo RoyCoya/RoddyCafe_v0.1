@@ -21,8 +21,8 @@
                         <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                     </a>
                     <span class="col-8 h5 text-center" style="margin: 0px;">新增笔记</span>
-                    <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-1 text-center">
-                        <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
+                    <a id="save" href="#" class="col-1 text-center">
+                        <i class="text-success bi bi-check-circle" style="font-size: 1.5rem;"></i>
                     </a>
                 </nav>
             </div>
@@ -32,47 +32,6 @@
 
     <div>
         <div id="editor_container" class="container" style="min-height: 58px;border-bottom: 1px dotted rgb(0, 124, 77);"></div>
-    </div>
-
-    <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="toolbarBottomLabel">还没写完的工具栏</h5>
-        </div>
-        <div class="offcanvas-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <ul class="list-group">
-                            <a id="save" href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    保存
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    模版
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    设置提醒
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    修改可见性
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    锁定笔记
-                                </div>
-                            </a>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <a href="#" class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: rgb(0, 124, 77);"></a>
