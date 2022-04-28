@@ -20,14 +20,3 @@ $('[id^=insertDir_]').click(function (e) {
     $(this).find('span').removeClass("invisible");
     $('#form_new_directory_position').val($(this).attr("id"));
 });
-//提交表单
-$('#form_new_directory').submit(function (e) {
-    var postData = $('#form_new_directory').serializeArray()
-    $.post(
-        url_api_directory_new_save,
-        postData,
-        function (data, textStatus, jqXHR) {
-            window.location.replace(url_page_all_directory);
-        },
-    );
-});

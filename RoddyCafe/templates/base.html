@@ -6,9 +6,9 @@
     <title>{% block block_title %}网站模板{% endblock %} | Roy's Cafe</title>
     <!--css导入区-->
     {% load static %}
-    {% block block_css %}
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
     <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+    {% block block_css %}
     {% endblock %}
     <!--/css导入区-->
 </head>
@@ -19,9 +19,9 @@
     <!--/正文区-->
 
     <!--JS导入区-->
-    {% block block_js %}
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+    {% block block_js %}
     {% endblock %}
     <!--/JS导入区-->
 </body>

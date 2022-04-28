@@ -3,35 +3,29 @@
 {% block block_title %}用户登录{% endblock %}
 
 {% block block_content %}
-
-    {% if form.errors %}
-    <p>用户名与密码不匹配，请重试</p>
-    {% endif %}
-
-    {% if next %}
-        {% if user.is_authenticated %}
-        <h3>您的账户无使用权限</h3>
-        {% else %}
-        <h3>登录以使用笔记库</h3>
-        {% endif %}
-    {% endif %}
-
-    <small>我知道登录界面很丑，懒得写，以后再说，摸。</small>
-
-    <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-    <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-    </tr>
-    </table>
-
-    <input type="submit" value="login">
-    </form>
-
+<div class="container mt-3">
+    <div class="row text-center">
+        <h2>登录账户</h2>
+    </div>
+    <div class="row">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% if form.errors %}
+                <small class="text-danger">账户或密码错误，请重试！</small>
+            {% endif %}
+            {% if next %}
+                {% if user.is_authenticated %}
+                    <small class="text-danger">您的账户无使用权限</small>
+                {% else %}
+                    <small class="text-danger">登录以使用笔记库</small>
+                {% endif %}
+            {% endif %}
+            <div class="form-lable">账户：</div>
+            <input class="form-control mb-3" type="text" name="username" autocomplete="username" maxlength="20" id="id_username" autofocus required>
+            <div class="form-lable">密码：</div>
+            <input class="form-control  mb-3" type="password" name="password" autocomplete="current-password" id="id_password" required>
+            <button class="btn btn-primary" type="submit">登录</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

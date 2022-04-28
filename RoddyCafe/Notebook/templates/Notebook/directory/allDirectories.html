@@ -37,11 +37,15 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col">
-                <ul class="list-group list-group-flush">
+                <ul class="list-group list-group-flush" style="border-bottom:1px solid rgb(0, 124, 77);">
                     {% if root_dir.directory_first_child %}
                         {% with dir=root_dir.directory_first_child %}
                             {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir %}
                         {% endwith%}
+                    {% else %}
+                    <div class="alert alert-success" role="alert">
+                        暂无目录，<a href="#" data-bs-toggle="modal" data-bs-target="#modal_new_directory">点击创建</a>
+                    </div>
                     {% endif %}
                 </ul>
             </div>
@@ -64,7 +68,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="form_new_directory">
+                    <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new_save' %}">
                         {% csrf_token %}
                         <div class="col mb-3">
                             <label class="form-label"><span class="text-danger">*</span> 目录名</label>
@@ -95,7 +99,7 @@
                         {% endif %}
                         <input id="form_new_directory_position" class="invisible" name="directory_position" type="text" {% if root_dir.directory_first_child %}required{% endif %}>
                         <div class="col mb-3">
-                            <button class="btn btn-danger" method ="post" type="submit" href="#">确认</button>
+                            <button class="btn btn-danger" type="submit" href="#">确认</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                         </div>
                     </form>
@@ -125,10 +129,6 @@
     <script src="{% static '/jquery/jquery.min.js/' %}"></script>
     <script src="{% static '/bootstrap/js/popover.js' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script>
-        var url_api_directory_new_save = "{% url 'api_Notebook_directory_new_save' %}"
-        var url_page_all_directory = "{% url 'Notebook_directory' %}"
-    </script>
     <script src="{% static '/Notebook/js/directory_new.js' %}"></script>
     <!--/JS导入区-->
 </body>

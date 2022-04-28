@@ -194,7 +194,7 @@ def api_directory_new_save(request):
             root_dir = dirs[0]
             root_dir.directory_first_child = inserted_newDir
             root_dir.save()
-        return HttpResponse('new directory created successfully')
+        return HttpResponseRedirect(reverse('Notebook_directory'))
 
 #删除笔记
 def api_note_delete(request,note_id):

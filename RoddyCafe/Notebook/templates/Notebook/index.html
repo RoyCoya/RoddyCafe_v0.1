@@ -1,9 +1,20 @@
-欢迎使用笔记库，
-<br>
-<strong>{{ user.username }}</strong>
-<br>
-<p>这里是笔记库的个人主页，包含个人收藏笔记、快捷操作等。暂时还没做，以后再说，摸。</p>
-<p>目前要使用的话请直接点击下方总目录.</p>
-<a href="{% url 'Notebook_directory' %}">总目录</a>
-<br>
-<a href="{% url 'logout' %}">退出登录</a>
+{% extends "base.html" %}
+
+{% block block_title %}笔记库{% endblock %}
+
+{% block block_content %}
+<div class="container mt-3">
+    <div class="row text-center">
+        <h2>笔记库</h2>
+    </div>
+    <div class="row">
+        <p>欢迎使用笔记库，<strong class="text-success">{{ user.username }}</strong>。</p>
+        <p>这是你的笔记库个人主页，可以设置某些笔记的快捷入口、操作的快捷入口等。但是目前还没做，摸了。</p>
+        <p><a class="text-success" href="{% url 'Notebook_directory' %}">点击进入笔记库总目录</a>以开始使用。</p>
+    </div>
+    <div class="row">
+        <p>或</p>
+        <a href="{% url 'logout' %}">退出登录</a>
+    </div>
+</div>
+{% endblock %}

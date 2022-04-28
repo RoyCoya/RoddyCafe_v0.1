@@ -3,6 +3,14 @@
 {% block block_title %}退出登录{% endblock %}
 
 {% block block_content %}
-<p>已退出登录。</p>
-<a href="{% url 'RoddyCafe_index' %}">回到主页</a>
+<div class="container mt-3">
+    <div class="row text-center">
+        <h2>拾心咖啡馆<small> v0.1</small></h2>
+    </div>
+    <div class="row">
+        <div class="alert alert-success" role="alert">
+            已退出，<a href="{% url 'RoddyCafe_index' %}">点击返回主页</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
