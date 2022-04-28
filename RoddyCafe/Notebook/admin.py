@@ -6,6 +6,7 @@ from .models import *
 class admin_notebook_directory(admin.ModelAdmin):
 	list_display = [
         'directory_id',
+        'directory_user',
 		'directory_name',
         'directory_discription',
         'directory_first_child',
@@ -17,6 +18,7 @@ admin.site.register(notebook_directory,admin_notebook_directory)
 class admin_notebook_note(admin.ModelAdmin):
 	list_display = [
 		'note_id',
+        'note_user',
         'note_title',
         'note_directory',
         'note_pinTop',

@@ -1,10 +1,11 @@
 from django.db import models
-# Create your models here.
+from django.contrib.auth import settings
 
 #目录
 #注意：本表采用森林转二叉树的数据结构存储，以便使目录能够手动排序而不用按标题字母等自动排序
 class notebook_directory(models.Model):
     directory_id = models.AutoField(primary_key=True,verbose_name='目录id')
+    directory_user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,verbose_name='所属用户')
     directory_name = models.CharField(max_length=20,verbose_name='目录名')
     directory_discription = models.CharField(blank=True,null=True,max_length=200,verbose_name='目录描述')
     directory_first_child = models.ForeignKey('self',related_name='first_child',on_delete=models.SET_NULL,blank=True,null=True,verbose_name='第一个子目录（左子树）')
@@ -18,8 +19,9 @@ class notebook_directory(models.Model):
 #笔记
 class notebook_note(models.Model):
     note_id = models.AutoField(primary_key=True,verbose_name='笔记id')
-    #注：交互页面中，标题是直接根据笔记中的标题块、副标题块、第一句正文前20字等的优先级自动进行设置
+    note_user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,verbose_name='所属用户')
     note_directory = models.ForeignKey(notebook_directory,blank=True,null=True,on_delete=models.CASCADE,verbose_name='所属目录')
+    #注：交互页面中，标题是直接根据笔记中的标题块、副标题块、第一句正文前20字等的优先级自动进行设置。在编辑笔记页面中可再次手动修改
     note_title = models.CharField(blank=True,null=True,max_length=50,verbose_name='笔记标题')
     note_content = models.TextField(blank=True,null=True,verbose_name='笔记内容')
     note_pinTop = models.BooleanField(default=False,verbose_name='置顶')
@@ -34,11 +36,10 @@ class notebook_note(models.Model):
 
 #笔记提醒
 class notebook_note_alert(models.Model):
-    note_alert_id = models.AutoField(primary_key=True,verbose_name='提醒id')
-    note_alert_note_id = models.ForeignKey(notebook_note,on_delete=models.CASCADE,verbose_name='所属笔记')
-    note_alert_datetime = models.DateTimeField(verbose_name='提醒时间')
+    alert_id = models.AutoField(primary_key=True,verbose_name='提醒id')
+    alert_note = models.ForeignKey(notebook_note,on_delete=models.CASCADE,verbose_name='所属笔记')
+    alert_datetime = models.DateTimeField(verbose_name='提醒时间')
     #TODO:重复提醒功能
-
     class Meta:
         verbose_name = '提醒'
         verbose_name_plural = '提醒'
@@ -46,4 +47,5 @@ class notebook_note_alert(models.Model):
 #用户文件（图片、视频等）
 class notebook_userfile(models.Model):
     userfile_id = models.AutoField(primary_key=True,verbose_name='文件id')
+    userfile_user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,verbose_name='所属用户')
     userfile_content = models.FileField(upload_to='Notebook/%Y/%m/%d/',verbose_name='文件内容')

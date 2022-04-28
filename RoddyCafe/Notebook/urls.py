@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
 	#静态页面url
+	#用户相关
 	#目录相关
 	path('', views.index, name='Notebook_index'),
 	path('directory/', views.directory, name='Notebook_directory'),
@@ -12,8 +13,6 @@ urlpatterns = [
 	#笔记相关
 	path('note/<int:note_id>/', views.note, name='Notebook_note_detail'),
 	path('note/<int:note_id>/edit/', views.note_edit, name='Notebook_note_edit'),
-	
-
 
 	#接口url
 	#目录相关

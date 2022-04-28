@@ -1,2 +1,9 @@
-欢迎使用笔记库
-<a href="{% url 'Notebook_directory' %}">目录</a>
+欢迎使用笔记库，
+<br>
+<strong>{{ user.username }}</strong>
+<br>
+<p>这里是笔记库的个人主页，包含个人收藏笔记、快捷操作等。暂时还没做，以后再说，摸。</p>
+<p>目前要使用的话请直接点击下方总目录.</p>
+<a href="{% url 'Notebook_directory' %}">总目录</a>
+<br>
+<a href="{% url 'logout' %}">退出登录</a>

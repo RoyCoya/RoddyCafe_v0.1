@@ -19,9 +19,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import re_path
 from django.views.static import serve
+import django.contrib.auth.urls
 
 urlpatterns = [
+    #django自带后台
     path('admin/', admin.site.urls),
+    #django自带用户验证模版
+    path('accounts/', include('django.contrib.auth.urls')),
+    
     #基础架构：包含主页、个人面板等
     path('', include('CafeFrame.urls')),
     #笔记库

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block block_title %}用户登录{% endblock %}
+
+{% block block_content %}
+
+    {% if form.errors %}
+    <p>用户名与密码不匹配，请重试</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <h3>您的账户无使用权限</h3>
+        {% else %}
+        <h3>登录以使用笔记库</h3>
+        {% endif %}
+    {% endif %}
+
+    <small>我知道登录界面很丑，懒得写，以后再说，摸。</small>
+
+    <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+    </tr>
+    </table>
+
+    <input type="submit" value="login">
+    </form>
+
+{% endblock %}

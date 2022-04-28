@@ -62,7 +62,7 @@ ROOT_URLCONF = 'RoddyCafe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,3 +134,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'userfile/')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email settings
+# EMAIL_USE_SSL = True
+# EMAIL_HOST = 'outlook.office365.com'
+# EMAIL_PORT = 995
+# EMAIL_HOST_USER = 'synercoya@outlook.com'
+# EMAIL_HOST_PASSWORD = 'cirmi0-miMrej-pyptor'
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# 用户账户管理
+# LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/notebook/'

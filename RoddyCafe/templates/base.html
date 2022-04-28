@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
+    <title>{% block block_title %}网站模板{% endblock %} | Roy's Cafe</title>
+    <!--css导入区-->
+    {% load static %}
+    {% block block_css %}
+    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
+    <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+    {% endblock %}
+    <!--/css导入区-->
+</head>
+<body>
+    <!--正文区-->
+    {% block block_content %}
+    {% endblock %}
+    <!--/正文区-->
+
+    <!--JS导入区-->
+    {% block block_js %}
+    <script src="{% static '/jquery/jquery.min.js/' %}"></script>
+    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+    {% endblock %}
+    <!--/JS导入区-->
+</body>
+</html>

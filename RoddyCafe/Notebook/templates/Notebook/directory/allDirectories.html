@@ -38,20 +38,11 @@
         <div class="row mt-3">
             <div class="col">
                 <ul class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
-                            <i class="bi bi-box-seam"></i> 所有笔记
-                        </a>
-                        {% if root_dir.directory_first_child %}
-                            {% with dir=root_dir.directory_first_child %}
-                                {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir %}
-                            {% endwith%}
-                        {% endif %}
-                        <a href="#" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
-                            <i class="bi bi-files"></i> 未分类
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                            <i class="bi bi-trash"></i> 最近删除（还没做）
-                        </a>
+                    {% if root_dir.directory_first_child %}
+                        {% with dir=root_dir.directory_first_child %}
+                            {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir %}
+                        {% endwith%}
+                    {% endif %}
                 </ul>
             </div>
         </div>
