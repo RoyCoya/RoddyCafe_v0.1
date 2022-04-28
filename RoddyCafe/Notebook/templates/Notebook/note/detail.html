@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
     <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
     <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
+    <link rel="stylesheet" href="{% static '/Notebook/css/listgroup_hover.css' %}">
     <style>
         :focus-visible{outline: none;}
     </style>
@@ -23,7 +24,7 @@
                     <a href="{% url 'Notebook_directory_notelist' note.note_directory.directory_id%}" class="col-1 text-center">
                         <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                     </a>
-                    <span class="col-10 text-center" style="margin: 0px;">{{ note.note_title }}</span>
+                    <span class="col-10 text-center" style="margin: 0px;"></span>
                     <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-1 text-center">
                         <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
                     </a>
@@ -35,17 +36,42 @@
     <div id="editor_container" class="container"></div>
 
     <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="toolbarBottomLabel">还没写完的工具栏</h5>
+        <div class="offcanvas-header row border-bottom d-flex justify-content-between">
+            <h4 class="offcanvas-title col-10" id="toolbarBottomLabel">{{ note.note_title }}</h4>
+            <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
             <div class="container">
+                <div class="row"><small class="col">最后编辑：{{ note.note_editDate }}</small></div>
+                <div class="row"><small class="col">创建时间：{{ note.note_createDate }}</small></div>
                 <div class="row">
                     <div class="col">
                         <ul class="list-group">
                             <a href="{% url 'Notebook_note_edit' note.note_id%}" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
                                 <div class="d-flex justify-content-between">
                                     编辑
+                                </div>
+                            </a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    删除
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="d-flex justify-content-between">
+                                    更改目录
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">置顶</label>
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                </div>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">待编辑</label>
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
                                 </div>
                             </a>
                             <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
@@ -63,16 +89,7 @@
                                     锁定笔记
                                 </div>
                             </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    删除
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    修改分类
-                                </div>
-                            </a>
+                            
                         </ul>
                     </div>
                 </div>
