@@ -5,7 +5,7 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
+    atomic=False
     dependencies = [
         ('Notebook', '0014_directory_rename_notebook_note_alert_alert_and_more'),
     ]
