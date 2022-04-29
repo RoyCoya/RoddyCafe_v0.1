@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
     <title>{% block block_title %}{% endblock %} | Roy's Cafe</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static '/img/favicon.ico'%}" type="image/x-icon">
     <!--css导入区-->
     {% block block_css %}
     {% endblock %}
