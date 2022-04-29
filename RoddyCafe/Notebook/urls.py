@@ -7,11 +7,11 @@ urlpatterns = [
 	#用户相关
 	#目录相关
 	path('', views.index, name='Notebook_index'),
-	path('directory/', views.directory, name='Notebook_directory'),
+	path('directory/', views.all_directory, name='Notebook_directory'),
 	path('directory/<int:directory_id>/', views.directory_notelist, name='Notebook_directory_notelist'),
 	path('directory/<int:directory_id>/newnote/', views.note_new, name='Notebook_note_new'),
 	#笔记相关
-	path('note/<int:note_id>/', views.note, name='Notebook_note_detail'),
+	path('note/<int:note_id>/', views.note_detail, name='Notebook_note_detail'),
 	path('note/<int:note_id>/edit/', views.note_edit, name='Notebook_note_edit'),
 
 	#接口url

@@ -1,59 +1,53 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
+{% extends "base.html" %}
+{% load static %}
+{% block block_title %}{{ note.title}}{% endblock %} | 编辑
 
-    <title>编辑 | {{ note.note_title}} | Roy's Cafe</title>
-    <!--css导入区-->
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
-    <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
-    <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
-    <!--/css导入区-->
-</head>
-<body class="bg-light">
-    <div class="sticky-top bg-light border-bottom">
-        <div class="container">
-            <div class="row">
-                <nav class="navbar navbar-light">
-                    <a href="{% url 'Notebook_note_detail' note.note_id %}" class="col-1 text-center">
-                        <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
-                    </a>
-                    <span class="col-8 h5 text-center" style="margin: 0px;">编辑：{{ note.note_title }}</span>
-                    <a id="save" href="#" class="col-1 text-center">
-                        <i class="text-success bi bi-check-circle" style="font-size: 1.5rem;"></i>
-                    </a>
-                </nav>
-            </div>
+{% block block_css %}
+<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
+<link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
+<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+{% endblock %}
+
+{% block block_content %}
+<div class="sticky-top bg-light border-bottom">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-light">
+                <a href="{% url 'Notebook_note_detail' note.id %}" class="col-1 text-center">
+                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                </a>
+                <span class="col-8 h5 text-center" style="margin: 0px;">编辑：{{ note.title }}</span>
+                <a id="save" href="#" class="col-1 text-center">
+                    <i class="text-success bi bi-check-circle" style="font-size: 1.5rem;"></i>
+                </a>
+            </nav>
         </div>
-        <div id="toolbar_container" class="border-top"></div>
     </div>
+    <div id="toolbar_container" class="border-top"></div>
+</div>
 
-    <div>
-        <div id="editor_container" class="container" style="min-height: 58px;border-bottom: 1px dotted rgb(0, 124, 77);"></div>
-    </div>
+<div>
+    <div id="editor_container" class="container" style="min-height: 58px;border-bottom: 1px dotted rgb(0, 124, 77);"></div>
+</div>
 
-    <i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
-    <form id="form_note" class="invisible" method="post" style="height: 50%;">
-        {% csrf_token %}
-        <textarea name="note_content_edited" id="note_content"></textarea>
-    </form>
+<i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
+<form id="form_note" class="invisible" method="post" style="height: 50%;">
+    {% csrf_token %}
+    <textarea name="note_content_edited" id="note_content"></textarea>
+</form>
+{% endblock %}
 
-    <!--JS导入区-->
-    <script src="{% static '/jquery/jquery.min.js/' %}"></script>
-    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
-    <script>
-        /* Django tag传递数据用*/
-        var note_id = {{note.note_id}}
-        var note_content = `{{ note.note_content|safe }}`
-        var url_api_note_save = "{% url 'api_Notebook_note_save' note.note_id  %}"
-        var url_note_detail = "{% url 'Notebook_note_detail' note.note_id %}"
-        url_api_Notebook_userfile_upload_img = "{% url 'api_Notebook_userfile_upload_img' %}"
-        url_api_Notebook_userfile_upload_video = "{% url 'api_Notebook_userfile_upload_video' %}"
-    </script>
-    <script src="{% static '/Notebook/js/note_edit.js' %}"></script>
-    <!--/JS导入区-->
-</body>
-</html>
+{% block block_js %}
+<script src="{% static '/jquery/jquery.min.js/' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
+<script>
+    var note_id = {{note.id}}
+    var note_content = `{{ note.content|escape }}`
+    var url_api_note_save = "{% url 'api_Notebook_note_save' note.id  %}"
+    var url_note_detail = "{% url 'Notebook_note_detail' note.id %}"
+    url_api_Notebook_userfile_upload_img = "{% url 'api_Notebook_userfile_upload_img' %}"
+    url_api_Notebook_userfile_upload_video = "{% url 'api_Notebook_userfile_upload_video' %}"
+</script>
+<script src="{% static '/Notebook/js/note_edit.js' %}"></script>
+{% endblock %}

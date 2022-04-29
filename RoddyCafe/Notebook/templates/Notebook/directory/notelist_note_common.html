@@ -1,13 +1,13 @@
-<a href="{% url 'Notebook_note_detail' note.note_id %}" class="list-group-item list-group-item-action border_theme">
+<a href="{% url 'Notebook_note_detail' note.id %}" class="list-group-item list-group-item-action border_theme">
     <div class="col">
-        <strong class="col align-self-center">{{ note.note_title }}</strong>
-        {% if note.note_content|striptags|cut:note.note_title|length > 20 %}
-            <span class="text-secondary">{{ note.note_content|striptags|cut:note.note_title|truncatechars:20 }}...</span>
+        <strong class="col align-self-center">{{ note.title }}</strong>
+        {% if note.content|striptags|cut:note.title|length > 20 %}
+            <span class="text-secondary">{{ note.content|striptags|cut:note.title|truncatechars:20 }}...</span>
         {% else %}
-            <span class="text-secondary">{{ note.note_content|striptags|cut:note.note_title }}</span>
+            <span class="text-secondary">{{ note.content|striptags|cut:note.title }}</span>
         {% endif %}
     </div>
     <div class="col">
-        <small class="col align-self-center text-secondary">{{ note.note_editDate}}</small>
+        <small class="col align-self-center text-secondary">{{ note.editDate}}</small>
     </div>
 </a>

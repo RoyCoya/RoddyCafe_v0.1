@@ -3,7 +3,7 @@ from django.conf import settings
 from xmlrpc.client import Boolean
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseForbidden,HttpResponseRedirect
-from .models import notebook_directory, notebook_note, notebook_userfile
+from .models import directory, note, userfile
 from django.urls import reverse
 from django.core.files import File
 from django.db.models import Q
@@ -23,11 +23,11 @@ def index(request):
         return render(request,'Notebook/index.html')
 
 #目录->所有目录
-def directory(request):
+def all_directory(request):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        dirs = notebook_directory.objects.filter(directory_user=request.user)
+        dirs = directory.objects.filter(user=request.user)
         root_dir = dirs[0]
         context = {
             'root_dir':root_dir
@@ -39,37 +39,37 @@ def directory_notelist(request,directory_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        directory = notebook_directory.objects.get(directory_id=directory_id)
-        if request.user != directory.directory_user:
+        dir = directory.objects.get(id=directory_id)
+        if request.user != dir.user:
             return HttpResponseForbidden('您无权查看此页面')
-        dir = directory
+        dir_temp = dir
         #拉取所有父目录
         directory_parent = False
         try:
-            directory_parent = notebook_directory.objects.get(Q(directory_first_child=directory)|Q(directory_next_brother=directory))
+            directory_parent = directory.objects.get(Q(first_child=dir)|Q(next_brother=dir))
         except Exception as e:
             pass
         parents_directories = []
         while(directory_parent):
-            if directory == directory_parent.directory_first_child:
+            if dir_temp == directory_parent.first_child:
                 parents_directories.append(directory_parent)
-            directory = directory_parent
+            dir_temp = directory_parent
             try:
-                directory_parent = notebook_directory.objects.get(Q(directory_first_child=directory)|Q(directory_next_brother=directory))
+                directory_parent = directory.objects.get(Q(first_child=dir_temp)|Q(next_brother=dir_temp))
             except Exception as e:
                 break
-        notes = notebook_note.objects.filter(note_directory=dir).order_by('note_title')
         parents_directories.reverse()
         #拉取所有子目录
         children_directories = []
         try:
-            directory = dir
-            directory_child = directory.directory_first_child
+            dir_temp = dir
+            directory_child = dir_temp.first_child
             while(directory_child):
                 children_directories.append(directory_child)
-                directory_child = directory_child.directory_next_brother
+                directory_child = directory_child.next_brother
         except Exception as e:
             pass
+        notes = note.objects.filter(directory=dir).order_by('title')
         context = {
             'directory' : dir,
             'directory_parents' : parents_directories,
@@ -79,15 +79,15 @@ def directory_notelist(request,directory_id):
         return render(request,'Notebook/directory/notelist.html',context)
 
 #笔记详情
-def note(request,note_id):
+def note_detail(request,note_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        note = notebook_note.objects.get(note_id=note_id)
-        if request.user != note.note_user:
+        noteToView = note.objects.get(id=note_id)
+        if request.user != noteToView.user:
             return HttpResponseForbidden('您无权查看此页面')
         context = {
-            'note' : note
+            'note' : noteToView
         }
         return render(request,'Notebook/note/detail.html',context)
 
@@ -96,11 +96,11 @@ def note_edit(request,note_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        note = notebook_note.objects.get(note_id=note_id)
-        if request.user != note.note_user:
+        noteToEdit = note.objects.get(id=note_id)
+        if request.user != noteToEdit.user:
             return HttpResponseForbidden('您无权查看此页面')
         context = {
-            'note' : note
+            'note' : noteToEdit
         }
         return render(request,'Notebook/note/edit.html',context)
 
@@ -109,11 +109,11 @@ def note_new(request,directory_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        directory = notebook_directory.objects.get(directory_id=directory_id)
-        if request.user != directory.directory_user:
+        dir = directory.objects.get(id=directory_id)
+        if request.user != dir.user:
             return HttpResponseForbidden('您无权查看此页面')
         context = {
-            'directory':directory
+            'directory':dir
         }
         return render(request,'Notebook/directory/newNote.html',context)
 
@@ -126,24 +126,24 @@ def api_directory_delete(request,directory_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        directory = notebook_directory.objects.get(directory_id=directory_id)
-        if request.user != directory.directory_user:
+        dir = directory.objects.get(id=directory_id)
+        if request.user != dir.user:
             return HttpResponseForbidden('您无权查看此页面')
-        parent = notebook_directory.objects.get(Q(directory_first_child=directory)|Q(directory_next_brother=directory))
-        isFirstChild = False if parent.directory_first_child != directory else True
+        parent = directory.objects.get(Q(first_child=dir)|Q(next_brother=dir))
+        isFirstChild = False if parent.first_child != dir else True
         if isFirstChild:
-            parent.directory_first_child = directory.directory_next_brother
+            parent.first_child = dir.next_brother
             parent.save()
-            delete_list = [directory]
-            if directory.directory_first_child:
-                delete_list = func_getDirsToDelete_list(directory.directory_first_child,delete_list)
+            delete_list = [dir]
+            if dir.first_child:
+                delete_list = func_getDirsToDelete_list(dir.first_child,delete_list)
             for dir in delete_list: dir.delete()
         else:
-            parent.directory_next_brother = directory.directory_next_brother
+            parent.next_brother = dir.next_brother
             parent.save()
-            delete_list = [directory]
-            if directory.directory_first_child:
-                delete_list = func_getDirsToDelete_list(directory.directory_first_child,delete_list)
+            delete_list = [dir]
+            if dir.first_child:
+                delete_list = func_getDirsToDelete_list(dir.first_child,delete_list)
             for dir in delete_list: dir.delete()      
         return HttpResponseRedirect(reverse('Notebook_directory'))
 
@@ -152,47 +152,47 @@ def api_directory_new_save(request):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        new_directory = notebook_directory(
-            directory_user = request.user,
-            directory_name = request.POST['directory_name'],
-            directory_discription = request.POST['directory_discription']
+        new_directory = directory(
+            user = request.user,
+            name = request.POST['directory_name'],
+            discription = request.POST['directory_discription']
         )
         new_directory.save()
         postion = str(request.POST['directory_position']).split('_')
         if len(postion)>1:
-            parent = notebook_directory.objects.get(directory_id=postion[1])
+            parent = directory.objects.get(id=postion[1])
             child = None
             if postion[2]:
-                child = notebook_directory.objects.get(directory_id=postion[2])
+                child = directory.objects.get(id=postion[2])
             if child:
-                isFirstChild = True if parent.directory_first_child == child else False
+                isFirstChild = True if parent.first_child == child else False
                 if isFirstChild:
-                    inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
-                    parent.directory_first_child = inserted_newDir
+                    inserted_newDir = directory.objects.get(id=new_directory.id)
+                    parent.first_child = inserted_newDir
                     parent.save()
-                    inserted_newDir.directory_next_brother = child
+                    inserted_newDir.next_brother = child
                     inserted_newDir.save()
                 else:
-                    inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
-                    parent.directory_next_brother = inserted_newDir
+                    inserted_newDir = directory.objects.get(id=new_directory.id)
+                    parent.next_brother = inserted_newDir
                     parent.save()
-                    inserted_newDir.directory_next_brother = child
+                    inserted_newDir.next_brother = child
                     inserted_newDir.save()
             else:
                 isFirstChild = True if postion[3] == 'left' else False
                 if isFirstChild:
-                    inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
-                    parent.directory_first_child = inserted_newDir
+                    inserted_newDir = directory.objects.get(id=new_directory.id)
+                    parent.first_child = inserted_newDir
                     parent.save()
                 else:
-                    inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
-                    parent.directory_next_brother = inserted_newDir
+                    inserted_newDir = directory.objects.get(id=new_directory.id)
+                    parent.next_brother = inserted_newDir
                     parent.save()
         else:
-            dirs = notebook_directory.objects.filter(directory_user=request.user)
-            inserted_newDir = notebook_directory.objects.get(directory_id=new_directory.directory_id)
+            dirs = directory.objects.filter(user=request.user)
+            inserted_newDir = directory.objects.get(id=new_directory.id)
             root_dir = dirs[0]
-            root_dir.directory_first_child = inserted_newDir
+            root_dir.first_child = inserted_newDir
             root_dir.save()
         return HttpResponseRedirect(reverse('Notebook_directory'))
 
@@ -201,24 +201,23 @@ def api_note_delete(request,note_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        note = notebook_note.objects.get(note_id=note_id)
-        if request.user != note.note_user:
+        noteDeleted = note.objects.get(id=note_id)
+        if request.user != noteDeleted.user:
             return HttpResponseForbidden('您无权查看此页面')
-        directory = note.note_directory
-        note.delete()
-        return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory.directory_id,)))
+        directory = noteDeleted.directory
+        noteDeleted.delete()
+        return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory.id,)))
 
 #保存笔记编辑
 def api_note_save(request,note_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        note = notebook_note.objects.get(note_id=note_id)
-        if request.user != note.note_user:
+        noteEdited = note.objects.get(id=note_id)
+        if request.user != noteEdited.user:
             return HttpResponseForbidden('您无权查看此页面')
-        directory = note.note_directory
-        note.note_content = request.POST['note_content_edited']
-        note.save()
+        noteEdited.content = request.POST['note_content_edited']
+        noteEdited.save()
         return HttpResponse('note saved successfully.')
 
 #新增笔记
@@ -226,17 +225,17 @@ def api_note_new_save(request,directory_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        directory = notebook_directory.objects.get(directory_id=directory_id)
-        if request.user != directory.directory_user:
+        dir = directory.objects.get(id=directory_id)
+        if request.user != dir.user:
             return HttpResponseForbidden('您无权查看此页面')
-        new_note = notebook_note(
-            note_directory=directory,
-            note_user=request.user,
-            note_title=request.POST['note_title'],
-            note_content=request.POST['note_content'],
+        new_note = note(
+            directory=dir,
+            user=request.user,
+            title=request.POST['note_title'],
+            content=request.POST['note_content'],
         )
         new_note.save()
-        return HttpResponse(new_note.note_id)
+        return HttpResponse(new_note.id)
 
 #wangeditor上传图片
 def api_userfile_upload_img(request):
@@ -244,10 +243,13 @@ def api_userfile_upload_img(request):
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
         fileUploaded = File(request.FILES.get('img_uploaded'))
-        userfile = notebook_userfile(userfile_content=fileUploaded,userfile_user=request.user)
-        userfile.save()
+        userfileUploaded = userfile(
+            content=fileUploaded,
+            user=request.user
+        )
+        userfileUploaded.save()
         return HttpResponse(
-            '{"errno": 0,"data": {"url": "'+ userfile.userfile_content.url +'","href": "'+ userfile.userfile_content.url +'"}}',
+            '{"errno": 0,"data": {"url": "'+ userfileUploaded.content.url +'","href": "'+ userfileUploaded.content.url +'"}}',
             content_type='application/json'
         )
 
@@ -257,10 +259,13 @@ def api_userfile_upload_video(request):
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
         fileUploaded = File(request.FILES.get('video_uploaded'))
-        userfile = notebook_userfile(userfile_content=fileUploaded,userfile_user=request.user)
-        userfile.save()
+        userfileUploaded = userfile(
+            content=fileUploaded,
+            user=request.user
+        )
+        userfileUploaded.save()
         return HttpResponse(
-            '{"errno": 0,"data": {"url": "'+ userfile.userfile_content.url +'"}}',
+            '{"errno": 0,"data": {"url": "'+ userfileUploaded.content.url +'"}}',
             content_type='application/json'
         )
 
@@ -273,8 +278,8 @@ def api_user_logout(request):
 '''
 def func_getDirsToDelete_list(dir,deleteList):
     deleteList.append(dir)
-    if dir.directory_first_child:
-        func_getDirsToDelete_list(dir.directory_first_child,deleteList)
-    if dir.directory_next_brother:
-        func_getDirsToDelete_list(dir.directory_next_brother,deleteList)
+    if dir.first_child:
+        func_getDirsToDelete_list(dir.first_child,deleteList)
+    if dir.next_brother:
+        func_getDirsToDelete_list(dir.next_brother,deleteList)
     return deleteList

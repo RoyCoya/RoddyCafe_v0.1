@@ -3,32 +3,32 @@ from .models import *
 # Register your models here.
 
 #笔记目录
-class admin_notebook_directory(admin.ModelAdmin):
+class admin_directory(admin.ModelAdmin):
 	list_display = [
-        'directory_id',
-        'directory_user',
-		'directory_name',
-        'directory_discription',
-        'directory_first_child',
-        'directory_next_brother',
+        'id',
+        'user',
+		'name',
+        'discription',
+        'first_child',
+        'next_brother',
 ]
-admin.site.register(notebook_directory,admin_notebook_directory)
+admin.site.register(directory,admin_directory)
 
 #笔记
-class admin_notebook_note(admin.ModelAdmin):
+class admin_note(admin.ModelAdmin):
 	list_display = [
-		'note_id',
-        'note_user',
-        'note_title',
-        'note_directory',
-        'note_pinTop',
-        'note_pending',
-        'note_createDate',
-        'note_editDate',
+		'id',
+        'user',
+        'title',
+        'directory',
+        'isPinTop',
+        'isPending',
+        'createDate',
+        'editDate',
 ]
-admin.site.register(notebook_note,admin_notebook_note)
+admin.site.register(note,admin_note)
 
 #笔记提醒
-admin.site.register(notebook_note_alert)
+admin.site.register(alert)
 #用户文件
-admin.site.register(notebook_userfile)
+admin.site.register(userfile)

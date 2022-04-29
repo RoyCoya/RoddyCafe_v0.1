@@ -1,135 +1,126 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
-    <title>目录 | Roy's Cafe</title>
-    <!--css导入区-->
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
-    <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
-    <link rel="stylesheet" href="{% static '/Notebook/css/listgroup_hover.css' %}">
-    <style>
-        .choosed-postion{color:white;background-color: rgb(0, 124, 77);}
-        .choosed-postion i{color:white;background-color: rgb(0, 124, 77);}
-    </style>
-    <!--/css导入区-->
-</head>
-<body>
-    <!--正文区-->
+{% extends "base.html" %}
+{% load static %}
+{% block block_title %}总目录{% endblock %}
 
-    <div class="sticky-top bg-light border-bottom">
-        <div class="container">
-            <div class="row">
-                <nav class="navbar navbar-light ">
-                    <a href="{% url 'Notebook_index' %}" class="col-1 text-center">
-                        <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
-                    </a>
-                    <span class="col-10 h5 text-center" style="margin: 0px;">目录</span>
-                    <span class="col-1 text-center">
-                        <a class="text-success bi bi-question-circle" style="font-size: 1.5rem;" data-bs-toggle="offcanvas" href="#info"></a>
-                    </span>
-                </nav>
-            </div>
-        </div>
-    </div>
+{% block block_css %}
+<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
+<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+<link rel="stylesheet" href="{% static '/Notebook/css/listgroup_hover.css' %}">
+<style>
+    .choosed-postion{color:white;background-color: rgb(0, 124, 77);}
+    .choosed-postion i{color:white;background-color: rgb(0, 124, 77);}
+</style>
+{% endblock %}
 
+{% block block_content %}
+<div class="sticky-top bg-light border-bottom">
     <div class="container">
-        <div class="row mt-3">
-            <div class="col">
-                <ul class="list-group list-group-flush" style="border-bottom:1px solid rgb(0, 124, 77);">
-                    {% if root_dir.directory_first_child %}
-                        {% with dir=root_dir.directory_first_child %}
-                            {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir %}
-                        {% endwith%}
-                    {% else %}
-                    <div class="alert alert-success" role="alert">
-                        暂无目录，<a href="#" data-bs-toggle="modal" data-bs-target="#modal_new_directory">点击创建</a>
+        <div class="row">
+            <nav class="navbar navbar-light ">
+                <a href="{% url 'Notebook_index' %}" class="col-1 text-center">
+                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                </a>
+                <span class="col-10 h5 text-center" style="margin: 0px;">总目录：{{ user.username }}</span>
+                <span class="col-1 text-center">
+                    <a class="text-success bi bi-question-circle" style="font-size: 1.5rem;" data-bs-toggle="offcanvas" href="#info"></a>
+                </span>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col">
+            <ul class="list-group list-group-flush"">
+                {% if root_dir.first_child %}
+                    {% with dir=root_dir.first_child %}
+                        {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir %}
+                    {% endwith%}
+                {% else %}
+                <div class="alert alert-success" role="alert">
+                    暂无目录，<a href="#" data-bs-toggle="modal" data-bs-target="#modal_new_directory">点击创建</a>
+                </div>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="fixed-bottom border-top">
+    <nav class="navbar navbar-light bg-light">
+        <a href="#" class="text-success text-center col-2 bi bi-journal-plus" data-bs-toggle="modal" data-bs-target="#modal_new_directory" style="font-size:1.5rem;"></a>
+        <small class="col-8 text-center">写笔记请点进目录里面写，右边这个没做好--></small>
+        <a href="#" class="text-secondary bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></a>
+    </nav>
+</div>
+
+<div class="modal fade" id="modal_new_directory" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新增目录</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new_save' %}">
+                    {% csrf_token %}
+                    <div class="col mb-3">
+                        <label class="form-label"><span class="text-danger">*</span> 目录名</label>
+                        <input id="form_new_directory_name" class="form-control" name="directory_name" type="text" maxlength="20" required>
+                        <div class="invalid-feedback">
+                            请输入目录名
+                        </div>
                     </div>
+                    <div class="col mb-3">
+                        <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：“包含语法、单词、习惯用语等内容”"></i></label>
+                        <input id="form_new_directory_discription" class="form-control" name="directory_discription" type="text" maxlength="200">
+                    </div>
+                    {% if root_dir.first_child %}
+                        <label class="form-label">
+                            <span class="text-danger">*</span> 新目录位置（点击<i class="bi bi-plus align-self-center text-success"></i>确定插入点）：<span id="isFormFilled" class="text-danger">未选择</span></label>
+                        <div class="container mb-3">
+                            <div class="row mt-3">
+                                <ul class="list-group list-group-flush">
+                                    {% with dir=root_dir.first_child %}
+                                        <a id="insertDir_{{root_dir.id}}_{{dir.id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 20px;">
+                                            <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
+                                        </a>                                            
+                                        {% include 'Notebook/directory/allDirectories_createTreeWithOption.html' with dir=dir %}
+                                    {% endwith%}
+                                </ul>
+                            </div>
+                        </div>
                     {% endif %}
-                </ul>
+                    <input id="form_new_directory_position" class="invisible" name="directory_position" type="text" {% if root_dir.first_child %}required{% endif %}>
+                    <div class="col mb-3">
+                        <button class="btn btn-danger" type="submit" href="#">确认</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="fixed-bottom border-top">
-        <nav class="navbar navbar-light bg-light">
-            <a href="#" class="text-success text-center col-2 bi bi-journal-plus" data-bs-toggle="modal" data-bs-target="#modal_new_directory" style="font-size:1.5rem;"></a>
-            <small class="col-8 text-center">写笔记请点进目录里面写，右边这个没做好--></small>
-            <a href="#" class="text-secondary bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></a>
-        </nav>
+<div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="info">
+    <div class="offcanvas-header">
+        <h3 class="offcanvas-title container" id="toolbarBottomLabel">使用提示</h3>
     </div>
-    
-    <div class="modal fade" id="modal_new_directory" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">新增目录</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new_save' %}">
-                        {% csrf_token %}
-                        <div class="col mb-3">
-                            <label class="form-label"><span class="text-danger">*</span> 目录名</label>
-                            <input id="form_new_directory_name" class="form-control" name="directory_name" type="text" maxlength="20" required>
-                            <div class="invalid-feedback">
-                                请输入目录名
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：“包含语法、单词、习惯用语等内容”"></i></label>
-                            <input id="form_new_directory_discription" class="form-control" name="directory_discription" type="text" maxlength="200">
-                        </div>
-                        {% if root_dir.directory_first_child %}
-                            <label class="form-label">
-                                <span class="text-danger">*</span> 新目录位置（点击<i class="bi bi-plus align-self-center text-success"></i>确定插入点）：<span id="isFormFilled" class="text-danger">未选择</span></label>
-                            <div class="container mb-3">
-                                <div class="row mt-3">
-                                    <ul class="list-group list-group-flush">
-                                        {% with dir=root_dir.directory_first_child %}
-                                            <a id="insertDir_{{root_dir.directory_id}}_{{dir.directory_id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 20px;">
-                                                <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
-                                            </a>                                            
-                                            {% include 'Notebook/directory/allDirectories_createTreeWithOption.html' with dir=dir %}
-                                        {% endwith%}
-                                    </ul>
-                                </div>
-                            </div>
-                        {% endif %}
-                        <input id="form_new_directory_position" class="invisible" name="directory_position" type="text" {% if root_dir.directory_first_child %}required{% endif %}>
-                        <div class="col mb-3">
-                            <button class="btn btn-danger" type="submit" href="#">确认</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="offcanvas-body">
+        <div class="container">
+            <h5>基本使用：</h5>
+            <p>先左下角创建目录，再点进目录内部的右下角创建笔记</p>
+            <h5>为什么新建目录的界面这么奇怪：</h5>
+            <p>因为做起来简单。滑块列表可以做，但以我的智力水平要很久，别人的也不好用不想用，所以，摸。</p>
         </div>
     </div>
+</div>
+{% endblock %}
 
-    <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="info">
-        <div class="offcanvas-header">
-            <h3 class="offcanvas-title container" id="toolbarBottomLabel">使用提示</h3>
-        </div>
-        <div class="offcanvas-body">
-            <div class="container">
-                <h5>基本使用：</h5>
-                <p>先左下角创建目录，再点进目录内部的右下角创建笔记</p>
-                <h5>为什么新建目录的界面这么奇怪：</h5>
-                <p>因为做起来简单。滑块列表可以做，但以我的智力水平要很久，别人的也不好用不想用，所以，摸。</p>
-            </div>
-        </div>
-    </div>
-
-
-    <!--/正文区-->
-    
-    <!--JS导入区-->
-    <script src="{% static '/jquery/jquery.min.js/' %}"></script>
-    <script src="{% static '/bootstrap/js/popover.js' %}"></script>
-    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static '/Notebook/js/directory_new.js' %}"></script>
-    <!--/JS导入区-->
-</body>
-</html>
+{% block block_js%}
+<script src="{% static '/jquery/jquery.min.js/' %}"></script>
+<script src="{% static '/bootstrap/js/popover.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/Notebook/js/directory_new.js' %}"></script>
+{% endblock %}

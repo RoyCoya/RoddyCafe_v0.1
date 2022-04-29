@@ -1,131 +1,123 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
-    <title>笔记 | {{ note.note_title }} | Roy's Cafe</title>
-    <!--css导入区-->
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
-    <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
-    <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
-    <link rel="stylesheet" href="{% static '/Notebook/css/listgroup_hover.css' %}">
-    <style>
-        :focus-visible{outline: none;}
-    </style>
-    <!--/css导入区-->
-</head>
-<body>
-    <!--正文区-->
-    <div class="sticky-top bg-light border-bottom">
+{% extends "base.html" %}
+{% load static %}
+{% block block_title %}{{ note.title }}{% endblock %} | 笔记
+
+{% block block_css %}
+<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
+<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+<link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
+<link rel="stylesheet" href="{% static '/Notebook/css/listgroup_hover.css' %}">
+<style>
+    :focus-visible{outline: none;}
+</style>
+{% endblock %}
+
+{% block block_content %}
+<div class="sticky-top bg-light border-bottom">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-light ">
+                <a href="{% url 'Notebook_directory_notelist' note.directory.id%}" class="col-1 text-center">
+                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                </a>
+                <span class="col-10 h5 text-center" style="margin: 0px;">笔记详情</span>
+                <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-1 text-center">
+                    <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div id="editor_container" class="container"></div>
+
+<div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
+    <div class="offcanvas-header row border-bottom d-flex justify-content-between">
+        <h4 class="offcanvas-title col-10" id="toolbarBottomLabel">{{ note.title }}</h4>
+        <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
         <div class="container">
+            <div class="row"><small class="col">最后编辑：{{ note.editDate }}</small></div>
+            <div class="row"><small class="col">创建时间：{{ note.createDate }}</small></div>
             <div class="row">
-                <nav class="navbar navbar-light ">
-                    <a href="{% url 'Notebook_directory_notelist' note.note_directory.directory_id%}" class="col-1 text-center">
-                        <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
-                    </a>
-                    <span class="col-10 h5 text-center" style="margin: 0px;">笔记详情</span>
-                    <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-1 text-center">
-                        <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
-                    </a>
-                </nav>
-            </div>
-        </div>
-    </div>
-    
-    <div id="editor_container" class="container"></div>
-
-    <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
-        <div class="offcanvas-header row border-bottom d-flex justify-content-between">
-            <h4 class="offcanvas-title col-10" id="toolbarBottomLabel">{{ note.note_title }}</h4>
-            <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="container">
-                <div class="row"><small class="col">最后编辑：{{ note.note_editDate }}</small></div>
-                <div class="row"><small class="col">创建时间：{{ note.note_createDate }}</small></div>
-                <div class="row">
-                    <div class="col">
-                        <ul class="list-group">
-                            <a href="{% url 'Notebook_note_edit' note.note_id%}" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    编辑
-                                </div>
-                            </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    删除
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    更改目录
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">置顶</label>
-                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">待编辑</label>
-                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    设置提醒
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    修改可见性
-                                </div>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                                <div class="d-flex justify-content-between">
-                                    锁定笔记
-                                </div>
-                            </a>
-                            
-                        </ul>
-                    </div>
+                <div class="col">
+                    <ul class="list-group">
+                        <a href="{% url 'Notebook_note_edit' note.id%}" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <div class="d-flex justify-content-between">
+                                编辑
+                            </div>
+                        </a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <div class="d-flex justify-content-between">
+                                删除
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                            <div class="d-flex justify-content-between">
+                                更改目录
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">置顶</label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">待编辑</label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                            <div class="d-flex justify-content-between">
+                                设置提醒
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                            <div class="d-flex justify-content-between">
+                                修改可见性
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
+                            <div class="d-flex justify-content-between">
+                                锁定笔记
+                            </div>
+                        </a>
+                        
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="deleteConfirm" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">确认删除？</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    删除的笔记将在回收站中保留30天（注：还没做这个功能，删了就是真删了）。
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-danger" href="{% url 'api_Notebook_note_delete' note.note_id %}">确认</a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                </div>
+<div class="modal fade" id="deleteConfirm" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">确认删除？</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                删除的笔记将在回收站中保留30天（注：还没做这个功能，删了就是真删了）。
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger" href="{% url 'api_Notebook_note_delete' note.id %}">确认</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
             </div>
         </div>
     </div>
+</div>
+{% endblock %}
 
-    <!--/正文区-->
-
-    <!--JS导入区-->
-    <script src="{% static '/jquery/jquery.min.js/' %}"></script>
-    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
-    <script>
-        /* Django tag传递数据用*/
-        var note_content = `{{ note.note_content|safe }}`
-    </script>
-    <script src="{% static '/Notebook/js/note_detail.js' %}"></script>
-    <!--/JS导入区-->
-</body>
-</html>
+{% block block_js %}
+<script src="{% static '/jquery/jquery.min.js/' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
+<script>
+    note_content = `{{note.content|escape}}`
+</script>
+<script src="{% static '/Notebook/js/note_detail.js' %}"></script>
+{% endblock %}

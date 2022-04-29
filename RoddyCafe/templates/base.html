@@ -3,24 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
-    <title>{% block block_title %}网站模板{% endblock %} | Roy's Cafe</title>
+    <title>{% block block_title %}{% endblock %} | Roy's Cafe</title>
     <!--css导入区-->
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
-    <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
     {% block block_css %}
     {% endblock %}
     <!--/css导入区-->
 </head>
-<body>
+<body class="bg-light">
     <!--正文区-->
     {% block block_content %}
     {% endblock %}
     <!--/正文区-->
 
     <!--JS导入区-->
-    <script src="{% static '/jquery/jquery.min.js/' %}"></script>
-    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
     {% block block_js %}
     {% endblock %}
     <!--/JS导入区-->

@@ -1,6 +1,11 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block block_title %}主页{% endblock %}
+
+{% block block_css %}
+<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
+<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+{% endblock %}
 
 {% block block_content %}
 <div class="container mt-3">
@@ -8,7 +13,7 @@
         <h2>拾心咖啡馆<small> v0.1</small></h2>
     </div>
     <div class="row">
-        <p>欢迎光临<strong>拾心咖啡馆</strong>。</p>
+        <p>欢迎光临。</p>
         <p><small class="text-secondary">Welcome to <strong>Roy's Cafe</strong>.</small></p>
         <p>本站点为哲予（<a href="mailto:larysing@outlook.com">larysing@outlook.com）</a>的个人站点，目前处于边开发边使用的状态。有任何问题请邮件联系。</p>
         <p><small class="text-secondary">This is a personal blog site belonging to Roy Coya (<a href="mailto:larysing@outlook.com">larysing@outlook.com)</a>. It's still building and also be in use by Roy and his friends at the same time. Got any question about this site, just send a mail please.</small></p>
@@ -33,4 +38,9 @@
         </small>
     </div>
 </div>
+{% endblock %}
+
+{% block block_js %}
+<script src="{% static '/jquery/jquery.min.js/' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 {% endblock %}

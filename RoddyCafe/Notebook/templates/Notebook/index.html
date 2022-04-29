@@ -1,6 +1,11 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block block_title %}笔记库{% endblock %}
+
+{% block block_css %}
+<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css/' %}">
+<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+{% endblock %}
 
 {% block block_content %}
 <div class="container mt-3">
@@ -17,4 +22,9 @@
         <a href="{% url 'logout' %}">退出登录</a>
     </div>
 </div>
+{% endblock %}
+
+{% block block_js %}
+<script src="{% static '/jquery/jquery.min.js/' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 {% endblock %}
