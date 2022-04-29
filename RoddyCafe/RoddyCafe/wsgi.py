@@ -8,9 +8,10 @@ https://docs.djangoproject.com/en/4.0/howto/deployment/wsgi/
 """
 
 import os
+import sys
 
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'RoddyCafe.settings')
-
+sys.path.append("/home/www/RoddyCafe/RoddyCafe")
 application = get_wsgi_application()
