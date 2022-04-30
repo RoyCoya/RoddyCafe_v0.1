@@ -43,7 +43,6 @@
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script>
     /* Django tag传递数据用*/
-    var directory_id = {{ diretory.id}}
     url_api_note_new_save = `{% url 'api_Notebook_directory_newNote' directory.id %}`
     url_note_detail = "/notebook/note/note_id/"
     url_api_Notebook_userfile_upload_img = "{% url 'api_Notebook_userfile_upload_img' %}"

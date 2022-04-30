@@ -42,7 +42,6 @@
 <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script>
-    var note_id = {{note.id}}
     var note_content = `{{ note.content|escape }}`
     var url_api_note_save = "{% url 'api_Notebook_note_save' note.id  %}"
     var url_note_detail = "{% url 'Notebook_note_detail' note.id %}"
