@@ -86,8 +86,11 @@ def note_detail(request,note_id):
         noteToView = note.objects.get(id=note_id)
         if request.user != noteToView.user:
             return HttpResponseForbidden('您无权查看此页面')
+        dirs = directory.objects.filter(user=request.user)
+        root_dir = dirs[0]
         context = {
-            'note' : noteToView
+            'note' : noteToView,
+            'root_dir':root_dir,
         }
         return render(request,'Notebook/note/detail.html',context)
 
@@ -219,6 +222,14 @@ def api_note_save(request,note_id):
         noteEdited.content = request.POST['note_content_edited']
         noteEdited.save()
         return HttpResponse('note saved successfully.')
+
+#笔记更换目录
+def api_note_change_directory(request,note_id,directory_id):
+    note_to_change_dir = note.objects.get(id=note_id)
+    target_directory = directory.objects.get(id=directory_id)
+    note_to_change_dir.directory = target_directory
+    note_to_change_dir.save()
+    return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory_id,)))
 
 #新增笔记
 def api_note_new_save(request,directory_id):
