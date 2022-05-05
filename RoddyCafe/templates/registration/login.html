@@ -15,20 +15,27 @@
     <div class="row">
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
-            {% if form.errors %}
-                <small class="text-danger">账户或密码错误，请重试！</small>
-            {% endif %}
-            {% if next %}
-                {% if user.is_authenticated %}
-                    <small class="text-danger">您的账户无使用权限</small>
-                {% else %}
-                    <small class="text-danger">登录以使用笔记库</small>
+            <div class="mb-3">
+                {% if form.errors %}
+                    <small class="text-danger">账户或密码错误，请重试！</small>
                 {% endif %}
-            {% endif %}
-            <div class="form-lable">账户：</div>
-            <input class="form-control mb-3" type="text" name="username" autocomplete="username" maxlength="20" id="id_username" autofocus required>
-            <div class="form-lable">密码：</div>
-            <input class="form-control  mb-3" type="password" name="password" autocomplete="current-password" id="id_password" required>
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        <small class="text-danger">您的账户无使用权限</small>
+                    {% else %}
+                        <small class="text-danger">登录以使用笔记库</small>
+                    {% endif %}
+                {% endif %}
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" name="username" id="input_account" autocomplete="username" maxlength="20" id="id_username" placeholder="account" autofocus required>
+                <label for="input_account">账户：</label>
+              </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" type="password" name="password" id="input_password" autocomplete="current-password" placeholder="password" id="id_password" required>
+                <label for="input_password">密码：</label>
+            </div>
             <button class="btn btn-primary" type="submit">登录</button>
         </form>
     </div>

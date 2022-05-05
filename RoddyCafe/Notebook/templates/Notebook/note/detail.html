@@ -13,6 +13,8 @@
 {% endblock %}
 
 {% block block_content %}
+
+<!-- 顶栏 -->
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
@@ -31,6 +33,7 @@
 
 <div id="editor_container" class="container"></div>
 
+<!-- 工具栏 -->
 <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
     <div class="offcanvas-header row border-bottom d-flex justify-content-between">
         <h4 class="offcanvas-title col-10" id="toolbarBottomLabel">{{ note.title }}</h4>
@@ -48,26 +51,26 @@
                                 编辑
                             </div>
                         </a>
+                        <a href="#modal_new_directory" data-bs-toggle="modal"  class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
+                            <div class="d-flex justify-content-between">
+                                更改目录
+                            </div>
+                        </a>
                         <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="list-group-item list-group-item-action" style="border-color: rgb(0, 124, 77);">
                             <div class="d-flex justify-content-between">
                                 删除
                             </div>
                         </a>
                         <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
-                            <div class="d-flex justify-content-between">
-                                更改目录
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
                             <div class="form-check form-switch">
                                 <label class="form-check-label" for="flexSwitchCheckChecked">置顶</label>
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                             </div>
                         </a>
                         <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
                             <div class="form-check form-switch">
                                 <label class="form-check-label" for="flexSwitchCheckChecked">待编辑</label>
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                             </div>
                         </a>
                         <a href="#" class="list-group-item list-group-item-action disabled" style="border-color: rgb(0, 124, 77);">
@@ -93,6 +96,7 @@
     </div>
 </div>
 
+<!-- 删除确认 -->
 <div class="modal fade" id="deleteConfirm" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -106,6 +110,33 @@
             <div class="modal-footer">
                 <a class="btn btn-danger" href="{% url 'api_Notebook_note_delete' note.id %}">确认</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 更换目录 -->
+<div class="modal fade" id="modal_new_directory" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">更换目录</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <ul class="list-group list-group-flush">
+                                {% if root_dir.first_child %}
+                                    {% with dir=root_dir.first_child %}
+                                        {% include 'Notebook/note/detail_createChangeDirTree.html' with dir=dir %}
+                                    {% endwith%}
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

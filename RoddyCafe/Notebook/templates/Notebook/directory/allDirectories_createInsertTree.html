@@ -7,7 +7,7 @@
         <a id="insertDir_{{dir.id}}_{{dir.first_child.id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 18px;">
             <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
         </a>
-        {% include 'Notebook/directory/allDirectories_createTreeWithOption.html' with dir=dir.first_child %}
+        {% include 'Notebook/directory/allDirectories_createInsertTree.html' with dir=dir.first_child %}
     </ul>
 {% else %}
     <div class="list-group-item d-flex justify-content-between" style="border-color: rgb(0, 124, 77);">
@@ -24,7 +24,7 @@
     <a id="insertDir_{{dir.id}}_{{dir.next_brother.id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 18px;">
         <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
     </a>
-    {% include 'Notebook/directory/allDirectories_createTreeWithOption.html' with dir=dir.next_brother %}
+    {% include 'Notebook/directory/allDirectories_createInsertTree.html' with dir=dir.next_brother %}
 {% else %}
     <a id="insertDir_{{dir.id}}__right" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 18px;">
         <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
