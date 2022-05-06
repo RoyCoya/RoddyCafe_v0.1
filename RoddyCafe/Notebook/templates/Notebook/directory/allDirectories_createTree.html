@@ -1,5 +1,5 @@
 {% if dir.first_child %}
-    <div class="list-group-item list-group-item-action d-flex justify-content-between" style="border-color: rgb(0, 124, 77);">
+    <div class="list-group-item list-group-item-action d-flex justify-content-between">
         <a href="{% url 'Notebook_directory_notelist' dir.id %}" class="col-11">
             <i class="bi bi-journal-text"></i> {{ dir.name }}
         </a>
@@ -9,7 +9,7 @@
         {% include 'Notebook/directory/allDirectories_createTree.html' with dir=dir.first_child %}
     </ul>
 {% else %}
-    <div class="list-group-item list-group-item-action d-flex justify-content-between" style="border-color: rgb(0, 124, 77);">
+    <div class="list-group-item list-group-item-action d-flex justify-content-between">
         <a href="{% url 'Notebook_directory_notelist' dir.id %}" class="col-12">
             <i class="bi bi-journal-text"></i> {{ dir.name }}
         </a>

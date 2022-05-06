@@ -1,4 +1,5 @@
 /* list-group 的 item 在没有focus和hover时为主题色（特殊标识则为其自己的颜色），无背景。focus和hover时转为背景主题色文字白色 */
+.list-group-item{border: 1px solid rgb(0, 124, 77);}
 .list-group-item-action a{color: rgb(25, 27, 30);text-decoration: none;}
 .list-group-item-action i{color: rgb(0, 124, 77);}
 .list-group-item-action .edit-date{color: rgb(89, 98, 106);}
