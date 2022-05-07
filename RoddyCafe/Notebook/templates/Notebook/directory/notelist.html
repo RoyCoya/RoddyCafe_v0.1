@@ -5,12 +5,9 @@
 {% block block_css %}
 <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
-<link rel="stylesheet" href="{% static '/Notebook/css/listgroup_hover.css' %}">
+<link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 <style>
-    a{color: rgb(0, 124, 77);}
-    .tooltip-inner{background-color: rgb(0, 124, 77);}
-    .bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before, .bs-tooltip-top .tooltip-arrow::before{border-top-color: rgb(0, 124, 77);}
-    .border_theme{border-color: rgb(0, 124, 77);}
+    
 </style>
 {% endblock %}
 
@@ -36,6 +33,7 @@
         <div class="col">
             <nav>
                 <ol class="breadcrumb ms-2 mt-2">
+                    <li class="breadcrumb-item"><a href="{% url 'Notebook_directory' %}">{{ user.username }}</a></li>
                     {% if directory_parents %}
                         {% for dir in directory_parents %}
                             {% if forloop.counter0 == 0 %}
@@ -60,7 +58,7 @@
         <div class="col">
             <ul class="list-group">
                     {% for dir in directory_children %}
-                    <a href="{% url 'Notebook_directory_notelist' dir.id %}" class="list-group-item list-group-item-action border_theme">
+                    <a href="{% url 'Notebook_directory_notelist' dir.id %}" class="list-group-item list-group-item-action">
                         <i class="bi bi-journal-text"></i>
                         <span class="col align-self-center">{{ dir.name }}</span>
                     </a>
@@ -74,37 +72,12 @@
     <div class="row mt-3">
         <div class="col">
             <ul class="list-group">
-                {% if notes %}
-                    {% for note in notes %}
-                        {% if note.pinTop %}
-                            <a href="{% url 'Notebook_note_detail' note.id %}" class="list-group-item list-group-item-action border_theme">
-                                <div class="col">
-                                    <i class="bi bi-bookmark-star pin-top" data-bs-toggle="tooltip" data-bs-placement="top" title="置顶"></i>
-                                    {% if note.pending %}
-                                        <i class="bi bi-pen pending" data-bs-toggle="tooltip" data-bs-placement="top" title="待编辑"></i>
-                                    {% endif %}
-                                    <strong class="col align-self-center">{{ note.title }}</strong>
-                                </div>
-                                <div class="col">
-                                    <small class="col align-self-center edit-date">{{ note.editDate}}</small>
-                                </div>
-                            </a>
-                        {% endif %}
+                {% if notes_pintop or notes_not_pintop %}
+                    {% for note in notes_pintop %}
+                        {% include 'Notebook/directory/notelist_note_listitem.html' with note=note %}
                     {% endfor %}
-                    {% for note in notes %}
-                        {% if not note.pinTop %}
-                            <a href="{% url 'Notebook_note_detail' note.id %}" class="list-group-item list-group-item-action border_theme">
-                                <div class="col">
-                                    {% if note.pending %}
-                                        <i class="bi bi-pen pending" data-bs-toggle="tooltip" data-bs-placement="top" title="待编辑"></i>
-                                    {% endif %}
-                                    <strong class="col align-self-center">{{ note.title }}</strong>
-                                </div>
-                                <div class="col">
-                                    <small class="col align-self-center edit-date">{{ note.editDate}}</small>
-                                </div>
-                            </a>
-                        {% endif %}
+                    {% for note in notes_not_pintop %}
+                        {% include 'Notebook/directory/notelist_note_listitem.html' with note=note %}
                     {% endfor %}
                 {% else %}
                     <small class="text-secondary text-center col mt-2 mb-2">无笔记</small>
