@@ -1,8 +1,9 @@
 /*
-    元素统一改为主题色
+    元素统一改为主题色。目前包含：链接、卡片
 */
-a{color: rgb(0, 124, 77);}
-
+a{color: rgb(0, 124, 77);text-decoration: none;}
+.card{border-color: rgb(0, 124, 77);}
+.breadcrumb-item a:hover{text-decoration: underline; color:rgb(10, 91, 60);}
 /*
     list-group 的 item 在没有focus和hover时边框为主题色（特殊标识则为其自己的颜色），背景文字维持默认。当focus和hover时，背景转为主题色，文字转为白色
 */
@@ -22,3 +23,8 @@ a{color: rgb(0, 124, 77);}
 */
 .tooltip-inner{background-color: white;color: rgb(0, 124, 77);font-size: large;}
 .bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow::before, .bs-tooltip-start .tooltip-arrow::before{border-left-color: white;}
+
+/*
+    switch的确认背景色改为主题色
+*/
+.form-check-input:checked{ background-color: rgb(0, 124, 77);border-color: rgb(0, 124, 77);}
