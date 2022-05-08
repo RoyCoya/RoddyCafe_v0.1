@@ -73,7 +73,7 @@ $('#save').click(function (e) {
     $.post(
         url_api_note_new_save,
         postData,
-        function (data, textStatus, jqXHR) {
+        function (data) {
             window.location.replace(url_note_detail.replace('note_id',data.toString()));
         },
     );

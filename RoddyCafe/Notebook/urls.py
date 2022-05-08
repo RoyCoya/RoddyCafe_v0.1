@@ -23,6 +23,8 @@ urlpatterns = [
 	path('note/<int:note_id>/edit/save', views.api_note_save, name='api_Notebook_note_save'),
 	path('note/<int:note_id>/delete/', views.api_note_delete, name='api_Notebook_note_delete'),
 	path('note/<int:note_id>/changedir/<int:directory_id>/', views.api_note_change_directory, name='api_Notebook_note_change_directory'),
+	path('note/<int:note_id>/setpintop/', views.api_note_switch_pintop, name='api_Notebook_note_switch_pintop'),
+	path('note/<int:note_id>/setpending/', views.api_note_switch_pending, name='api_Notebook_note_switch_pending'),
 	path('note/uploadimg/', views.api_userfile_upload_img, name='api_Notebook_userfile_upload_img'),
 	path('note/uploadvideo/', views.api_userfile_upload_video, name='api_Notebook_userfile_upload_video'),
 ]

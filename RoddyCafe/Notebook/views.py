@@ -1,4 +1,5 @@
 import re
+from tkinter.tix import Tree
 from django.conf import settings
 from xmlrpc.client import Boolean
 from django.shortcuts import render,redirect
@@ -69,12 +70,14 @@ def directory_notelist(request,directory_id):
                 directory_child = directory_child.next_brother
         except Exception as e:
             pass
-        notes = note.objects.filter(directory=dir).order_by('title')
+        notes_pintop = note.objects.filter(directory=dir,isPinTop=True).order_by('title')
+        notes_not_pintop = note.objects.filter(directory=dir,isPinTop=False).order_by('title')
         context = {
             'directory' : dir,
             'directory_parents' : parents_directories,
             'directory_children' : children_directories,
-            'notes' : notes,
+            'notes_pintop' : notes_pintop,
+            'notes_not_pintop' : notes_not_pintop
         }
         return render(request,'Notebook/directory/notelist.html',context)
 
@@ -199,6 +202,23 @@ def api_directory_new_save(request):
             root_dir.save()
         return HttpResponseRedirect(reverse('Notebook_directory'))
 
+#新增笔记
+def api_note_new_save(request,directory_id):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    else:
+        dir = directory.objects.get(id=directory_id)
+        if request.user != dir.user:
+            return HttpResponseForbidden('您无权查看此页面')
+        new_note = note(
+            directory=dir,
+            user=request.user,
+            title=request.POST['note_title'],
+            content=request.POST['note_content'],
+        )
+        new_note.save()
+        return HttpResponse(new_note.id)
+
 #删除笔记
 def api_note_delete(request,note_id):
     if not request.user.is_authenticated:
@@ -231,22 +251,19 @@ def api_note_change_directory(request,note_id,directory_id):
     note_to_change_dir.save()
     return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory_id,)))
 
-#新增笔记
-def api_note_new_save(request,directory_id):
-    if not request.user.is_authenticated:
-        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    else:
-        dir = directory.objects.get(id=directory_id)
-        if request.user != dir.user:
-            return HttpResponseForbidden('您无权查看此页面')
-        new_note = note(
-            directory=dir,
-            user=request.user,
-            title=request.POST['note_title'],
-            content=request.POST['note_content'],
-        )
-        new_note.save()
-        return HttpResponse(new_note.id)
+#笔记切换置顶状态
+def api_note_switch_pintop(request,note_id):
+    note_to_set_pin = note.objects.get(id=note_id)
+    note_to_set_pin.isPinTop = request.POST['pintop_checked'].title()
+    note_to_set_pin.save()
+    return HttpResponse("success to change note's pin status")
+
+#笔记切换待编辑状态
+def api_note_switch_pending(request,note_id):
+    note_to_set_pending = note.objects.get(id=note_id)
+    note_to_set_pending.isPending = request.POST['pending_checked'].title()
+    note_to_set_pending.save()
+    return HttpResponse("success to change note's pending status")
 
 #wangeditor上传图片
 def api_userfile_upload_img(request):

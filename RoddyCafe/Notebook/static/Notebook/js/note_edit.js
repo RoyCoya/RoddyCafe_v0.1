@@ -55,7 +55,7 @@ $('#save').click(function (e) {
     $.post(
         url_api_note_save,
         $('#form_note').serializeArray(),
-        function (data, textStatus, jqXHR) {
+        function () {
             window.location.replace(url_note_detail);
         },
     );
