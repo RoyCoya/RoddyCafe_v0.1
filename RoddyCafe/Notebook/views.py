@@ -1,7 +1,4 @@
-import re
-from tkinter.tix import Tree
 from django.conf import settings
-from xmlrpc.client import Boolean
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseForbidden,HttpResponseRedirect
 from .models import directory, note, userfile
@@ -72,12 +69,15 @@ def directory_notelist(request,directory_id):
             pass
         notes_pintop = note.objects.filter(directory=dir,isPinTop=True).order_by('title')
         notes_not_pintop = note.objects.filter(directory=dir,isPinTop=False).order_by('title')
+        dirs = directory.objects.filter(user=request.user)
+        root_dir = dirs[0]
         context = {
             'directory' : dir,
             'directory_parents' : parents_directories,
             'directory_children' : children_directories,
             'notes_pintop' : notes_pintop,
-            'notes_not_pintop' : notes_not_pintop
+            'notes_not_pintop' : notes_not_pintop,
+            'root_dir': root_dir
         }
         return render(request,'Notebook/directory/notelist.html',context)
 
@@ -202,6 +202,45 @@ def api_directory_new_save(request):
             root_dir.save()
         return HttpResponseRedirect(reverse('Notebook_directory'))
 
+#目录移动位置
+def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_first_child):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    else:
+        target_parent = directory.objects.get(id=parent_id)
+        target_child = None
+        if child_id:
+            target_child = directory.objects.get(id=child_id)
+        #分离需要移动的目录，两端连接
+        dir_to_move = directory.objects.get(id=dir_to_move_id)
+        parent = directory.objects.get(Q(first_child=dir_to_move)|Q(next_brother=dir_to_move))
+
+        is_dir_to_move_first_child = False if parent.first_child != dir_to_move else True
+        if is_dir_to_move_first_child:
+            parent.first_child = dir_to_move.next_brother
+        else:
+            parent.next_brother = dir_to_move.next_brother
+        print
+        parent.save()
+        dir_to_move.next_brother = None
+        dir_to_move.save()
+        #插入新位置
+        if target_child:
+            is_target_child_first_child = False if target_parent.first_child != target_child else True
+            if is_target_child_first_child:
+                target_parent.first_child = dir_to_move
+            else:
+                target_parent.next_brother = dir_to_move
+            dir_to_move.next_brother = target_child
+        else:
+            if is_first_child:
+                target_parent.first_child = dir_to_move
+            else:
+                target_parent.next_brother = dir_to_move
+        target_parent.save()
+        dir_to_move.save()
+        return HttpResponse('directory moved success')
+
 #新增笔记
 def api_note_new_save(request,directory_id):
     if not request.user.is_authenticated:
@@ -245,25 +284,34 @@ def api_note_save(request,note_id):
 
 #笔记更换目录
 def api_note_change_directory(request,note_id,directory_id):
-    note_to_change_dir = note.objects.get(id=note_id)
-    target_directory = directory.objects.get(id=directory_id)
-    note_to_change_dir.directory = target_directory
-    note_to_change_dir.save()
-    return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory_id,)))
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    else:
+        note_to_change_dir = note.objects.get(id=note_id)
+        target_directory = directory.objects.get(id=directory_id)
+        note_to_change_dir.directory = target_directory
+        note_to_change_dir.save()
+        return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory_id,)))
 
 #笔记切换置顶状态
 def api_note_switch_pintop(request,note_id):
-    note_to_set_pin = note.objects.get(id=note_id)
-    note_to_set_pin.isPinTop = request.POST['pintop_checked'].title()
-    note_to_set_pin.save()
-    return HttpResponse("success to change note's pin status")
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    else:
+        note_to_set_pin = note.objects.get(id=note_id)
+        note_to_set_pin.isPinTop = request.POST['pintop_checked'].title()
+        note_to_set_pin.save()
+        return HttpResponse("success to change note's pin status")
 
 #笔记切换待编辑状态
 def api_note_switch_pending(request,note_id):
-    note_to_set_pending = note.objects.get(id=note_id)
-    note_to_set_pending.isPending = request.POST['pending_checked'].title()
-    note_to_set_pending.save()
-    return HttpResponse("success to change note's pending status")
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    else:
+        note_to_set_pending = note.objects.get(id=note_id)
+        note_to_set_pending.isPending = request.POST['pending_checked'].title()
+        note_to_set_pending.save()
+        return HttpResponse("success to change note's pending status")
 
 #wangeditor上传图片
 def api_userfile_upload_img(request):
@@ -304,6 +352,7 @@ def api_user_logout(request):
 '''
 通用方法
 '''
+#获取删除目录时所需要删除的本体和所有子目录，返回列表
 def func_getDirsToDelete_list(dir,deleteList):
     deleteList.append(dir)
     if dir.first_child:
