@@ -1,7 +1,0 @@
-/* Django卡片换成主题色 */
-.card{
-    border-color: rgb(0, 124, 77);;
-}
-a.card{
-    text-decoration: none;
-}

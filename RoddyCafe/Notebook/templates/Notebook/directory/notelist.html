@@ -89,52 +89,45 @@
 
 <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
     <div class="offcanvas-header row border-bottom d-flex justify-content-between">
-        <h4 class="offcanvas-title col-10" id="toolbarBottomLabel">{{ directory.name }}</h4>
+        <h4 class="offcanvas-title col-10" id="toolbarBottomLabel"><i class="bi bi-folder2 text-success"></i> {{ directory.name }}</h4>
         <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <ul class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action disabled">
-                            <div class="d-flex justify-content-between">
-                                重命名
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action disabled">
-                            <div class="d-flex justify-content-between">
-                                修改描述
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action disabled">
-                            <div class="d-flex justify-content-between">
-                                视图
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action disabled">
-                            <div class="d-flex justify-content-between">
-                                排序
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action disabled">
-                            <div class="d-flex justify-content-between">
-                                添加子目录
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action disabled">
-                            <div class="d-flex justify-content-between">
-                                移动目录
-                            </div>
-                        </a>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="list-group-item list-group-item-action">
-                            <div class="d-flex justify-content-between">
-                                删除目录
-                            </div>
-                        </a>
-                    </ul>
+            <div class="row mb-3">
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#" class="card pt-2 pb-2 text-center text-secondary">
+                        <i class="bi bi-folder-plus" style="font-size: 2rem;"></i>
+                        <small>*新子目录*</small>
+                    </a>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#" class="card pt-2 pb-2 text-center text-secondary">
+                        <i class="bi bi-folder-symlink-fill" style="font-size: 2rem;"></i>
+                        <small>*整体移动*</small>
+                    </a>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#" class="card pt-2 pb-2 text-center text-secondary">
+                        <i class="bi bi-grid-1x2" style="font-size: 2rem;"></i>
+                        <small>*显示方式*</small>
+                    </a>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#deleteConfirm" data-bs-toggle="modal" class="card pt-2 pb-2 text-center text-danger">
+                        <i class="bi bi-trash-fill" style="font-size: 2rem;"></i>
+                        <small>删除</small>
+                    </a>
                 </div>
             </div>
+            <ul class="list-group">
+                <div class="list-group-item">
+                    <small class="text-success">目录描述：<br></small>
+                    {% if directory.discription %}{{ directory.discription }}
+                    {% else %}<span class="text-secondary">无</span>
+                    {% endif %}
+                </div>
+            </ul>
         </div>
     </div>
 </div>
