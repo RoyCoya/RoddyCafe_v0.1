@@ -245,6 +245,45 @@ def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_f
         dir_to_move.save()
         return HttpResponse('directory moved success')
 
+#目录移动位置
+def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_first_child):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    else:
+        target_parent = directory.objects.get(id=parent_id)
+        target_child = None
+        if child_id:
+            target_child = directory.objects.get(id=child_id)
+        #分离需要移动的目录，两端连接
+        dir_to_move = directory.objects.get(id=dir_to_move_id)
+        parent = directory.objects.get(Q(first_child=dir_to_move)|Q(next_brother=dir_to_move))
+
+        is_dir_to_move_first_child = False if parent.first_child != dir_to_move else True
+        if is_dir_to_move_first_child:
+            parent.first_child = dir_to_move.next_brother
+        else:
+            parent.next_brother = dir_to_move.next_brother
+        print
+        parent.save()
+        dir_to_move.next_brother = None
+        dir_to_move.save()
+        #插入新位置
+        if target_child:
+            is_target_child_first_child = False if target_parent.first_child != target_child else True
+            if is_target_child_first_child:
+                target_parent.first_child = dir_to_move
+            else:
+                target_parent.next_brother = dir_to_move
+            dir_to_move.next_brother = target_child
+        else:
+            if is_first_child:
+                target_parent.first_child = dir_to_move
+            else:
+                target_parent.next_brother = dir_to_move
+        target_parent.save()
+        dir_to_move.save()
+        return HttpResponse('directory moved success')
+
 #新增笔记
 def api_note_new_save(request,directory_id):
     if not request.user.is_authenticated:
