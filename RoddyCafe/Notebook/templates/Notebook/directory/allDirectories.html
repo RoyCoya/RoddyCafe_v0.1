@@ -63,7 +63,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new_save' %}">
+                <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new_save' 0 %}">
                     {% csrf_token %}
                     <div class="col mb-3">
                         <label class="form-label"><span class="text-danger">*</span> 目录名</label>
