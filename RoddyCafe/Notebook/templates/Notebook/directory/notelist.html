@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block block_content %}
+
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
@@ -132,12 +133,39 @@
             </div>
             <ul class="list-group">
                 <div class="list-group-item">
-                    <small class="text-success">目录描述：<br></small>
+                    <div class="d-flex justify-content-between text-success">
+                        <small>目录描述：<br></small>
+                        <a href="#modal_change_discription" data-bs-toggle="modal" class="bi bi-pen"></a>
+                    </div>
                     {% if directory.discription %}{{ directory.discription }}
                     {% else %}<span class="text-secondary">无</span>
                     {% endif %}
                 </div>
             </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 修改目录描述弹出框 -->
+<div class="modal fade" id="modal_change_discription" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">修改目录描述</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{% url 'api_Notebook_directory_change_discription' directory.id %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="col mb-3">
+                        <textarea placeholder="描述上限200字" id="form_new_directory_discription" class="form-control" name="directory_discription" type="text" maxlength="200"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="submit">确认</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -169,45 +197,42 @@
                 <h5 class="modal-title" id="exampleModalLabel">创建子目录</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
                 <div class="container">
                     <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new_save' directory.id %}">
                         {% csrf_token %}
-                        <div class="col mb-3">
-                            <label class="form-label"><span class="text-danger">*</span> 目录名</label>
-                            <input id="form_new_directory_name" class="form-control" name="directory_name" type="text" maxlength="20" required>
-                            <div class="invalid-feedback">
-                                请输入目录名
+                        <div class="modal-body">
+                            <div class="col mb-3">
+                                <label class="form-label"><span class="text-danger">*</span> 目录名</label>
+                                <input id="form_new_directory_name" class="form-control" name="directory_name" type="text" maxlength="20" required>
                             </div>
-                        </div>
-                        <div class="col mb-3">
-                            <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：“包含语法、单词、习惯用语等内容”"></i></label>
-                            <input id="form_new_directory_discription" class="form-control" name="directory_discription" type="text" maxlength="200">
-                        </div>
-                        {% if directory.first_child %}
-                            <label class="form-label">
-                                <span class="text-danger">*</span> 新目录位置（点击<i class="bi bi-plus align-self-center text-success"></i>确定插入点）：<span id="isFormFilled" class="text-danger">未选择</span></label>
-                            <div class="container mb-3">
-                                <div class="row mt-3">
-                                    <ul class="list-group list-group-flush">
-                                        {% with dir=directory.first_child %}
-                                            <a id="insertDir_{{directory.id}}_{{dir.id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 20px;">
-                                                <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
-                                            </a>                                            
-                                            {% include 'Notebook/directory/notelist_new_subdir_tree.html' with dir=dir %}
-                                        {% endwith%}
-                                    </ul>
+                            <div class="col mb-3">
+                                <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：“包含语法、单词、习惯用语等内容”"></i></label>
+                                <input id="form_new_directory_discription" class="form-control" name="directory_discription" type="text" maxlength="200">
+                            </div>
+                            {% if directory.first_child %}
+                                <label class="form-label">
+                                    <span class="text-danger">*</span> 新目录位置（点击<i class="bi bi-plus align-self-center text-success"></i>确定插入点）：<span id="isFormFilled" class="text-danger">未选择</span></label>
+                                <div class="container mb-3">
+                                    <div class="row mt-3">
+                                        <ul class="list-group list-group-flush">
+                                            {% with dir=directory.first_child %}
+                                                <a id="insertDir_{{directory.id}}_{{dir.id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 20px;">
+                                                    <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
+                                                </a>                                            
+                                                {% include 'Notebook/directory/notelist_new_subdir_tree.html' with dir=dir %}
+                                            {% endwith%}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                        <input id="form_new_directory_position" class="invisible" name="directory_position" type="text" {% if directory.first_child %}required {% else %}value='insertDir_{{directory.id}}__left'{% endif %}>
-                        <div class="col mb-3">
+                            {% endif %}
+                            <input id="form_new_directory_position" class="invisible" name="directory_position" type="text" {% if directory.first_child %}required {% else %}value='insertDir_{{directory.id}}__left'{% endif %}>
+                        </div>
+                        <div class="modal-footer">
                             <button class="btn btn-danger" type="submit" href="#">确认</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                         </div>
                     </form>
                 </div>
-            </div>
         </div>
     </div>
 </div>
@@ -257,7 +282,9 @@
 <div class="fixed-bottom border-top">
     <nav class="navbar navbar-light bg-light">
         <span class="col-2"></span>
-        <small class="col-8 text-center">共{{ notes|length }}条笔记</small>
+        {% with lengthof_notes_not_pintop=notes_not_pintop|length %}
+            <small class="col-8 text-center">共{{ notes_pintop|length|add:lengthof_notes_not_pintop }}条笔记</small>
+        {% endwith %}
         <a href="{% url 'Notebook_note_new' directory.id %}" class="text-success bi bi-pencil-square text-center col-2" style="font-size: 1.5rem;"></a>
     </nav>
 </div>
