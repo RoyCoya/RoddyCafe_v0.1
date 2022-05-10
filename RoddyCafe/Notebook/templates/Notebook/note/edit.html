@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
 <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+<link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 {% endblock %}
 
 {% block block_content %}
@@ -13,11 +14,12 @@
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light">
-                <a href="{% url 'Notebook_note_detail' note.id %}" class="col-1 text-center">
-                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                <a href="{% url 'Notebook_note_detail' note.id %}" class="col-2 text-start ps-2">
+                    <i class="text-success bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
+                    <i class="text-success bi bi-file-earmark-richtext" style="font-size: 1.5rem;"></i>
                 </a>
                 <span class="col-8 h5 text-center text-success" style="margin: 0px;">编辑：{{ note.title }}</span>
-                <a id="save" href="#" class="col-1 text-center">
+                <a id="save" href="#" class="col-2 text-end pe-2">
                     <i class="text-success bi bi-check-circle" style="font-size: 1.5rem;"></i>
                 </a>
             </nav>

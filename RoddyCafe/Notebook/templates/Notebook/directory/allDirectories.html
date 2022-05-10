@@ -13,15 +13,17 @@
 {% endblock %}
 
 {% block block_content %}
+<!-- 顶部工具栏 -->
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light ">
-                <a href="{% url 'Notebook_index' %}" class="col-1 text-center">
-                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                <a href="{% url 'Notebook_index' %}" class="col-2 text-start ps-2">
+                    <i class="text-success bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
+                    <i class="text-success bi bi-house" style="font-size: 1.5rem;"></i>
                 </a>
-                <span class="col-10 h5 text-center" style="margin: 0px;">总目录：{{ user.username }}</span>
-                <span class="col-1 text-center">
+                <span class="col-8 h5 text-center" style="margin: 0px;">{{ user.username }}</span>
+                <span class="col-2 text-end pe-2">
                     <a class="text-success bi bi-question-circle" style="font-size: 1.5rem;" data-bs-toggle="offcanvas" href="#info"></a>
                 </span>
             </nav>
@@ -29,6 +31,7 @@
     </div>
 </div>
 
+<!-- 目录列表 -->
 <div class="container">
     <div class="row mt-3">
         <div class="col">
@@ -47,6 +50,7 @@
     </div>
 </div>
 
+<!-- 底部工具栏 -->
 <div class="fixed-bottom border-top">
     <nav class="navbar navbar-light bg-light">
         <a href="#" class="text-success text-center col-2 bi bi-journal-plus" data-bs-toggle="modal" data-bs-target="#modal_new_directory" style="font-size:1.5rem;"></a>
@@ -55,6 +59,7 @@
     </nav>
 </div>
 
+<!-- 新增目录弹窗 -->
 <div class="modal fade" id="modal_new_directory" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
@@ -68,9 +73,6 @@
                     <div class="col mb-3">
                         <label class="form-label"><span class="text-danger">*</span> 目录名</label>
                         <input id="form_new_directory_name" class="form-control" name="directory_name" type="text" maxlength="20" required>
-                        <div class="invalid-feedback">
-                            请输入目录名
-                        </div>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：“包含语法、单词、习惯用语等内容”"></i></label>
@@ -103,6 +105,7 @@
     </div>
 </div>
 
+<!-- 使用帮助弹窗 -->
 <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="info">
     <div class="offcanvas-header">
         <h3 class="offcanvas-title container" id="toolbarBottomLabel">使用提示</h3>

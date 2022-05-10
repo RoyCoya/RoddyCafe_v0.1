@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.conf import settings
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseForbidden,HttpResponseRedirect
@@ -18,7 +19,11 @@ def index(request):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        return render(request,'Notebook/index.html')
+        notes_to_edit = note.objects.filter(isPending=True,directory__user=request.user)
+        context = {
+            'notes_to_edit':notes_to_edit
+        }
+        return render(request,'Notebook/index.html',context)
 
 #目录->所有目录
 def all_directory(request):
@@ -153,7 +158,7 @@ def api_directory_delete(request,directory_id):
             for dir in delete_list: dir.delete()      
         return HttpResponseRedirect(reverse('Notebook_directory'))
 
-#根目录页面中新增目录
+#新增目录
 def api_directory_new_save(request, directory_id):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
@@ -243,13 +248,9 @@ def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_f
                 target_parent.next_brother = dir_to_move
         target_parent.save()
         dir_to_move.save()
-        return HttpResponse('directory moved success')
+        return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(dir_to_move_id,)))
 
-#目录移动位置
-def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_first_child):
-    if not request.user.is_authenticated:
-        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    else:
+
         target_parent = directory.objects.get(id=parent_id)
         target_child = None
         if child_id:
@@ -283,6 +284,16 @@ def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_f
         target_parent.save()
         dir_to_move.save()
         return HttpResponse('directory moved success')
+
+#目录更改描述
+def api_directory_change_discription(request,directory_id):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    else:
+        dir = directory.objects.get(id=directory_id)
+        dir.discription = request.POST['directory_discription']
+        dir.save()
+        return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory_id,)))
 
 #新增笔记
 def api_note_new_save(request,directory_id):

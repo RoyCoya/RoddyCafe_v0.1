@@ -18,6 +18,7 @@ urlpatterns = [
 	#目录相关
 	path('directory/<int:directory_id>/newnote/save/', views.api_note_new_save, name='api_Notebook_directory_newNote'),
 	path('directory/<int:directory_id>/delete/', views.api_directory_delete, name='api_Notebook_directory_delete'),
+	path('directory/<int:directory_id>/changediscription/', views.api_directory_change_discription, name='api_Notebook_directory_change_discription'),
 	path('directory/new/save/<int:directory_id>', views.api_directory_new_save, name='api_Notebook_directory_new_save'),
 	path('directory/<int:dir_to_move_id>/move/parent/<int:parent_id>/child/<int:child_id>/childtype/<int:is_first_child>', views.api_directory_change_position, name='api_Notebook_move_directory'),
 	#笔记相关

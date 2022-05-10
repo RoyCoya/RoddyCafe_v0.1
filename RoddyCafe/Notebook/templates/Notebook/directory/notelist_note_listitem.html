@@ -1,7 +1,7 @@
 <a href="{% url 'Notebook_note_detail' note.id %}" class="list-group-item list-group-item-action border_theme d-flex justify-content-between">
     <div>
         <div class="col">
-            <strong class="col align-self-center">{{ note.title }}</strong>
+            <strong class="col align-self-center"><i class="bi bi-file-earmark-richtext"></i> {{ note.title }}</strong>
         </div>
         <div class="col">
             <small class="col align-self-center edit-date">{{ note.editDate}}</small>

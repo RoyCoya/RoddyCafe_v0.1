@@ -2,6 +2,7 @@
     元素统一改为主题色。目前包含：链接、卡片
 */
 a{color: rgb(0, 124, 77);text-decoration: none;}
+#editor_container a{text-decoration: underline;}
 .card{border-color: rgb(0, 124, 77);}
 .breadcrumb-item a:hover{text-decoration: underline; color:rgb(10, 91, 60);}
 /*
