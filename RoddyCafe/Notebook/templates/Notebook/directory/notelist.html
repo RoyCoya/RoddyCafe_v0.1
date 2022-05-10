@@ -14,15 +14,17 @@
 
 {% block block_content %}
 
+<!-- 顶部工具栏 -->
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light ">
-                <a href="{% url 'Notebook_directory' %}" class="col-1 text-center">
-                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                <a href="{% url 'Notebook_directory' %}" class="col-2 text-start ps-2">
+                    <i class="text-success bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
+                    <i class="text-success bi bi-inboxes" style="font-size: 1.5rem;"></i>
                 </a>
-                <span class="col-10 h5 text-center" style="margin: 0px;">{{ directory.name }}</span>
-                <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-1 text-center">
+                <span class="col-8 h5 text-center" style="margin: 0px;">{{ directory.name }}</span>
+                <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-2 text-end pe-2">
                     <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
                 </a>
             </nav>
@@ -97,10 +99,10 @@
     {% endif %}
 </div>
  
-<!-- 工具栏 -->
+<!-- 弹出式工具栏 -->
 <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
     <div class="offcanvas-header row border-bottom d-flex justify-content-between">
-        <h4 class="offcanvas-title col-10" id="toolbarBottomLabel"><i class="bi bi-folder2 text-success"></i> {{ directory.name }}</h4>
+        <h4 class="offcanvas-title col-10" id="toolbarBottomLabel"><i class="bi bi-journal-text text-success"></i> {{ directory.name }}</h4>
         <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
@@ -108,20 +110,20 @@
             <div class="row mb-3">
                 <div class="col-3 ps-1 pe-1">
                     <a href="#modal_new_directory " data-bs-toggle="modal" class="card pt-2 pb-2 text-center text-success">
-                        <i class="bi bi-folder-plus" style="font-size: 2rem;"></i>
-                        <small>新子目录</small>
+                        <i class="bi bi-journal-plus" style="font-size: 2rem;"></i>
+                        <small>子目录</small>
                     </a>
                 </div>
                 <div class="col-3 ps-1 pe-1">
                     <a href="#modal_move_directory" data-bs-toggle="modal" class="card pt-2 pb-2 text-center text-primary">
-                        <i class="bi bi-folder-symlink-fill" style="font-size: 2rem;"></i>
-                        <small>整体移动</small>
+                        <i class="bi bi-pin-map" style="font-size: 2rem;"></i>
+                        <small>移动</small>
                     </a>
                 </div>
                 <div class="col-3 ps-1 pe-1">
                     <a href="#" class="card pt-2 pb-2 text-center text-secondary">
                         <i class="bi bi-grid-1x2" style="font-size: 2rem;"></i>
-                        <small>*显示方式*</small>
+                        <small>*视图*</small>
                     </a>
                 </div>
                 <div class="col-3 ps-1 pe-1">
@@ -242,7 +244,7 @@
     <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">选择新挂载位置<span class="bi-arrow-bar-right text-success"></span></h5>
+                <h5 class="modal-title" id="exampleModalLabel">挂载到新位置：<span class="bi-arrow-bar-right text-success"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

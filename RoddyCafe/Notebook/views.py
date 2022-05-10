@@ -243,7 +243,7 @@ def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_f
                 target_parent.next_brother = dir_to_move
         target_parent.save()
         dir_to_move.save()
-        return HttpResponse('directory moved success')
+        return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(dir_to_move_id,)))
 
 
         target_parent = directory.objects.get(id=parent_id)

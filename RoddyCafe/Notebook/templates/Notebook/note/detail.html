@@ -20,11 +20,12 @@
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light ">
-                <a href="{% url 'Notebook_directory_notelist' note.directory.id%}" class="col-1 text-center">
-                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                <a href="{% url 'Notebook_directory_notelist' note.directory.id%}" class="col-2 text-start ps-2">
+                    <i class="text-success bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
+                    <i class="text-success bi bi-journal-text" style="font-size: 1.5rem;"></i>
                 </a>
-                <span class="col-10 h5 text-center" style="margin: 0px;">笔记详情</span>
-                <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-1 text-center">
+                <span class="col-8 h5 text-center" style="margin: 0px;">笔记详情</span>
+                <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-2 text-end pe-2">
                     <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
                 </a>
             </nav>
@@ -51,7 +52,7 @@
                 </div>
                 <div class="col-3 ps-1 pe-1">
                     <a href="#modal_change_directory" data-bs-toggle="modal" class="card pt-2 pb-2 text-center text-primary">
-                        <i class="bi bi-folder-symlink-fill" style="font-size: 2rem;"></i>
+                        <i class="bi bi-pin-map" style="font-size: 2rem;"></i>
                         <small>移动</small>
                     </a>
                 </div>
@@ -120,7 +121,7 @@
     <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">更换目录</h5>
+                <h5 class="modal-title" id="exampleModalLabel">移动笔记至：</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
