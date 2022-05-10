@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.conf import settings
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseForbidden,HttpResponseRedirect
@@ -18,7 +19,11 @@ def index(request):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     else:
-        return render(request,'Notebook/index.html')
+        notes_to_edit = note.objects.filter(isPending=True,directory__user=request.user)
+        context = {
+            'notes_to_edit':notes_to_edit
+        }
+        return render(request,'Notebook/index.html',context)
 
 #目录->所有目录
 def all_directory(request):
