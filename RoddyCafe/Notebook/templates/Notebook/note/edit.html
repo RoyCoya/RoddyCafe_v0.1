@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
-{% block block_title %}{{ note.title}}{% endblock %} | 编辑
+{% block title %}{{ note.title}}{% endblock %} | 编辑
 
-{% block block_css %}
-<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
+{% block css %}
 <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
-<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
 <link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 {% endblock %}
 
-{% block block_content %}
+{% block content %}
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
@@ -33,15 +31,14 @@
 </div>
 
 <i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
+
 <form id="form_note" class="invisible" method="post" style="height: 50%;">
     {% csrf_token %}
     <textarea name="note_content_edited" id="note_content"></textarea>
 </form>
 {% endblock %}
 
-{% block block_js %}
-<script src="{% static '/jquery/jquery.min.js' %}"></script>
-<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+{% block js %}
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script>
     var note_content = `{{ note.content|escape }}`

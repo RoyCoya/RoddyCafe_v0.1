@@ -1,6 +1,7 @@
 /*
-    选择新目录位置时列表的ui变化
+    页面功能
 */
+//选择新目录位置时列表的ui变化
 $('.move-dir').click(function (e) {
     $('.move-dir').removeClass("choosed-postion");
     $('.move-dir').find('span').addClass("invisible");

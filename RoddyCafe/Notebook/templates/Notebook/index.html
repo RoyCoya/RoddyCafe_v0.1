@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
-{% block block_title %}笔记库{% endblock %}
+{% block title %}笔记库{% endblock %}
 
-{% block block_css %}
-<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+{% block css %}
 <link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 {% endblock %}
 
-{% block block_content %}
+{% block content %}
 <div class="container mt-3">
     <div class="row text-center">
         <h2>笔记库</h2>
@@ -49,9 +47,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block block_js %}
-<script src="{% static '/jquery/jquery.min.js' %}"></script>
-<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 {% endblock %}

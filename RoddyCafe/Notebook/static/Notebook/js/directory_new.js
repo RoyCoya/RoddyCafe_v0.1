@@ -1,5 +1,5 @@
 /*
-popover提示框初试化
+    popover提示框初试化
 */
 var tooltipTriggerList = Array.prototype.slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -7,7 +7,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 
 /*
-新目录表单
+    页面功能
 */
 //选择目录插入点的ui变化
 $('[id^=insertDir_]').click(function (e) {

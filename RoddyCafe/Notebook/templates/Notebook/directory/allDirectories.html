@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-{% block block_title %}总目录{% endblock %}
+{% block title %}总目录{% endblock %}
 
-{% block block_css %}
-<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+{% block css %}
 <link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 <style>
     .choosed-postion{color:white;background-color: rgb(0, 124, 77);}
@@ -12,7 +10,7 @@
 </style>
 {% endblock %}
 
-{% block block_content %}
+{% block content %}
 <!-- 顶部工具栏 -->
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
@@ -121,9 +119,6 @@
 </div>
 {% endblock %}
 
-{% block block_js%}
-<script src="{% static '/jquery/jquery.min.js' %}"></script>
-<script src="{% static '/bootstrap/js/popover.js' %}"></script>
-<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+{% block js%}
 <script src="{% static '/Notebook/js/directory_new.js' %}"></script>
 {% endblock %}

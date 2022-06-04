@@ -39,9 +39,7 @@ const editor = createEditor({
     mode : 'default',
 })
 //工具栏配置
-const toolbarConfig = {
-    
-}
+const toolbarConfig = {}
 const toolbar = createToolbar({
     editor,
     selector : '#toolbar_container',
@@ -49,8 +47,10 @@ const toolbar = createToolbar({
     mode : 'default'
 })
 
-
-
+/*
+    页面功能
+*/
+//保存笔记修改
 $('#save').click(function (e) { 
     $.post(
         url_api_note_save,
