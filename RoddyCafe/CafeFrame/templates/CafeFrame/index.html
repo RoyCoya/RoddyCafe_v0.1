@@ -1,13 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
-{% block block_title %}主页{% endblock %}
 
-{% block block_css %}
-<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
-{% endblock %}
+{% block title %}主页{% endblock %}
 
-{% block block_content %}
+{% block content %}
 <div class="container mt-3">
     <div class="row text-center">
         <h2>拾心咖啡馆<small> v0.1</small></h2>
@@ -38,9 +34,4 @@
         </small>
     </div>
 </div>
-{% endblock %}
-
-{% block block_js %}
-<script src="{% static '/jquery/jquery.min.js' %}"></script>
-<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 {% endblock %}

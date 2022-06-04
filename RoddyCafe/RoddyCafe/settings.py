@@ -135,14 +135,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'userfile/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email settings
-# EMAIL_USE_SSL = True
-# EMAIL_HOST = 'outlook.office365.com'
-# EMAIL_PORT = 995
-# EMAIL_HOST_USER = 'synercoya@outlook.com'
-# EMAIL_HOST_PASSWORD = 'cirmi0-miMrej-pyptor'
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 # 用户账户管理
 # LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/notebook/'
+LOGIN_REDIRECT_URL = '/'

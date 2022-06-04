@@ -1,7 +1,11 @@
+/*
+    通用变量、函数
+*/
 const getCookie = (name) => document.cookie.match(`[;\s+]?${name}=([^;]*)`)?.pop();
 const csrftoken = getCookie('csrftoken');
+
 /* 
-wangeditor 相关 
+    wangeditor 相关 
 */
 const { createEditor } = window.wangEditor
 //编辑器配置
@@ -16,8 +20,9 @@ const editor = createEditor({
 })
 
 /*
-切换置顶状态、待编辑状态
+    页面功能
 */
+//切换置顶状态
 $("#switch_pintop").click(function (e) { 
     $.ajax({
         type: "post",
@@ -27,6 +32,7 @@ $("#switch_pintop").click(function (e) {
         headers:{'X-CSRFToken': csrftoken}
     });
 });
+//切换待编辑状态
 $("#switch_pending").click(function (e) { 
     $.ajax({
         type: "post",

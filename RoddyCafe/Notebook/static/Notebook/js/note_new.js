@@ -1,5 +1,10 @@
 /* 
-    wangeditor 相关 
+    通用变量、函数
+*/
+url_note_detail = "/notebook/note/note_id/"
+
+/*
+    wangeditor相关
 */
 const { createEditor, createToolbar } = window.wangEditor
 const getCookie = (name) => document.cookie.match(`[;\s+]?${name}=([^;]*)`)?.pop();
@@ -46,12 +51,9 @@ const toolbar = createToolbar({
     mode : 'default'
 })
 
-
-
 /*
     页面功能
 */
-
 //保存新笔记
 $('#save').click(function (e) {
     //自动产生title

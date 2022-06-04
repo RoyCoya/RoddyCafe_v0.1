@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
-{% block block_title %}新增笔记 | {{ directory.name }}{% endblock %}
+{% block title %}新增笔记 | {{ directory.name }}{% endblock %}
 
-{% block block_css %}
-<link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+{% block css %}
 <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
 <link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 {% endblock %}
 
-{% block block_content %}
+{% block content %}
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
@@ -33,20 +31,17 @@
 </div>
 
 <a href="#" class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: rgb(0, 124, 77);"></a>
+
 <form id="form_note" class="invisible" method="post">
     {% csrf_token %}
     <textarea name="note_content" id="note_content"></textarea>
 </form>
 {% endblock %}
 
-{% block block_js %}
-<script src="{% static '/jquery/jquery.min.js' %}"></script>
-<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+{% block js %}
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script>
-    /* Django tag传递数据用*/
     url_api_note_new_save = `{% url 'api_Notebook_directory_newNote' directory.id %}`
-    url_note_detail = "/notebook/note/note_id/"
     url_api_Notebook_userfile_upload_img = "{% url 'api_Notebook_userfile_upload_img' %}"
     url_api_Notebook_userfile_upload_video = "{% url 'api_Notebook_userfile_upload_video' %}"
 </script>
