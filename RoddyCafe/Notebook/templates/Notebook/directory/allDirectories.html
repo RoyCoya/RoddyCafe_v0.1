@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light ">
-                <a href="{% url 'Notebook_index' %}" class="col-2 text-start ps-2">
+                <a href="{% url 'Notebook_index_unedit_notes' %}" class="col-2 text-start ps-2">
                     <i class="text-success bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
                     <i class="text-success bi bi-house" style="font-size: 1.5rem;"></i>
                 </a>
@@ -66,7 +66,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new_save' 0 %}">
+                <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new' 0 %}">
                     {% csrf_token %}
                     <div class="col mb-3">
                         <label class="form-label"><span class="text-danger">*</span> 目录名</label>

@@ -9,7 +9,7 @@ from Notebook.models import *
 from .common import *
 
 # 新增笔记
-def api_note_new(request,directory_id):
+def new(request,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)
     user = request.user
@@ -26,7 +26,7 @@ def api_note_new(request,directory_id):
     return HttpResponse(new_note.id)
 
 # 删除笔记
-def api_note_delete(request,note_id):
+def delete(request,note_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     note_to_delete = note.objects.get(id=note_id)
     user = request.user
@@ -38,7 +38,7 @@ def api_note_delete(request,note_id):
     return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(dir.id,)))
 
 # 保存笔记编辑
-def api_note_edit(request,note_id):
+def edit(request,note_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     noteEdited = note.objects.get(id=note_id)
     user = request.user
@@ -50,7 +50,7 @@ def api_note_edit(request,note_id):
     return HttpResponse('编辑笔记成功')
 
 # 笔记更换目录
-def api_note_change_directory(request,note_id,directory_id):
+def move(request,note_id,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     note_to_move = note.objects.get(id=note_id)
     user = request.user
@@ -63,7 +63,7 @@ def api_note_change_directory(request,note_id,directory_id):
     return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory_id,)))
 
 # 笔记切换置顶状态
-def api_note_switch_pintop(request,note_id):
+def switch_pintop(request,note_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     note_to_set_pin = note.objects.get(id=note_id)
     user = request.user
@@ -75,7 +75,7 @@ def api_note_switch_pintop(request,note_id):
     return HttpResponse("笔记置顶成功")
 
 # 笔记切换待编辑状态
-def api_note_switch_pending(request,note_id):
+def switch_pending(request,note_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     note_to_set_pending = note.objects.get(id=note_id)
     user = request.user

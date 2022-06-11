@@ -17,7 +17,7 @@ const editorConfig = {
 }
 editorConfig.MENU_CONF['uploadImage'] = {
     // 上传图片的配置
-    server : url_api_Notebook_userfile_upload_img,
+    server : url_api_Notebook_wangeditor_upload_img,
     fieldName: 'img_uploaded',
     headers: {
         'X-CSRFToken': csrftoken
@@ -26,7 +26,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
 }
 editorConfig.MENU_CONF['uploadVideo'] = {
     //上传视频的配置
-    server : url_api_Notebook_userfile_upload_video,
+    server : url_api_Notebook_wangeditor_upload_video,
     fieldName: 'video_uploaded',
     maxFileSize: 200 * 1024 * 1024, 
     maxNumberOfFiles: 10,

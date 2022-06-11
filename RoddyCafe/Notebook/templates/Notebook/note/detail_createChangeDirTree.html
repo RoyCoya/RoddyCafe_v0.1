@@ -1,6 +1,6 @@
 {% if dir.first_child %}
     <div class="list-group-item list-group-item-action d-flex justify-content-between" style="border-color: rgb(0, 124, 77);">
-        <a href="{% url 'api_Notebook_note_change_directory' note.id dir.id %}" class="col-11">
+        <a href="{% url 'api_Notebook_note_move' note.id dir.id %}" class="col-11">
             <i class="bi bi-journal-text"></i> {{ dir.name }}
         </a>
         <a href="#groupOfDir{{dir.id}}" data-bs-toggle="collapse" class=" bi bi-caret-down-fill"></a>
@@ -10,7 +10,7 @@
     </ul>
 {% else %}
     <div class="list-group-item list-group-item-action d-flex justify-content-between" style="border-color: rgb(0, 124, 77);">
-        <a href="{% url 'api_Notebook_note_change_directory' note.id dir.id %}" class="col-12">
+        <a href="{% url 'api_Notebook_note_move' note.id dir.id %}" class="col-12">
             <i class="bi bi-journal-text"></i> {{ dir.name }}
         </a>
     </div>

@@ -9,7 +9,7 @@ from Notebook.models import *
 from .common import *
 
 # 新增目录
-def api_directory_new_save(request, directory_id):
+def new(request, directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
     new_directory = directory(
@@ -65,7 +65,7 @@ def api_directory_new_save(request, directory_id):
         return HttpResponseRedirect(reverse('Notebook_directory'))
 
 # 删除目录
-def api_directory_delete(request,directory_id):
+def delete(request,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)
     user = request.user
@@ -94,7 +94,7 @@ def api_directory_delete(request,directory_id):
     return HttpResponseRedirect(reverse('Notebook_directory'))
 
 # 目录移动位置
-def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_first_child):
+def move(request,dir_to_move_id,parent_id,child_id,is_first_child):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir_to_move = directory.objects.get(id=dir_to_move_id)
     user = request.user
@@ -138,7 +138,7 @@ def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_f
     return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(dir_to_move_id,)))
 
 # 目录更改描述
-def api_directory_change_discription(request,directory_id):
+def edit_discription(request,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     user = request.user
     dir = directory.objects.get(id=directory_id)

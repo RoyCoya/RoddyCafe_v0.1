@@ -44,8 +44,8 @@
     var note_content = `{{ note.content|escape }}`
     var url_api_note_save = "{% url 'api_Notebook_note_save' note.id  %}"
     var url_note_detail = "{% url 'Notebook_note_detail' note.id %}"
-    url_api_Notebook_userfile_upload_img = "{% url 'api_Notebook_userfile_upload_img' %}"
-    url_api_Notebook_userfile_upload_video = "{% url 'api_Notebook_userfile_upload_video' %}"
+    url_api_Notebook_wangeditor_upload_img = "{% url 'api_Notebook_wangeditor_upload_img' %}"
+    url_api_Notebook_wangeditor_upload_video = "{% url 'api_Notebook_wangeditor_upload_video' %}"
 </script>
 <script src="{% static '/Notebook/js/note_edit.js' %}"></script>
 {% endblock %}

@@ -154,7 +154,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">修改目录描述</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{% url 'api_Notebook_directory_change_discription' directory.id %}" method="post">
+            <form action="{% url 'api_Notebook_directory_edit_discription' directory.id %}" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="col mb-3">
@@ -198,7 +198,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
                 <div class="container">
-                    <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new_save' directory.id %}">
+                    <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new' directory.id %}">
                         {% csrf_token %}
                         <div class="modal-body">
                             <div class="col mb-3">
@@ -260,7 +260,7 @@
                                                 {% include 'Notebook/directory/notelist_move_dir.html' with dir=dir_to_move.next_brother %}
                                             {% endif %}
                                         {% else %}
-                                            <a href="{% url 'api_Notebook_move_directory' dir_to_move.id root_dir.id dir.id 0 %}" class="list-group-item list-group-item-action d-flex justify-content-start move-dir" style="height: 18px;">
+                                            <a href="{% url 'api_Notebook_directory_move' dir_to_move.id root_dir.id dir.id 0 %}" class="list-group-item list-group-item-action d-flex justify-content-start move-dir" style="height: 18px;">
                                                 <i class="bi bi-arrow-bar-right align-self-center" style="font-size: 0.75rem;"></i>
                                             </a>
                                             {% include 'Notebook/directory/notelist_move_dir.html' with dir=dir dir_to_move=directory %}

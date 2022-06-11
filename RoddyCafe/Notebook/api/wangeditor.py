@@ -9,7 +9,7 @@ from Notebook.models import *
 from .common import is_login
 
 # wangeditor上传图片
-def api_userfile_upload_img(request):
+def upload_img(request):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     
     fileUploaded = File(request.FILES.get('img_uploaded'))
@@ -25,7 +25,7 @@ def api_userfile_upload_img(request):
     )
 
 # wangeditor上传视频
-def api_userfile_upload_video(request):
+def upload_video(request):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
     fileUploaded = File(request.FILES.get('video_uploaded'))

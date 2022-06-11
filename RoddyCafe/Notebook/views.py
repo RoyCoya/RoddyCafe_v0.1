@@ -1,38 +1,33 @@
-import imp
-
-
-from Notebook.api import note, directory, wangeditor
-from Notebook.page import pages
+from Notebook.api import note as api_note, directory as api_directory, wangeditor as api_wangeditor
+from Notebook.page import index as page_index, note as page_note, directory as page_directory
 
 '''页面'''
 # 主页
-def index(request): return pages.index(request)
+def index_unedit_notes(request): return page_index.unedit_notes(request)
 
 # 目录
-def all_directory(request): return pages.all_directory(request)
-def directory_notelist(request,directory_id): return pages.directory_notelist(request,directory_id)
-
+def all_directory(request): return page_directory.all(request)
+def directory_notelist(request,directory_id): return page_directory.notelist(request,directory_id)
 # 笔记
-def note_detail(request,note_id): return pages.note_detail(request,note_id)
-def note_edit(request,note_id): return pages.note_edit(request,note_id)
-def note_new(request,directory_id): return pages.note_new(request,directory_id)
+def note_new(request,directory_id): return page_note.new(request,directory_id)
+def note_detail(request,note_id): return page_note.detail(request,note_id)
+def note_edit(request,note_id): return page_note.edit(request,note_id)
 
 '''接口'''
-
 # 目录
-def api_directory_new_save(request, directory_id): return directory.api_directory_new_save(request, directory_id)
-def api_directory_delete(request,directory_id): return directory.api_directory_delete(request,directory_id)
-def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_first_child): return directory.api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_first_child)
-def api_directory_change_discription(request,directory_id): return directory.api_directory_change_discription(request,directory_id)
+def api_directory_new(request, directory_id): return api_directory.new(request, directory_id)
+def api_directory_delete(request,directory_id): return api_directory.delete(request,directory_id)
+def api_directory_move(request,dir_to_move_id,parent_id,child_id,is_first_child): return api_directory.move(request,dir_to_move_id,parent_id,child_id,is_first_child)
+def api_directory_edit_discription(request,directory_id): return api_directory.edit_discription(request,directory_id)
 
 # 笔记
-def api_note_new(request,directory_id): return note.api_note_new(request,directory_id)
-def api_note_delete(request,note_id): return note.api_note_delete(request,note_id)
-def api_note_edit(request,note_id): return note.api_note_edit(request,note_id)
-def api_note_change_directory(request,note_id,directory_id): return note.api_note_change_directory(request,note_id,directory_id)
-def api_note_switch_pintop(request,note_id): return note.api_note_switch_pintop(request,note_id)
-def api_note_switch_pending(request,note_id): return note.api_note_switch_pending(request,note_id)
+def api_note_new(request,directory_id): return api_note.new(request,directory_id)
+def api_note_delete(request,note_id): return api_note.delete(request,note_id)
+def api_note_edit(request,note_id): return api_note.edit(request,note_id)
+def api_note_move(request,note_id,directory_id): return api_note.move(request,note_id,directory_id)
+def api_note_switch_pintop(request,note_id): return api_note.switch_pintop(request,note_id)
+def api_note_switch_pending(request,note_id): return api_note.switch_pending(request,note_id)
 
 # wangeditor
-def api_userfile_upload_img(request): return wangeditor.api_userfile_upload_img(request)
-def api_userfile_upload_video(request): return wangeditor.api_userfile_upload_video(request)
+def api_wangeditor_upload_img(request): return api_wangeditor.upload_img(request)
+def api_wangeditor_upload_video(request): return api_wangeditor.upload_video(request)

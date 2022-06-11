@@ -1,25 +1,13 @@
-'''笔记本静态页面'''
-
-import imp
+from django.conf import settings
 from django.shortcuts import render,redirect
 from django.http import *
-from django.conf import settings
 from django.db.models import Q
 
 from Notebook.models import *
 from Notebook.api.common import *
 
-# 主页
-def index(request):
-    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    notes_to_edit = note.objects.filter(isPending=True,directory__user=request.user)
-    context = {
-        'notes_to_edit':notes_to_edit
-    }
-    return render(request,'Notebook/index.html',context)
-
-# 目录->所有目录
-def all_directory(request):
+# 所有目录
+def all(request):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dirs = directory.objects.filter(user=request.user)
     root_dir = dirs[0]
@@ -28,8 +16,8 @@ def all_directory(request):
     }
     return render(request,'Notebook/directory/allDirectories.html',context)
 
-# 目录->目录内笔记列表详情
-def directory_notelist(request,directory_id):
+# 目录内笔记列表详情
+def notelist(request,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)
     user = request.user
@@ -75,43 +63,3 @@ def directory_notelist(request,directory_id):
         'root_dir': root_dir
     }
     return render(request,'Notebook/directory/notelist.html',context)
-
-# 笔记详情
-def note_detail(request,note_id):
-    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    user = request.user
-    noteToView = note.objects.get(id=note_id)
-    if user != noteToView.user: return HttpResponseForbidden('您无权查看该笔记')
-
-    dirs = directory.objects.filter(user=request.user)
-    root_dir = dirs[0]
-    
-    context = {
-        'note' : noteToView,
-        'root_dir':root_dir,
-    }
-    return render(request,'Notebook/note/detail.html',context)
-
-# 笔记->编辑
-def note_edit(request,note_id):
-    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    noteToEdit = note.objects.get(id=note_id)
-    user = request.user
-    if user != noteToEdit.user: return HttpResponseForbidden('您无权操作该笔记')
-    
-    context = {
-        'note' : noteToEdit
-    }
-    return render(request,'Notebook/note/edit.html',context)
-
-# 笔记->新增
-def note_new(request,directory_id):
-    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    user = request.user
-    dir = directory.objects.get(id=directory_id)
-    if user != dir.user: return HttpResponseForbidden('您无权在此目录中新增笔记')
-    
-    context = {
-        'directory':dir
-    }
-    return render(request,'Notebook/directory/newNote.html',context)
