@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.http import *
 
 from Notebook.models import *
-from .common import is_login
+from CafeFrame.api.common import is_login
 
 # wangeditor上传图片
 def upload_img(request):

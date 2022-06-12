@@ -6,7 +6,7 @@ from django.conf import settings
 from django.urls import reverse
 
 from Notebook.models import *
-from .common import *
+from CafeFrame.api.common import is_login
 
 # 新增笔记
 def new(request,directory_id):

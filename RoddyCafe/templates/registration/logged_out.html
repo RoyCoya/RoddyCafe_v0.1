@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "cafe.html" %}
 {% load static %}
 {% block title %}退出登录{% endblock %}
 
@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         <div class="alert alert-success" role="alert">
-            已退出，<a href="{% url 'RoddyCafe_index' %}">点击返回主页</a>
+            已退出，<a href="{% url 'RoddyCafe_entrance' %}">点击返回主页</a>
         </div>
     </div>
 </div>

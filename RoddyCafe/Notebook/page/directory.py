@@ -4,7 +4,7 @@ from django.http import *
 from django.db.models import Q
 
 from Notebook.models import *
-from Notebook.api.common import *
+from CafeFrame.api.common import is_login
 
 # 所有目录
 def all(request):

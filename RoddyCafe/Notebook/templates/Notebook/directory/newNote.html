@@ -1,13 +1,14 @@
-{% extends "base.html" %}
+{% extends "Notebook/base.html" %}
 {% load static %}
-{% block title %}新增笔记 | {{ directory.name }}{% endblock %}
 
-{% block css %}
+{% block title_notebook %}新增笔记 | 目录：{{ directory.name }}{% endblock title_notebook %}
+
+{% block css_notebook %}
 <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
 <link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
-{% endblock %}
+{% endblock css_notebook %}
 
-{% block content %}
+{% block content_notebook %}
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
@@ -36,9 +37,9 @@
     {% csrf_token %}
     <textarea name="note_content" id="note_content"></textarea>
 </form>
-{% endblock %}
+{% endblock content_notebook %}
 
-{% block js %}
+{% block js_notebook %}
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script>
     url_api_note_new_save = `{% url 'api_Notebook_note_new' directory.id %}`
@@ -46,4 +47,4 @@
     url_api_Notebook_wangeditor_upload_video = "{% url 'api_Notebook_wangeditor_upload_video' %}"
 </script>
 <script src="{% static '/Notebook/js/note_new.js' %}"></script>
-{% endblock %}
+{% endblock js_notebook %}

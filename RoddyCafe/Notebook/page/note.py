@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import *
 
 from Notebook.models import *
-from Notebook.api.common import *
+from CafeFrame.api.common import is_login
 
 # 笔记详情
 def detail(request,note_id):

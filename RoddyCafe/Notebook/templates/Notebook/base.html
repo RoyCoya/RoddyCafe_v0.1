@@ -1,0 +1,21 @@
+{% extends "employee_room.html" %}
+{% load static %}
+
+{% block title %}
+{% block title_notebook %}{% endblock title_notebook %} | 笔记库
+{% endblock title %}
+
+{% block css_employee_room %}
+<link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
+{% block css_notebook %}{% endblock css_notebook %}
+{% endblock css_employee_room %}
+
+{% block content_employee_room %}
+{% block content_notebook %}{% endblock content_notebook %}
+{% endblock content_employee_room %}
+
+{% block js_employee_room %}
+{% block js_notebook %}{% endblock js_notebook %}
+{% endblock js_employee_room %}
+
+{% block active_notebook %}text-success{% endblock active_notebook %}

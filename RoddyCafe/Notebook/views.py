@@ -3,7 +3,7 @@ from Notebook.page import index as page_index, note as page_note, directory as p
 
 '''页面'''
 # 主页
-def index_unedit_notes(request): return page_index.unedit_notes(request)
+def index_homepage(request): return page_index.homepage(request)
 
 # 目录
 def all_directory(request): return page_directory.all(request)

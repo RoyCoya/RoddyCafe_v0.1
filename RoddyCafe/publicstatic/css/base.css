@@ -1,0 +1,2 @@
+/* 调低bootstrap warning颜色的对比度 */
+.text-warning{ color: rgba(255, 153, 0)!important;}

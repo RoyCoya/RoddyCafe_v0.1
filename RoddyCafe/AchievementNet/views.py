@@ -1,7 +1,3 @@
-import imp
-from django.shortcuts import render
-from django.http import HttpResponse
+from AchievementNet.page import index
 
-# Create your views here.
-def index(request):
-    return HttpResponse('Achivement Net index')
+def profile(request): return index.profile(request)

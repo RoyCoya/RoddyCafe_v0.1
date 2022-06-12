@@ -1,22 +1,22 @@
-{% extends "base.html" %}
+{% extends "Notebook/base.html" %}
 {% load static %}
-{% block title %}总目录{% endblock %}
 
-{% block css %}
-<link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
+{% block title_notebook %}总目录{% endblock title_notebook %}
+
+{% block css_notebook %}
 <style>
     .choosed-postion{color:white;background-color: rgb(0, 124, 77);}
     .choosed-postion i{color:white;background-color: rgb(0, 124, 77);}
 </style>
-{% endblock %}
+{% endblock css_notebook %}
 
-{% block content %}
+{% block content_notebook %}
 <!-- 顶部工具栏 -->
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light ">
-                <a href="{% url 'Notebook_index_unedit_notes' %}" class="col-2 text-start ps-2">
+                <a href="{% url 'Notebook_homepage' %}" class="col-2 text-start ps-2">
                     <i class="text-success bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
                     <i class="text-success bi bi-house" style="font-size: 1.5rem;"></i>
                 </a>
@@ -117,8 +117,8 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock content_notebook %}
 
-{% block js%}
+{% block js_notebook %}
 <script src="{% static '/Notebook/js/directory_new.js' %}"></script>
-{% endblock %}
+{% endblock js_notebook %}

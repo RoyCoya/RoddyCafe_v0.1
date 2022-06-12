@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,,user-scalable=no">
-    <title>{% block title %}{% endblock %} | Roy's Cafe</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>{% block title %}{% endblock title %} | Roy's Cafe</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static '/img/apple_icon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static '/img/apple_icon.ico' %}" type="image/x-icon">
@@ -11,15 +12,16 @@
     <!--css导入区-->
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static '/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static '/css/base.css' %}">
     {% block css %}
-    {% endblock %}
+    {% endblock css %}
     <!--/css导入区-->
 </head>
 <body class="bg-light">
 
     <!--正文区-->
     {% block content %}
-    {% endblock %}
+    {% endblock content %}
     <!--/正文区-->
 
     <!--JS导入区-->
@@ -27,7 +29,7 @@
     <script src="{% static '/bootstrap/js/popover.js' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
     {% block js %}
-    {% endblock %}
+    {% endblock js %}
     <!--/JS导入区-->
 </body>
 </html>

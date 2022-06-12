@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/css/employee_room.css' %}">
+{% block css_employee_room %}{% endblock css_employee_room %}
+{% endblock css %}
+
+{% block content %}
+<div class="mb-5 pb-5">
+    {% block content_employee_room %}{% endblock content_employee_room %}
+</div>
+
+<!-- 底部tab栏 -->
+<div class="fixed-bottom row bg-light border-top py-2">
+    <a href="{% url 'LifeStream_homepage' %}" class="col-3 text-center {% block active_life_stream %}text-secondary{% endblock active_life_stream %}">
+        <span class="bi bi-heart-pulse" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>生命线</small></small>
+    </a>
+    <a href="#" class="col-3 text-center {% block active_project_board %}text-secondary{% endblock active_project_board %}">
+        <span class="bi bi-briefcase" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>计划与项目</small></small>
+    </a>
+    <a href="{% url 'Notebook_homepage' %}" class="col-3 text-center {% block active_notebook %}text-secondary{% endblock active_notebook %}">
+        <span class="bi bi-journals" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>笔记库</small></small>
+    </a>
+    <a href="{% url 'AchievementNet_profile' %}" class="col-3 text-center {% block active_achievement_net %}text-secondary{% endblock active_achievement_net %}">
+        <span class="bi bi-person-circle" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>我的</small></small>
+    </a>
+</div>
+{% endblock content %}
+
+{% block js %}
+{% block js_employee_room %}{% endblock js_employee_room %}
+{% endblock js %}

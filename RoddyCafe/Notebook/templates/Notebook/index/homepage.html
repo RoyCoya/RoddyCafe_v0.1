@@ -1,12 +1,8 @@
-{% extends "base.html" %}
+{% extends "Notebook/base.html" %}
 {% load static %}
-{% block title %}笔记库{% endblock %}
+{% block title_notebook %}主页{% endblock title_notebook%}
 
-{% block css %}
-<link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
-{% endblock %}
-
-{% block content %}
+{% block content_notebook %}
 <div class="container mt-3">
     <div class="row text-center">
         <h2>笔记库</h2>
@@ -15,10 +11,6 @@
         <div class="col">
             <i class="bi bi-inboxes text-success"></i>
             <a class="text-success" href="{% url 'Notebook_directory' %}">总目录</a>
-        </div>
-        <div class="col text-end">
-            <i class="bi bi-person-x text-success"></i>
-            <a href="{% url 'logout' %}">退出登录</a>
         </div>
     </div>
     <br>
@@ -31,4 +23,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock content_notebook %}

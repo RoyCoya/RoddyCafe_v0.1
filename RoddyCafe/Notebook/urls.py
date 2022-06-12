@@ -5,7 +5,7 @@ from . import views
 '''页面'''
 pages = [
 	# 目录
-	path('', views.index_unedit_notes, name='Notebook_index_unedit_notes'),
+	path('', views.index_homepage, name='Notebook_homepage'),
 	path('directory/', views.all_directory, name='Notebook_directory'),
 	path('directory/<int:directory_id>/', views.directory_notelist, name='Notebook_directory_notelist'),
 	# 笔记

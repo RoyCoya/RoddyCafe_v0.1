@@ -5,8 +5,9 @@ from django.shortcuts import redirect
 from django.http import *
 from django.urls import reverse
 
+from CafeFrame.api.common import is_login
 from Notebook.models import *
-from .common import *
+from Notebook.api.common import func_getDirsToDelete_list
 
 # 新增目录
 def new(request, directory_id):
@@ -65,6 +66,7 @@ def new(request, directory_id):
         return HttpResponseRedirect(reverse('Notebook_directory'))
 
 # 删除目录
+# TODO:删除后跳转至父目录（非数据结构的父节点）
 def delete(request,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)

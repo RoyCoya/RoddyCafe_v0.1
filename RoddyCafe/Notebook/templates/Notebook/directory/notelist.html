@@ -1,17 +1,17 @@
-{% extends "base.html" %}
+{% extends "Notebook/base.html" %}
 {% load static %}
-{% block title %}{{ directory.name }} | 目录{% endblock %}
 
-{% block css %}
+{% block title_notebook %}目录：{{ directory.name }}{% endblock title_notebook %}
+
+{% block css_notebook %}
 <link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 <style>
     .choosed-postion{color:white;background-color: rgb(0, 124, 77);}
     .choosed-postion i{color:white;background-color: rgb(0, 124, 77);}
 </style>
-{% endblock %}
+{% endblock css_notebook %}
 
-{% block content %}
-
+{% block content_notebook %}
 <!-- 顶部工具栏 -->
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
@@ -289,9 +289,9 @@
     </nav>
 </div>
 
-{% endblock %}
+{% endblock content_notebook %}
 
-{% block js%}
+{% block js_notebook %}
 <script src="{% static '/Notebook/js/directory_change_position.js' %}"></script>
 <script src="{% static '/Notebook/js/directory_new.js' %}"></script>
-{% endblock %}
+{% endblock js_notebook %}

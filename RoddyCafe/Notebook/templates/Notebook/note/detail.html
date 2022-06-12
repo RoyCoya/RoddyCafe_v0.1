@@ -1,17 +1,18 @@
-{% extends "base.html" %}
+{% extends "Notebook/base.html" %}
 {% load static %}
-{% block title %}{{ note.title }}{% endblock %} | 笔记
 
-{% block css %}
+{% block title_notebook %}笔记：{{ note.title }}{% endblock title_notebook %}
+
+{% block css_notebook %}
 <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
 <link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 <style>
     :focus-visible{outline: none;}
     #editor_container a{text-decoration: underline;}
 </style>
-{% endblock %}
+{% endblock css_notebook %}
 
-{% block content %}
+{% block content_notebook %}
 <!-- 顶栏 -->
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
@@ -140,14 +141,14 @@
     </div>
 </div>
 
-{% endblock %}
+{% endblock content_notebook %}
 
-{% block js %}
-<script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
+{% block js_notebook %}
 <script>
     note_content = `{{note.content|escape}}`
     url_api_note_switch_pintop = "{% url 'api_Notebook_note_switch_pintop' note.id %}"
     url_api_note_switch_pending = "{% url 'api_Notebook_note_switch_pending' note.id %}"
 </script>
+<script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script src="{% static '/Notebook/js/note_detail.js' %}"></script>
-{% endblock %}
+{% endblock js_notebook %}
