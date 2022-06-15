@@ -51,10 +51,25 @@ const toolbar = createToolbar({
     页面功能
 */
 //保存笔记修改
-$('#save').click(function (e) { 
+$('#save').click(function (e) {
+    //自动产生title
+    var titlePriorityCheckList = []
+    titlePriorityCheckList.push($($('#note_content').val()).filter('p').first().text().substr(0,15))
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h5').first().text())
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h4').first().text())
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h3').first().text())
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h2').first().text())
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h1').first().text())
+    finalTitle = '未命名笔记'
+    $.each(titlePriorityCheckList, function (index, value) { 
+         if (value != '') finalTitle = value;
+    });
+    //组装post内容
+    var postData = $('#form_note').serializeArray()
+    postData.push({'name': 'note_title','value':finalTitle})
     $.post(
         url_api_note_save,
-        $('#form_note').serializeArray(),
+        postData,
         function () {
             window.location.replace(url_note_detail);
         },

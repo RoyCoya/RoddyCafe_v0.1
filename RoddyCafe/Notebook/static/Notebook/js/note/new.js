@@ -68,7 +68,6 @@ $('#save').click(function (e) {
     $.each(titlePriorityCheckList, function (index, value) { 
          if (value != '') finalTitle = value;
     });
-    console.log(finalTitle)
     //组装post内容
     var postData = $('#form_note').serializeArray()
     postData.push({'name': 'note_title','value':finalTitle})

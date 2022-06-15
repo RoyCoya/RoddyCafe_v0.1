@@ -44,6 +44,7 @@ def edit(request,note_id):
     user = request.user
     if user != noteEdited.user: return HttpResponseForbidden('您无权编辑此笔记')
 
+    noteEdited.title = request.POST['note_title']
     noteEdited.content = request.POST['note_content_edited']
     noteEdited.save()
     
