@@ -42,7 +42,10 @@ def specific(request,directory_id):
         except Exception as e:
             break
     parents_directories.reverse()
-    print(parents_directories)
+    #如果不存在父目录（当前进入的是用户根目录）则跳转至总目录
+    if not parents_directories:
+        return all(request)
+    
     #拉取所有子目录（子目录列表）
     try:
         dir_temp = dir
