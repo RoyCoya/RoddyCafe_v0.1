@@ -1,0 +1,28 @@
+{% extends "Notebook/base.html" %}
+{% load static %}
+
+{% block title_notebook %}笔记：{{ note.title }}{% endblock title_notebook %}
+
+{% block css_notebook %}
+<link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
+<link rel="stylesheet" href="{% static '/Notebook/css/note/note.css' %}">
+{% endblock css_notebook %}
+
+{% block content_notebook %}
+
+<!-- 顶部工具栏 -->
+{% include 'Notebook/note/headbar/headbar.html' %}
+
+<!-- 笔记内容 -->
+<div id="editor_container" class="container shadow"></div>
+{% endblock content_notebook %}
+
+{% block js_notebook %}
+<script>
+    note_content = `{{note.content|escape}}`
+    url_api_note_switch_pintop = "{% url 'api_Notebook_note_switch_pintop' note.id %}"
+    url_api_note_switch_pending = "{% url 'api_Notebook_note_switch_pending' note.id %}"
+</script>
+<script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
+<script src="{% static '/Notebook/js/note/note.js' %}"></script>
+{% endblock js_notebook %}

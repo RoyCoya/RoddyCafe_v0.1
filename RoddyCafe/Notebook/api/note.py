@@ -35,7 +35,7 @@ def delete(request,note_id):
     note_to_delete.delete()
     
     dir = note_to_delete.directory
-    return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(dir.id,)))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(dir.id,)))
 
 # 保存笔记编辑
 def edit(request,note_id):
@@ -60,7 +60,7 @@ def move(request,note_id,directory_id):
     note_to_move.directory = target_directory
     note_to_move.save()
 
-    return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory_id,)))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(directory_id,)))
 
 # 笔记切换置顶状态
 def switch_pintop(request,note_id):

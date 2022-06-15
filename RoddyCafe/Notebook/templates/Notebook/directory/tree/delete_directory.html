@@ -1,0 +1,18 @@
+<!-- 需传入当前目录directory -->
+<div class="modal fade" id="modal_delete_confirm" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">确认删除？</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                所有子目录和笔记都将被删除。
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger" href="{% url 'api_Notebook_directory_delete' directory.id %}">确认</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

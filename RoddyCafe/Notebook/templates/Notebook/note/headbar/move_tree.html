@@ -1,0 +1,5 @@
+<ul class="list-group list-group-flush">
+    {% with dir=root_dir.first_child %}
+        {% include 'Notebook/note/headbar/move_tree_item.html' with dir=dir %}
+    {% endwith%}
+</ul>

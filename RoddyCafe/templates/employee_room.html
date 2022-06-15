@@ -13,19 +13,23 @@
 
 <!-- 底部tab栏 -->
 <div class="fixed-bottom row bg-light border-top py-2">
-    <a href="{% url 'LifeStream_homepage' %}" class="col-3 text-center {% block active_life_stream %}text-secondary{% endblock active_life_stream %}">
+    <a href="{% block life_stream %}{% url 'LifeStream_homepage' %}{% endblock life_stream %}" 
+    class="col-3 text-center {% block life_stream_color %}text-secondary{% endblock life_stream_color %}">
         <span class="bi bi-heart-pulse" style="font-size:1.3rem"></span>
         <small class="d-block"><small>生命线</small></small>
     </a>
-    <a href="#" class="col-3 text-center {% block active_project_board %}text-secondary{% endblock active_project_board %}">
+    <a href="{% block project_board %}#{% endblock project_board %}" 
+    class="col-3 text-center {% block project_board_color %}text-secondary{% endblock project_board_color %}">
         <span class="bi bi-briefcase" style="font-size:1.3rem"></span>
         <small class="d-block"><small>计划与项目</small></small>
     </a>
-    <a href="{% url 'Notebook_homepage' %}" class="col-3 text-center {% block active_notebook %}text-secondary{% endblock active_notebook %}">
+    <a href="{% block notebook %}{% url 'Notebook_homepage' %}{% endblock notebook %}" 
+    class="col-3 text-center {% block notebook_color %}text-secondary{% endblock notebook_color %}">
         <span class="bi bi-journals" style="font-size:1.3rem"></span>
         <small class="d-block"><small>笔记库</small></small>
     </a>
-    <a href="{% url 'AchievementNet_profile' %}" class="col-3 text-center {% block active_achievement_net %}text-secondary{% endblock active_achievement_net %}">
+    <a href="{% block achievement_net %}{% url 'AchievementNet_profile' %}{% endblock achievement_net %}" 
+    class="col-3 text-center {% block achievement_net_color %}text-secondary{% endblock achievement_net_color %}">
         <span class="bi bi-person-circle" style="font-size:1.3rem"></span>
         <small class="d-block"><small>我的</small></small>
     </a>

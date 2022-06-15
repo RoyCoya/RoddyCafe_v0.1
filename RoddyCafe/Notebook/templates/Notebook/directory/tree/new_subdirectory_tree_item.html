@@ -3,11 +3,11 @@
 </div>
 {% if dir.next_brother %}
     <a id="insertDir_{{dir.id}}_{{dir.next_brother.id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 18px;">
-        <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
+        <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 新目录</span></i>
     </a>
-    {% include 'Notebook/directory/notelist_new_subdir_tree.html' with dir=dir.next_brother %}
+    {% include 'Notebook/directory/tree/new_subdirectory_tree_item.html' with dir=dir.next_brother %}
 {% else %}
     <a id="insertDir_{{dir.id}}__right" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 18px;">
-        <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 在此处添加新目录</span></i>
+        <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 新目录</span></i>
     </a>
 {% endif %}

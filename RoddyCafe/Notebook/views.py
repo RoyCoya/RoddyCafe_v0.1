@@ -6,8 +6,8 @@ from Notebook.page import index as page_index, note as page_note, directory as p
 def index_homepage(request): return page_index.homepage(request)
 
 # 目录
-def all_directory(request): return page_directory.all(request)
-def directory_notelist(request,directory_id): return page_directory.notelist(request,directory_id)
+def directory_all(request): return page_directory.all(request)
+def directory_specific(request,directory_id): return page_directory.specific(request,directory_id)
 # 笔记
 def note_new(request,directory_id): return page_note.new(request,directory_id)
 def note_detail(request,note_id): return page_note.detail(request,note_id)

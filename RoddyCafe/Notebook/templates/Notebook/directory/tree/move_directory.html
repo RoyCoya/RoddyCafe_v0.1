@@ -1,0 +1,14 @@
+<!-- 需传入当前目录directory -->
+<div class="modal fade" id="modal_move_directory" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel">移动《{{directory.name}}》至：<span class="bi-arrow-bar-right"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'Notebook/directory/tree/move_directory_tree.html' %}
+            </div>
+        </div>
+    </div>
+</div>

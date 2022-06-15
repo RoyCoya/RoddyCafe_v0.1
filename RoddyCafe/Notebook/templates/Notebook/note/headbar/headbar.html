@@ -1,28 +1,15 @@
-{% extends "Notebook/base.html" %}
-{% load static %}
-
-{% block title_notebook %}笔记：{{ note.title }}{% endblock title_notebook %}
-
-{% block css_notebook %}
-<link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
-<link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
-<style>
-    :focus-visible{outline: none;}
-    #editor_container a{text-decoration: underline;}
-</style>
-{% endblock css_notebook %}
-
-{% block content_notebook %}
-<!-- 顶栏 -->
+<!-- 顶部工具栏 -->
 <div class="sticky-top bg-light border-bottom">
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light ">
-                <a href="{% url 'Notebook_directory_notelist' note.directory.id%}" class="col-2 text-start ps-2">
-                    <i class="text-success bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
-                    <i class="text-success bi bi-journal-text" style="font-size: 1.5rem;"></i>
+                <a href="{% url 'Notebook_directory_specific' note.directory.id%}" class="col-2 text-start ps-2">
+                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                 </a>
-                <span class="col-8 h5 text-center" style="margin: 0px;">笔记详情</span>
+                <span class="col-8 h5 text-center" style="margin: 0px;">
+                    <i class="text-success bi bi-file-earmark-richtext" style="font-size: 1.3rem;"></i>
+                    {{note.title}}
+                </span>
                 <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-2 text-end pe-2">
                     <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
                 </a>
@@ -31,9 +18,7 @@
     </div>
 </div>
 
-<div id="editor_container" class="container"></div>
-
-<!-- 工具栏 -->
+<!-- 弹出式设置面板 -->
 <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
     <div class="offcanvas-header row border-bottom d-flex justify-content-between">
         <h4 class="offcanvas-title col-10" id="toolbarBottomLabel"><i class="bi bi-file-earmark-richtext text-success"></i> {{ note.title }}</h4>
@@ -95,60 +80,8 @@
     </div>
 </div>
 
-<!-- 删除确认 -->
-<div class="modal fade" id="deleteConfirm" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">确认删除？</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                删除的笔记将在回收站中保留30天（注：还没做这个功能，删了就是真删了）。
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-danger" href="{% url 'api_Notebook_note_delete' note.id %}">确认</a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 更换目录 -->
-<div class="modal fade" id="modal_change_directory" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">移动笔记至：</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row mt-3">
-                        <div class="col">
-                            <ul class="list-group list-group-flush">
-                                {% if root_dir.first_child %}
-                                    {% with dir=root_dir.first_child %}
-                                        {% include 'Notebook/note/detail_createChangeDirTree.html' with dir=dir %}
-                                    {% endwith%}
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-{% endblock content_notebook %}
-
-{% block js_notebook %}
-<script>
-    note_content = `{{note.content|escape}}`
-    url_api_note_switch_pintop = "{% url 'api_Notebook_note_switch_pintop' note.id %}"
-    url_api_note_switch_pending = "{% url 'api_Notebook_note_switch_pending' note.id %}"
-</script>
-<script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
-<script src="{% static '/Notebook/js/note_detail.js' %}"></script>
-{% endblock js_notebook %}
+<!-- 编辑笔记：没有弹窗，直接跳转新页面edit.html -->
+<!-- 移动笔记 -->
+{% include 'Notebook/note/headbar/move.html' %}
+<!-- 删除笔记 -->
+{% include 'Notebook/note/headbar/delete.html' %}

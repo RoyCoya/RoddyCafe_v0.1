@@ -5,7 +5,6 @@
 
 {% block css_notebook %}
 <link rel="stylesheet" href="{% static '/wangeditor/wangeditor.min.css' %}">
-<link rel="stylesheet" href="{% static '/Notebook/css/notebook_theme.css' %}">
 {% endblock css_notebook %}
 
 {% block content_notebook %}
@@ -14,10 +13,12 @@
         <div class="row">
             <nav class="navbar navbar-light">
                 <a href="{% url 'Notebook_note_detail' note.id %}" class="col-2 text-start ps-2">
-                    <i class="text-success bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
-                    <i class="text-success bi bi-file-earmark-richtext" style="font-size: 1.5rem;"></i>
+                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                 </a>
-                <span class="col-8 h5 text-center text-success" style="margin: 0px;">编辑：{{ note.title }}</span>
+                <span class="col-8 h5 text-center" style="margin: 0px;">
+                    <i class="text-success bi bi-pencil-square" style="font-size: 1.3rem;"></i>
+                    {{ note.title }}
+                </span>
                 <a id="save" href="#" class="col-2 text-end pe-2">
                     <i class="text-success bi bi-check-circle" style="font-size: 1.5rem;"></i>
                 </a>
@@ -30,8 +31,6 @@
 <div>
     <div id="editor_container" class="container" style="min-height: 58px;border-bottom: 1px dotted rgb(0, 124, 77);"></div>
 </div>
-
-<i class="bi bi-arrow-up-circle-fill" style="position: fixed;bottom: 5%;right: 5%;font-size: 2rem; color: cornflowerblue;"></i>
 
 <form id="form_note" class="invisible" method="post" style="height: 50%;">
     {% csrf_token %}
@@ -48,5 +47,11 @@
     url_api_Notebook_wangeditor_upload_img = "{% url 'api_Notebook_wangeditor_upload_img' %}"
     url_api_Notebook_wangeditor_upload_video = "{% url 'api_Notebook_wangeditor_upload_video' %}"
 </script>
-<script src="{% static '/Notebook/js/note_edit.js' %}"></script>
+<script src="{% static '/Notebook/js/note/edit.js' %}"></script>
 {% endblock js_notebook %}
+
+<!-- 编辑时禁用底部导航跳转 -->
+{% block life_stream %}#{% endblock life_stream %}
+{% block project_board %}#{% endblock project_board %}
+{% block notebook %}#{% endblock notebook %}
+{% block achievement_net %}#{% endblock achievement_net %}

@@ -1,0 +1,26 @@
+{% extends "Notebook/base.html" %}
+{% load static %}
+
+{% block title_notebook %}目录：{{ directory.name }}{% endblock title_notebook %}
+
+{% block css_notebook %}
+<link rel="stylesheet" href="{% static '/Notebook/css/directory/specific.css' %}">
+{% endblock css_notebook %}
+
+{% block content_notebook %}
+<!-- 
+    顶部工具栏（新增子目录、移动当前目录、更改视图、删除当前目录，以其其他当前目录的信息修改）
+    增移目录用到了目录树，需导入tree.js
+-->
+{% include 'Notebook/directory/specific/headbar/headbar.html' %}
+
+<!-- 导航与搜索 -->
+{% include 'Notebook/directory/specific/navigation/navigation.html' %}
+
+<!-- 子目录、笔记列表 -->
+{% include 'Notebook/directory/specific/subdirectory_and_note/subdirectory_and_note.html' %}
+{% endblock content_notebook %}
+
+{% block js_notebook %}
+<script src="{% static '/Notebook/js/directory/tree.js' %}"></script>
+{% endblock js_notebook %}
