@@ -1,0 +1,38 @@
+<!-- 需传入当前目录directory -->
+<div class="modal fade" id="modal_new_directory" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel">创建子目录</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="form_new_directory" method="post" action="{% url 'api_Notebook_directory_new' directory.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="col mb-3">
+                        <label class="form-label"><span class="text-danger">*</span> 目录名</label>
+                        <input id="form_new_directory_name" class="form-control" name="directory_name" type="text" maxlength="20" required>
+                    </div>
+                    <div class="col mb-3">
+                        <label class="form-label">目录描述 <i class="text-success bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="如《英文》目录的描述可以是：“包含语法、单词、习惯用语等内容”"></i></label>
+                        <input id="form_new_directory_discription" class="form-control" name="directory_discription" type="text" maxlength="200">
+                    </div>
+                    {% if directory.first_child %}
+                        <label class="form-label">
+                            <span class="text-danger">*</span>
+                            新目录位置（点击<i class="bi bi-plus align-self-center text-success"></i>确定插入点）:
+                            <span id="isFormFilled" class="text-light bg-danger">未选择插入点！</span>
+                        </label>
+                        {% include 'Notebook/directory/tree/new_subdirectory_tree.html' %}
+                    {% endif %}
+                    <input id="form_new_directory_position" type="hidden" name="directory_position" type="text" {% if directory.first_child %}required {% else %}value='insertDir_{{directory.id}}__left'{% endif %}>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" type="submit" href="#">确认</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

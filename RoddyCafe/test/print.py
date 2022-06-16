@@ -1,2 +1,2 @@
-print
-print(1)
+a=[]
+a.append(1,2,3)

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# Create your views here.
-def index(request):
-    return render(request,'CafeFrame/index.html')
+from CafeFrame.page import entrance as CafeEntrance
+
+# 咖啡屋门口
+def entrance(request): return CafeEntrance.doorway(request)

@@ -1,0 +1,2 @@
+/* 给只读模式的wangeditor中的a加上下划线 */
+#editor_container a{text-decoration: underline;}

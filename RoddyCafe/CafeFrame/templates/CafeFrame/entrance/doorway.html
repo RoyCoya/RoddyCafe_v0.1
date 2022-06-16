@@ -1,0 +1,32 @@
+{% extends "cafe.html" %}
+{% load static %}
+
+{% block title %}主页{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row text-center">
+        <h2>
+            拾心咖啡屋 Roy's Cafe
+        </h2>
+    </div>
+    <div class="row border-bottom border-top mt-2">
+        <img src="{% static '/CafeFrame/img/entrance/under_decoration.png' %}" class="img-fluid" />
+    </div>
+    <div class="row mt-2">
+        <p>欢迎光临。</p>
+        <p><small class="text-secondary">Welcome to <strong>Roy's Cafe</strong>.</small></p>
+        <p>本站点为哲予（<a href="mailto:larysing@outlook.com">larysing@outlook.com）</a>的个人站点，目前仅有部分功能供白名单用户使用，<a href="{% url 'LifeStream_homepage' %}">点击此处进入</a>。有任何问题请邮件联系。</p>
+        <p><small class="text-secondary">This is a personal blog site belonging to Roy Coya (<a href="mailto:larysing@outlook.com">larysing@outlook.com)</a>. It's still and will be building for a long time. However, there's a few tools and functions can be used already by ones in my whitelist. Got any questions, just send me a mail please.</small></p>
+    </div>
+</div>
+
+<div class="fixed-bottom border-top text-center bg-light">
+    <div class="text-secondary">
+        <small>版本：v0.2 develope</small>
+        <small class="ms-3">
+            备案号：<a href="https://beian.miit.gov.cn/">渝ICP备19014188号-1</a>
+        </small>
+    </div>
+</div>
+{% endblock %}

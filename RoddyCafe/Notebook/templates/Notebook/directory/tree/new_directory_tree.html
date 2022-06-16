@@ -1,0 +1,12 @@
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <ul class="list-group list-group-flush">
+            {% with dir=root_dir.first_child %}
+                <a id="insertDir_{{root_dir.id}}_{{dir.id}}" href="#" class="list-group-item list-group-item-action d-flex justify-content-start" style="height: 20px;">
+                    <i class="bi bi-plus align-self-center" style="font-size: 0.75rem;"><span class="invisible align-self-center"> 新目录</span></i>
+                </a>                                            
+                {% include 'Notebook/directory/tree/new_directory_tree_item.html' with dir=dir %}
+            {% endwith%}
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+{% extends "Notebook/base.html" %}
+{% load static %}
+{% block title_notebook %}主页{% endblock title_notebook%}
+
+{% block content_notebook %}
+
+<!-- 顶栏 -->
+{% include 'Notebook/homepage/headbar.html' %}
+
+<!-- TODO：笔记搜索 -->
+<div class="container">
+    {% include 'Notebook/note/search/search.html' %}
+</div>
+
+<!-- TODO：最近修改（只留三条） -->
+<div class="container">
+    <h3 class="text-center mt-3">最近修改</h3>
+    <small class="mt-3 text-secondary text-center ms-2">施工中……</small>
+</div>
+
+<!-- TODO：快捷入口（最多18个） -->
+<div class="container">
+    <hr class="text-success mt-3">
+    <h3 class="text-center mt-3">快捷入口</h3>
+    <small class="mt-3 text-secondary text-center ms-2">施工中……</small>
+</div>
+
+<!-- 待编辑笔记 -->
+{% if unfinished_notes_groupby_dir %}
+    <div class="container mt-3">
+        <hr class="text-success mt-3">
+        <h3 class="text-center">
+            待编辑
+        </h3>
+        {% include 'Notebook/homepage/unfinished_notes.html' %}
+    </div>
+{% endif %}
+
+{% endblock content_notebook %}
+
+{% block js_notebook %}
+<script src="{% static '/Notebook/js/directory/tree.js' %}"></script>
+{% endblock js_notebook %}

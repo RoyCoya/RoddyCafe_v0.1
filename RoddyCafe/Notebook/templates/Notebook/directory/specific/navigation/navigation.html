@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav>
+                <ol class="breadcrumb ms-2 mt-2 mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'Notebook_directory_all' %}">总目录</a></li>
+                    {% if directory_parents %}
+                        {% for dir in directory_parents %}
+                            {% if forloop.counter0 == 0 %}
+                            {% else %}
+                                <li class="breadcrumb-item"><a href="{% url 'Notebook_directory_specific' dir.id 0 %}">{{ dir.name }}</a></li>
+                            {% endif%}
+                        {% endfor %}
+                    {% endif %}
+                    <li class="breadcrumb-item active" aria-current="page">{{ directory.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>

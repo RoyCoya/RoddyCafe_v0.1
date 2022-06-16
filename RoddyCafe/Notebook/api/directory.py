@@ -5,11 +5,12 @@ from django.shortcuts import redirect
 from django.http import *
 from django.urls import reverse
 
+from CafeFrame.api.common import is_login
 from Notebook.models import *
-from .common import *
+from Notebook.api.common import func_getDirsToDelete_list
 
 # 新增目录
-def api_directory_new_save(request, directory_id):
+def new(request, directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
     new_directory = directory(
@@ -57,15 +58,11 @@ def api_directory_new_save(request, directory_id):
         root_dir.first_child = inserted_newDir
         root_dir.save()
     
-    # 如果是从根目录添加，则仍跳回根目录（id给0）。如果是从目录中添加子目录，则跳回该被添加子目录的目录（id为该目录id）
-    if directory_id:
-        dir = directory.objects.get(id=directory_id)
-        return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(dir.id,)))
-    else:
-        return HttpResponseRedirect(reverse('Notebook_directory'))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(new_directory.id, 0)))
 
 # 删除目录
-def api_directory_delete(request,directory_id):
+# TODO:删除后跳转至父目录（非数据结构的父节点）
+def delete(request,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)
     user = request.user
@@ -89,12 +86,12 @@ def api_directory_delete(request,directory_id):
             delete_list = func_getDirsToDelete_list(dir.first_child,delete_list)
         for dir in delete_list: dir.delete()      
     
-    # if parent == user_root_dir: return HttpResponseRedirect(reverse('Notebook_directory'))
-    # else: return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(parent.id,)))
-    return HttpResponseRedirect(reverse('Notebook_directory'))
+    # if parent == user_root_dir: return HttpResponseRedirect(reverse('Notebook_directory_all'))
+    # else: return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(parent.id,)))
+    return HttpResponseRedirect(reverse('Notebook_directory_all'))
 
 # 目录移动位置
-def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_first_child):
+def move(request,dir_to_move_id,parent_id,child_id,is_first_child):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir_to_move = directory.objects.get(id=dir_to_move_id)
     user = request.user
@@ -135,10 +132,10 @@ def api_directory_change_position(request,dir_to_move_id,parent_id,child_id,is_f
     dir_to_move.save()
     print(target_parent.first_child)
 
-    return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(dir_to_move_id,)))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(dir_to_move_id, 0)))
 
 # 目录更改描述
-def api_directory_change_discription(request,directory_id):
+def edit_discription(request,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     user = request.user
     dir = directory.objects.get(id=directory_id)
@@ -147,4 +144,4 @@ def api_directory_change_discription(request,directory_id):
     dir.discription = request.POST['directory_discription']
     dir.save()
     
-    return HttpResponseRedirect(reverse('Notebook_directory_notelist',args=(directory_id,)))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(directory_id, 0)))

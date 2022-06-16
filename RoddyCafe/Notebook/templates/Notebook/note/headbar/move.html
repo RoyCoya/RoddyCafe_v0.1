@@ -1,0 +1,22 @@
+<!-- 更换目录 -->
+<div class="modal fade" id="modal_change_directory" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success">移动至：</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            {% if root_dir.first_child %}
+                                {% include 'Notebook/note/headbar/move_tree.html' %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

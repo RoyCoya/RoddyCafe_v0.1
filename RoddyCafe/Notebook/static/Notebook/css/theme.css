@@ -1,0 +1,39 @@
+:root {
+    /* 主题色 */
+    --theme_color: rgb(0, 124, 77);
+}
+/*
+    元素统一改为主题色。目前包含：链接、卡片
+*/
+a{color: var(--theme_color);text-decoration: none;}
+a:hover{color: var(--theme_color);}
+#editor_container a{text-decoration: underline;}
+.card{border-color: var(--theme_color);}
+.breadcrumb-item a:hover{text-decoration: underline; color:rgb(10, 91, 60);}
+/*
+    list-group 的 item 在没有focus和hover时边框为主题色（特殊标识则为其自己的颜色），背景文字维持默认。当focus和hover时，背景转为主题色，文字转为白色
+*/
+.list-group-item{border: 1px solid var(--theme_color);}
+.list-group-item-action a{color: rgb(25, 27, 30);text-decoration: none;}
+.list-group-item-action i{color: var(--theme_color);}
+.list-group-item-action .edit-date{color: rgb(89, 98, 106);}
+.list-group-item-action .pin-top{color: rgb(208, 30, 54);}
+.list-group-item-action .pending{color: rgb(245, 181, 14);}
+.list-group-item-action:focus, .list-group-item-action:hover{color:white;background-color: var(--theme_color);}
+.list-group-item-action:focus, .list-group-item-action:hover a{color:white;}
+.list-group-item-action:focus, .list-group-item-action:hover i{color:white;}
+.list-group-item-action:focus, .list-group-item-action:hover .edit-date{color:white;}
+
+/*
+    popover的tip改为主题色背景白字
+*/
+.tooltip-inner{background-color: var(--theme_color);color: white;font-size: large;}
+.bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow::before, .bs-tooltip-start .tooltip-arrow::before{border-left-color: var(--theme_color);}
+.bs-tooltip-auto[data-popper-placement^=right] .tooltip-arrow::before, .bs-tooltip-end .tooltip-arrow::before{border-right-color: var(--theme_color);}
+.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before, .bs-tooltip-top .tooltip-arrow::before{border-top-color: var(--theme_color);}
+.bs-tooltip-auto[data-popper-placement^=bottom] .tooltip-arrow::before, .bs-tooltip-bottom .tooltip-arrow::before{border-bottom-color: var(--theme_color);}
+
+/*
+    switch的确认背景色改为主题色
+*/
+.form-check-input:checked{ background-color: var(--theme_color);border-color: var(--theme_color);}

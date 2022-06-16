@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "cafe.html" %}
 {% load static %}
 {% block title %}用户登录{% endblock %}
 
@@ -22,8 +22,6 @@
                 {% if next %}
                     {% if user.is_authenticated %}
                         <small class="text-danger">您的账户无使用权限</small>
-                    {% else %}
-                        <small class="text-danger">登录以使用笔记库</small>
                     {% endif %}
                 {% endif %}
             </div>
@@ -36,7 +34,11 @@
                 <input class="form-control" type="password" name="password" id="input_password" autocomplete="current-password" placeholder="password" id="id_password" required>
                 <label for="input_password">密码：</label>
             </div>
-            <button class="btn btn-primary" type="submit">登录</button>
+            <input type="hidden" name="next" value="{{ next }}">
+            <div class="text-end">
+                <button class="btn btn-primary me-2" type="submit">登录</button>
+                <a class="btn btn-danger" href="{% url 'RoddyCafe_entrance' %}">返回</a>
+            </div>
         </form>
     </div>
 </div>

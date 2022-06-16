@@ -1,0 +1,87 @@
+<!-- 顶部工具栏 -->
+<div class="sticky-top bg-light border-bottom">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-light ">
+                {% with parent_dir=directory_parents|last  %}
+                    <a href="
+                    {% if is_from_homepage %}
+                        {% url 'Notebook_homepage' %}
+                    {% elif parent_dir == root_dir %}
+                        {% url 'Notebook_directory_all' %}
+                    {% else %}
+                        {% url 'Notebook_directory_specific' parent_dir.id 0 %}
+                    {% endif %}"
+                    class="col-2 text-start ps-2">
+                        <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                    </a>
+                {% endwith %}
+                <span class="col-8 h5 text-center" style="margin: 0px;">
+                    <i class="text-success bi bi-journal-text" style="font-size: 1.3rem;"></i>
+                    {{ directory.name }}
+                </span>
+                <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-2 text-end pe-2">
+                    <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- 弹出式设置面板 -->
+<div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
+    <div class="offcanvas-header row border-bottom d-flex justify-content-between">
+        <h4 class="offcanvas-title col-10"><i class="bi bi-journal-text text-success"></i> {{ directory.name }}</h4>
+        <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#modal_new_directory " data-bs-toggle="modal" class="card pt-2 pb-2 text-center text-success">
+                        <i class="bi bi-journal-plus" style="font-size: 2rem;"></i>
+                        <small>子目录</small>
+                    </a>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#modal_move_directory" data-bs-toggle="modal" class="card pt-2 pb-2 text-center text-primary">
+                        <i class="bi bi-pin-map" style="font-size: 2rem;"></i>
+                        <small>移动</small>
+                    </a>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#" class="card pt-2 pb-2 text-center text-secondary">
+                        <i class="bi bi-grid-1x2" style="font-size: 2rem;"></i>
+                        <small>*视图*</small>
+                    </a>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#modal_delete_confirm" data-bs-toggle="modal" class="card pt-2 pb-2 text-center text-danger">
+                        <i class="bi bi-trash-fill" style="font-size: 2rem;"></i>
+                        <small>删除</small>
+                    </a>
+                </div>
+            </div>
+            <ul class="list-group">
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between text-success">
+                        <small>目录描述：<br></small>
+                        <a href="#modal_change_discription" data-bs-toggle="modal" class="bi bi-pen"></a>
+                    </div>
+                    {% if directory.discription %}{{ directory.discription }}
+                    {% else %}<span class="text-secondary">无</span>
+                    {% endif %}
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 新子目录弹出框 -->
+{% include 'Notebook/directory/tree/new_subdirectory.html' %}
+<!-- 移动目录弹出框 -->
+{% include 'Notebook/directory/tree/move_directory.html' %}
+<!-- 删除目录弹出框 -->
+{% include 'Notebook/directory/tree/delete_directory.html' %}
+<!-- 修改目录描述弹出框 -->
+{% include 'Notebook/directory/specific/headbar/edit_description.html' %}

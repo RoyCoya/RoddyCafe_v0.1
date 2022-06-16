@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/css/employee_room.css' %}">
+{% block css_employee_room %}{% endblock css_employee_room %}
+{% endblock css %}
+
+{% block content %}
+<div class="mb-5 pb-5">
+    {% block content_employee_room %}{% endblock content_employee_room %}
+</div>
+
+<!-- 底部tab栏 -->
+<div class="fixed-bottom row bg-light border-top py-2">
+    <a href="{% block life_stream %}{% url 'LifeStream_homepage' %}{% endblock life_stream %}" 
+    class="col-3 text-center {% block life_stream_color %}text-secondary{% endblock life_stream_color %}">
+        <span class="bi bi-heart-pulse" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>生命线</small></small>
+    </a>
+    <a href="{% block project_board %}#{% endblock project_board %}" 
+    class="col-3 text-center {% block project_board_color %}text-secondary{% endblock project_board_color %}">
+        <span class="bi bi-briefcase" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>计划与项目</small></small>
+    </a>
+    <a href="{% block notebook %}{% url 'Notebook_homepage' %}{% endblock notebook %}" 
+    class="col-3 text-center {% block notebook_color %}text-secondary{% endblock notebook_color %}">
+        <span class="bi bi-journals" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>笔记库</small></small>
+    </a>
+    <a href="{% block achievement_net %}{% url 'AchievementNet_homepage' %}{% endblock achievement_net %}" 
+    class="col-3 text-center {% block achievement_net_color %}text-secondary{% endblock achievement_net_color %}">
+        <span class="bi bi-person-circle" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>我的</small></small>
+    </a>
+</div>
+{% endblock content %}
+
+{% block js %}
+{% block js_employee_room %}{% endblock js_employee_room %}
+{% endblock js %}

@@ -1,0 +1,87 @@
+<!-- 顶部工具栏 -->
+<div class="sticky-top bg-light border-bottom">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-light ">
+                <a href="{% url 'Notebook_directory_specific' note.directory.id 0 %}" class="col-2 text-start ps-2">
+                    <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                </a>
+                <span class="col-8 h5 text-center" style="margin: 0px;">
+                    <i class="text-success bi bi-file-earmark-richtext" style="font-size: 1.3rem;"></i>
+                    {{note.title}}
+                </span>
+                <a data-bs-toggle="offcanvas" href="#toolbarBottom" class="col-2 text-end pe-2">
+                    <i class="text-success bi bi-gear-wide-connected" style="font-size: 1.5rem;"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- 弹出式设置面板 -->
+<div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
+    <div class="offcanvas-header row border-bottom d-flex justify-content-between">
+        <h4 class="offcanvas-title col-10" id="toolbarBottomLabel"><i class="bi bi-file-earmark-richtext text-success"></i> {{ note.title }}</h4>
+        <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-3 ps-1 pe-1">
+                    <a href="{% url 'Notebook_note_edit' note.id 0 %}" class="card pt-2 pb-2 text-center text-success">
+                        <i class="bi bi-pen" style="font-size: 2rem;"></i>
+                        <small>编辑</small>
+                    </a>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#modal_change_directory" data-bs-toggle="modal" class="card pt-2 pb-2 text-center text-primary">
+                        <i class="bi bi-pin-map" style="font-size: 2rem;"></i>
+                        <small>移动</small>
+                    </a>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <div href="#" class="card pt-2 pb-2 text-center text-secondary">
+                        <i class="bi bi-alarm-fill" style="font-size: 2rem;"></i>
+                        <small>*没做*</small>
+                    </div>
+                </div>
+                <div class="col-3 ps-1 pe-1">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirm" class="card pt-2 pb-2 text-center text-danger">
+                        <i class="bi bi-trash-fill" style="font-size: 2rem;"></i>
+                        <small>删除</small>
+                    </a>
+                </div>
+            </div>
+            <ul class="list-group mb-3">
+                <div class="list-group-item">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label">置顶</label>
+                        <input id="switch_pintop" class="form-check-input" type="checkbox" role="switch" {% if note.isPinTop %}checked{% endif %}>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label">待编辑</label>
+                        <input id="switch_pending" class="form-check-input" type="checkbox" role="switch" {% if note.isPending %}checked{% endif %}>
+                    </div>
+                </div>
+            </ul>
+            <ul class="list-group mb-3">
+                <div class="list-group-item">
+                    <small class="text-success">最后编辑时间：<br></small>
+                    {{ note.editDate }}
+                </div>
+                <div class="list-group-item">
+                    <small class="text-success">笔记创建时间：<br></small>
+                    {{ note.createDate }}
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑笔记：没有弹窗，直接跳转新页面edit.html -->
+<!-- 移动笔记 -->
+{% include 'Notebook/note/headbar/move.html' %}
+<!-- 删除笔记 -->
+{% include 'Notebook/note/headbar/delete.html' %}
