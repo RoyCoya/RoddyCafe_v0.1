@@ -58,7 +58,7 @@ def new(request, directory_id):
         root_dir.first_child = inserted_newDir
         root_dir.save()
     
-    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(new_directory.id,)))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(new_directory.id, 0)))
 
 # 删除目录
 # TODO:删除后跳转至父目录（非数据结构的父节点）
@@ -132,7 +132,7 @@ def move(request,dir_to_move_id,parent_id,child_id,is_first_child):
     dir_to_move.save()
     print(target_parent.first_child)
 
-    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(dir_to_move_id,)))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(dir_to_move_id, 0)))
 
 # 目录更改描述
 def edit_discription(request,directory_id):
@@ -144,4 +144,4 @@ def edit_discription(request,directory_id):
     dir.discription = request.POST['directory_discription']
     dir.save()
     
-    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(directory_id,)))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(directory_id, 0)))
