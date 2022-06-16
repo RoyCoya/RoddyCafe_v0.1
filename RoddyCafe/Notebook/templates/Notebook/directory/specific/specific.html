@@ -14,11 +14,16 @@
 -->
 {% include 'Notebook/directory/specific/headbar/headbar.html' %}
 
-<!-- 导航与搜索 -->
+<!-- 面包屑导航 -->
 {% include 'Notebook/directory/specific/navigation/navigation.html' %}
 
-<!-- 子目录、笔记列表 -->
-{% include 'Notebook/directory/specific/subdirectory_and_note/subdirectory_and_note.html' %}
+<div class="container">
+    <!-- 搜索栏 -->
+    {% include 'Notebook/note/search/search.html' %}
+
+    <!-- 子目录、笔记列表 -->
+    {% include 'Notebook/directory/specific/subdirectory_and_note/subdirectory_and_note.html' %}
+</div>
 {% endblock content_notebook %}
 
 {% block js_notebook %}
