@@ -17,7 +17,7 @@ def all(request):
     return render(request,'Notebook/directory/all/all.html',context)
 
 # 目录内笔记列表详情
-def specific(request,directory_id):
+def specific(request, directory_id, is_from_homepage):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)
     user = request.user
@@ -28,7 +28,7 @@ def specific(request,directory_id):
     parents_directories = []
     children_directories = []
 
-    #拉取所有父目录（crumb nav）
+    # 拉取所有父目录（crumb nav）
     directory_parent = None
     try: directory_parent = directory.objects.get(Q(first_child=dir)|Q(next_brother=dir))
     except: pass
@@ -42,11 +42,11 @@ def specific(request,directory_id):
         except Exception as e:
             break
     parents_directories.reverse()
-    #如果不存在父目录（当前进入的是用户根目录）则跳转至总目录
+    # 如果不存在父目录（当前进入的是用户根目录）则跳转至总目录
     if not parents_directories:
         return all(request)
     
-    #拉取所有子目录（子目录列表）
+    # 拉取所有子目录（子目录列表）
     try:
         dir_temp = dir
         directory_child = dir_temp.first_child
@@ -57,12 +57,16 @@ def specific(request,directory_id):
     notes_pintop = note.objects.filter(directory=dir,isPinTop=True).order_by('title')
     notes_not_pintop = note.objects.filter(directory=dir,isPinTop=False).order_by('title')
     
+    # 是否从主页跳转而来，若是，则返回按钮返回至主页
+    from_homepage = True if is_from_homepage else False
+
     context = {
         'directory' : dir,
         'directory_parents' : parents_directories,
         'directory_children' : children_directories,
         'notes_pintop' : notes_pintop,
         'notes_not_pintop' : notes_not_pintop,
-        'root_dir': root_dir
+        'root_dir' : root_dir,
+        'is_from_homepage' : from_homepage,
     }
     return render(request,'Notebook/directory/specific/specific.html',context)

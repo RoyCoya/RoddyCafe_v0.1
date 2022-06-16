@@ -8,7 +8,7 @@
                         {% for dir in directory_parents %}
                             {% if forloop.counter0 == 0 %}
                             {% else %}
-                                <li class="breadcrumb-item"><a href="{% url 'Notebook_directory_specific' dir.id %}">{{ dir.name }}</a></li>
+                                <li class="breadcrumb-item"><a href="{% url 'Notebook_directory_specific' dir.id 0 %}">{{ dir.name }}</a></li>
                             {% endif%}
                         {% endfor %}
                     {% endif %}

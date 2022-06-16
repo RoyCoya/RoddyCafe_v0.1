@@ -21,7 +21,7 @@
     {% for group in unfinished_notes_groupby_dirs %}
         <div class="{% if forloop.counter0 > 0 %}mt-2{% endif %}">
             <div class="text-start ms-3">
-                <a href="{% url 'Notebook_directory_specific' group.directory.id %}">
+                <a href="{% url 'Notebook_directory_specific' group.directory.id 1 %}">
                     <i class="bi bi-journal-text text-success"></i>
                     {{group.directory.name}}
                 </a>
@@ -30,7 +30,7 @@
                 <div class="col">
                     <ul class="list-group">
                         {% for note in group.notes %}
-                            <a href="{% url 'Notebook_note_edit' note.id %}" class="list-group-item list-group-item-action border_theme d-flex justify-content-between">
+                            <a href="{% url 'Notebook_note_edit' note.id 1 %}" class="list-group-item list-group-item-action border_theme d-flex justify-content-between">
                                 <div class="col-1 text-center">
                                     <i class="bi bi-file-earmark-richtext" style="font-size:2.1rem"></i>
                                 </div>

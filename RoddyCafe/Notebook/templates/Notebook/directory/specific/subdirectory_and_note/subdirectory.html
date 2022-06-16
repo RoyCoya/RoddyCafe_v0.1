@@ -4,7 +4,7 @@
         <div class="col">
             <ul class="list-group shadow">
                 {% for dir in directory_children %}
-                <a href="{% url 'Notebook_directory_specific' dir.id %}" class="list-group-item list-group-item-action">
+                <a href="{% url 'Notebook_directory_specific' dir.id 0 %}" class="list-group-item list-group-item-action">
                     <i class="bi bi-journal-text"></i>
                     <span class="col align-self-center">{{ dir.name }}</span>
                 </a>

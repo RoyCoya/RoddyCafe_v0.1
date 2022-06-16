@@ -6,7 +6,7 @@ from Notebook.models import *
 from CafeFrame.api.common import is_login
 
 # 笔记详情
-def detail(request,note_id):
+def detail(request, note_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     user = request.user
     noteToView = note.objects.get(id=note_id)
@@ -22,7 +22,7 @@ def detail(request,note_id):
     return render(request,'Notebook/note/note.html',context)
 
 # 新增笔记
-def new(request,directory_id):
+def new(request, directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     user = request.user
     dir = directory.objects.get(id=directory_id)
@@ -35,13 +35,17 @@ def new(request,directory_id):
 
 
 # 笔记编辑
-def edit(request,note_id):
+def edit(request, note_id, is_from_homepage):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     noteToEdit = note.objects.get(id=note_id)
     user = request.user
     if user != noteToEdit.user: return HttpResponseForbidden('您无权操作该笔记')
     
+    # 是否从主页跳转而来，若是，则返回按钮返回至主页
+    from_homepage = True if is_from_homepage else False
+
     context = {
-        'note' : noteToEdit
+        'note' : noteToEdit,
+        'is_from_homepage' : from_homepage,
     }
     return render(request,'Notebook/note/headbar/edit.html',context)

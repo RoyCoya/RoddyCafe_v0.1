@@ -5,10 +5,12 @@
             <nav class="navbar navbar-light ">
                 {% with parent_dir=directory_parents|last  %}
                     <a href="
-                    {% if parent_dir == root_dir %}
+                    {% if is_from_homepage %}
+                        {% url 'Notebook_homepage' %}
+                    {% elif parent_dir == root_dir %}
                         {% url 'Notebook_directory_all' %}
                     {% else %}
-                        {% url 'Notebook_directory_specific' parent_dir.id %}
+                        {% url 'Notebook_directory_specific' parent_dir.id 0 %}
                     {% endif %}"
                     class="col-2 text-start ps-2">
                         <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
