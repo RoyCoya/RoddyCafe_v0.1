@@ -12,45 +12,29 @@
     {% include 'Notebook/note/search/search.html' %}
 </div>
 
-<!-- 待编辑笔记 -->
+<!-- TODO：最近修改（只留三条） -->
 <div class="container">
-    <h4 class="text-start mt-3">
-        <i class="bi bi-tools pending align-self-center text-warning" style="font-size: 1.2rem;"></i>
-        待编辑
-    </h4>
-    {% for group in unfinished_notes_groupby_dirs %}
-        <div class="{% if forloop.counter0 > 0 %}mt-2{% endif %}">
-            <div class="text-start ms-3">
-                <a href="{% url 'Notebook_directory_specific' group.directory.id 1 %}">
-                    <i class="bi bi-journal-text text-success"></i>
-                    {{group.directory.name}}
-                </a>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <ul class="list-group">
-                        {% for note in group.notes %}
-                            <a href="{% url 'Notebook_note_edit' note.id 1 %}" class="list-group-item list-group-item-action border_theme d-flex justify-content-between">
-                                <div class="col-1 text-center">
-                                    <i class="bi bi-file-earmark-richtext" style="font-size:2.1rem"></i>
-                                </div>
-                                <div class="col">
-                                    <div class="ms-2">
-                                        <strong class="col">{{ note.title }}</strong>
-                                    </div>
-                                    <span class="col edit-date ms-2"><small>
-                                        最后编辑：{{ note.editDate}}
-                                    </small></span>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    
+    <h3 class="text-center mt-3">最近修改</h3>
+    <small class="mt-3 text-secondary text-center ms-2">施工中……</small>
 </div>
+
+<!-- TODO：快捷入口（最多18个） -->
+<div class="container">
+    <hr class="text-success mt-3">
+    <h3 class="text-center mt-3">快捷入口</h3>
+    <small class="mt-3 text-secondary text-center ms-2">施工中……</small>
+</div>
+
+<!-- 待编辑笔记 -->
+{% if unfinished_notes_groupby_dir %}
+    <div class="container mt-3">
+        <hr class="text-success mt-3">
+        <h3 class="text-center">
+            待编辑
+        </h3>
+        {% include 'Notebook/homepage/unfinished_notes.html' %}
+    </div>
+{% endif %}
 
 {% endblock content_notebook %}
 
