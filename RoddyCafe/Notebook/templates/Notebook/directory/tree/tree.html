@@ -2,25 +2,27 @@
 
 <!-- 目录树 -->
 <div class="container mt-3">
-    <div class="text-end">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#modal_new_directory" style:"width:auto">
-            <i class="bi bi-plus-circle text-success bg-light" ></i>
-            新增目录
-        </a>
-    </div>
+    {% if root_dir.first_child %}
+        <div class="text-end">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_new_directory" style:"width:auto">
+                <i class="bi bi-plus-circle text-success bg-light" ></i>
+                新增目录
+            </a>
+        </div>
+    {% endif %}
     <div class="row mt-2">
         <div class="col-12">
-            <ul class="list-group list-group-flush border-top border-bottom shadow">
-                {% if root_dir.first_child %}
-                  {% with dir=root_dir.first_child %}
+            {% if root_dir.first_child %}
+                <ul class="list-group list-group-flush border-top border-bottom shadow">
+                    {% with dir=root_dir.first_child %}
                         {% include 'Notebook/directory/tree/tree_item.html' with dir=dir %}
                     {% endwith%}
-                {% else %}
-                <div class="alert alert-success" role="alert">
+                </ul>
+            {% else %}
+                <div class="alert alert-success shadow" role="alert">
                     暂无目录，<a href="#" data-bs-toggle="modal" data-bs-target="#modal_new_directory">点击创建</a>
                 </div>
-                {% endif %}
-            </ul>
+            {% endif %}
         </div>
     </div>
 </div>
