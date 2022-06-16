@@ -1,9 +1,9 @@
 from Notebook.api import note as api_note, directory as api_directory, wangeditor as api_wangeditor
-from Notebook.page import index as page_index, note as page_note, directory as page_directory
+from Notebook.page import homepage as page_homepage, note as page_note, directory as page_directory
 
 '''页面'''
 # 主页
-def index_homepage(request): return page_index.homepage(request)
+def homepage(request): return page_homepage.homepage(request)
 
 # 目录
 def directory_all(request): return page_directory.all(request)

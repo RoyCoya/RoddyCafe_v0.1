@@ -11,4 +11,4 @@ def homepage(request):
     context = {
         'notes_to_edit':notes_to_edit
     }
-    return render(request,'Notebook/index/homepage.html',context)
+    return render(request,'Notebook/homepage/homepage.html',context)

@@ -1,3 +1,3 @@
-from AchievementNet.page import index
+from AchievementNet.page import homepage as page_homepage
 
-def profile(request): return index.profile(request)
+def homepage(request): return page_homepage.homepage(request)
