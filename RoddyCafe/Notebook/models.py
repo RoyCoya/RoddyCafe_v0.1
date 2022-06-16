@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth import settings
+from django.db.models import F
 
-#目录
-#注意：本表采用森林转二叉树的数据结构存储，以便使目录能够手动排序而不用按标题字母等自动排序，且排序顺序存至数据库而非本地
+# 目录
+# 注意：本表采用森林转二叉树的数据结构存储，以便使目录能够手动排序而不用按标题字母等自动排序，且排序顺序存至数据库而非本地
 class directory(models.Model):
     id = models.AutoField(primary_key=True,verbose_name='目录id')
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,verbose_name='所属用户')
@@ -16,7 +17,7 @@ class directory(models.Model):
         verbose_name = '目录'
         verbose_name_plural = '目录'
 
-#笔记
+# 笔记
 class note(models.Model):
     id = models.AutoField(primary_key=True,verbose_name='笔记id')
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,verbose_name='所属用户')
@@ -34,7 +35,7 @@ class note(models.Model):
         verbose_name = '笔记'
         verbose_name_plural = '笔记'
 
-#笔记提醒
+# 笔记提醒
 class alert(models.Model):
     id = models.AutoField(primary_key=True,verbose_name='提醒id')
     note = models.ForeignKey(note,on_delete=models.CASCADE,verbose_name='所属笔记')
@@ -44,8 +45,15 @@ class alert(models.Model):
         verbose_name = '提醒'
         verbose_name_plural = '提醒'
 
-#用户文件（图片、视频等）
-class userfile(models.Model):
+# 笔记附带的文件（图片、视频等）
+# 笔记附带文件路径组装
+def file_path(instance, filename):
+    return 'Notebook/user_{0}/{1}'.format(instance.note.user.id, filename)
+class note_file(models.Model):
     id = models.AutoField(primary_key=True,verbose_name='文件id')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,verbose_name='所属用户')
-    content = models.FileField(upload_to='Notebook/%Y/%m/%d/',verbose_name='文件内容')
+    note = models.ForeignKey(note,on_delete=models.CASCADE,verbose_name='所属笔记')
+    file = models.FileField(
+        upload_to=file_path,
+        verbose_name='文件内容'
+    )
+

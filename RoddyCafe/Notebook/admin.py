@@ -31,4 +31,4 @@ admin.site.register(note,admin_note)
 #笔记提醒
 admin.site.register(alert)
 #用户文件
-admin.site.register(userfile)
+admin.site.register(note_file)

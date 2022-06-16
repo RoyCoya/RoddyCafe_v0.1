@@ -42,8 +42,8 @@
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script>
     url_api_note_new_save = `{% url 'api_Notebook_note_new' directory.id %}`
-    url_api_Notebook_wangeditor_upload_img = "{% url 'api_Notebook_wangeditor_upload_img' %}"
-    url_api_Notebook_wangeditor_upload_video = "{% url 'api_Notebook_wangeditor_upload_video' %}"
+    url_api_Notebook_wangeditor_upload_img = "{% url 'api_Notebook_note_upload_img' note.id %}"
+    url_api_Notebook_wangeditor_upload_video = "{% url 'api_Notebook_note_upload_video' note.id %}"
 </script>
 <script src="{% static '/Notebook/js/note/new.js' %}"></script>
 {% endblock js_notebook %}

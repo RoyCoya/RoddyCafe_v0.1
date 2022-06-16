@@ -29,10 +29,8 @@ apis = [
 	path('note/<int:note_id>/moveto/directory/<int:directory_id>/', views.api_note_move, name='api_Notebook_note_move'),
 	path('note/<int:note_id>/setpintop/', views.api_note_switch_pintop, name='api_Notebook_note_switch_pintop'),
 	path('note/<int:note_id>/setpending/', views.api_note_switch_pending, name='api_Notebook_note_switch_pending'),
-
-	# wangeditor
-	path('note/uploadimg/', views.api_wangeditor_upload_img, name='api_Notebook_wangeditor_upload_img'),
-	path('note/uploadvideo/', views.api_wangeditor_upload_video, name='api_Notebook_wangeditor_upload_video'),
+	path('note/<int:note_id>/uploadimg/', views.api_wangeditor_upload_img, name='api_Notebook_note_upload_img'),
+	path('note/<int:note_id>/uploadvideo/', views.api_wangeditor_upload_video, name='api_Notebook_note_upload_video'),
 ]
 
 urlpatterns = pages + apis

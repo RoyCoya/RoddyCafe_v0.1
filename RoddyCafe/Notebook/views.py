@@ -29,5 +29,5 @@ def api_note_switch_pintop(request,note_id): return api_note.switch_pintop(reque
 def api_note_switch_pending(request,note_id): return api_note.switch_pending(request,note_id)
 
 # wangeditor
-def api_wangeditor_upload_img(request): return api_wangeditor.upload_img(request)
-def api_wangeditor_upload_video(request): return api_wangeditor.upload_video(request)
+def api_wangeditor_upload_img(request, note_id): return api_wangeditor.upload_img(request, note_id)
+def api_wangeditor_upload_video(request, note_id): return api_wangeditor.upload_video(request, note_id)

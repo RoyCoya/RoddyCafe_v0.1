@@ -1,4 +1,5 @@
 '''笔记操作'''
+import os
 
 from django.shortcuts import redirect
 from django.http import *
@@ -32,7 +33,11 @@ def delete(request,note_id):
     user = request.user
     if user != note_to_delete.user: return HttpResponseForbidden('您无权删除此笔记')
 
+    files = note_file.objects.filter(note=note_to_delete)
+    for file in files:
+        os.remove(file.file.path)
     note_to_delete.delete()
+
     
     dir = note_to_delete.directory
     return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(dir.id,)))
