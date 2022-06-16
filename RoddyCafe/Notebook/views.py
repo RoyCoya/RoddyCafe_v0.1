@@ -21,7 +21,6 @@ def api_directory_move(request, dir_to_move_id, parent_id, child_id, is_first_ch
 def api_directory_edit_discription(request, directory_id): return api_directory.edit_discription(request, directory_id)
 
 # 笔记
-def api_note_new(request, directory_id): return api_note.new(request, directory_id)
 def api_note_delete(request, note_id): return api_note.delete(request, note_id)
 def api_note_edit(request, note_id): return api_note.edit(request, note_id)
 def api_note_move(request, note_id, directory_id): return api_note.move(request, note_id, directory_id)

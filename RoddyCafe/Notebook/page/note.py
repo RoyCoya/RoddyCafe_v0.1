@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.shortcuts import render,redirect
 from django.http import *
+from django.urls import reverse
 
 from Notebook.models import *
 from CafeFrame.api.common import is_login
+from Notebook.api.note import new as new_note
 
 # 笔记详情
 def detail(request, note_id):
@@ -28,10 +30,7 @@ def new(request, directory_id):
     dir = directory.objects.get(id=directory_id)
     if user != dir.user: return HttpResponseForbidden('您无权在此目录中新增笔记')
     
-    context = {
-        'directory':dir
-    }
-    return render(request,'Notebook/note/headbar/new.html',context)
+    return HttpResponseRedirect(reverse('Notebook_note_edit',args=(new_note(request, dir.id), 0)))
 
 
 # 笔记编辑

@@ -23,7 +23,6 @@ apis = [
 	path('directory/<int:dir_to_move_id>/move/parent/<int:parent_id>/child/<int:child_id>/childtype/<int:is_first_child>/', views.api_directory_move, name='api_Notebook_directory_move'),
 
 	# 笔记
-	path('directory/<int:directory_id>/newnote/save/', views.api_note_new, name='api_Notebook_note_new'),
 	path('note/<int:note_id>/edit/save/', views.api_note_edit, name='api_Notebook_note_save'),
 	path('note/<int:note_id>/delete/', views.api_note_delete, name='api_Notebook_note_delete'),
 	path('note/<int:note_id>/moveto/directory/<int:directory_id>/', views.api_note_move, name='api_Notebook_note_move'),

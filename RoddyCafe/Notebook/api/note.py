@@ -11,20 +11,17 @@ from CafeFrame.api.common import is_login
 
 # 新增笔记
 def new(request,directory_id):
-    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)
-    user = request.user
-    if user != dir.user: return HttpResponseForbidden('您无权在该目录中新增笔记')
 
     new_note = note(
-        directory=dir,
-        user=request.user,
-        title=request.POST['note_title'],
-        content=request.POST['note_content'],
+        directory = dir,
+        user = request.user,
+        title = '新笔记',
+        content = None,
     )
     new_note.save()
 
-    return HttpResponse(new_note.id)
+    return new_note.id
 
 # 删除笔记
 def delete(request,note_id):
