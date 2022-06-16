@@ -1,18 +1,21 @@
-<a href="{% url 'Notebook_note_detail' note.id %}" class="list-group-item list-group-item-action border_theme d-flex justify-content-between">
-    <div>
-        <div class="col">
-            <strong class="col align-self-center"><i class="bi bi-file-earmark-richtext"></i> {{ note.title }}</strong>
-        </div>
-        <div class="col">
-            <small class="col align-self-center edit-date">{{ note.editDate}}</small>
-        </div>
+<a href="{% url 'Notebook_note_detail' note.id %}" class="list-group-item list-group-item-action border_theme d-flex justify-content-start">
+    <div class="col-1 text-center">
+        <i class="bi bi-file-earmark-richtext" style="font-size:2.1rem"></i>
     </div>
-    <div>
+    <div class="col">
+        <div class="ms-2">
+            <strong class="col">{{ note.title }}</strong>
+        </div>
+        <span class="col edit-date ms-2"><small>
+            最后编辑：{{ note.editDate}}
+        </small></span>
+    </div>
+    <div class="col-3 text-end">
         {% if note.isPending %}
-            <i class="bi bi-tools pending align-self-center me-2" style="font-size: 1.8rem;"></i>
+            <i class="bi bi-tools pending align-self-center me-1" style="font-size: 1.6rem;"></i>
         {% endif %}
         {% if note.isPinTop %}
-            <i class="bi bi-capslock pin-top me-2" style="font-size: 1.8rem;"></i>
+            <i class="bi bi-capslock pin-top me-1" style="font-size: 1.8rem;"></i>
         {% endif %}
     </div>
 </a>
