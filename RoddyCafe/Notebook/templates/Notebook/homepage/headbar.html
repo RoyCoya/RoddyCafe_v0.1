@@ -1,0 +1,31 @@
+<!-- 顶部工具栏 -->
+<div class="sticky-top bg-light border-bottom">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-light ">
+                <span class="col-2"></span>
+                <span class="col-8 h5 text-center" style="margin: 0px;">
+                    <i class="text-success bi bi-house" style="font-size: 1.3rem;"></i>
+                    笔记库
+                </span>
+                <a data-bs-toggle="offcanvas" href="#directory_all" class="col-2 text-end pe-2">
+                    <i class="text-success bi bi-journals" style="font-size: 1.5rem;"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- 弹出式总目录树 -->
+<div class="offcanvas offcanvas-end" data-bs-focus="false" style="width: 95%;" tabindex="-1" id="directory_all">
+    <div class="offcanvas-header border-bottom">
+        <h4 class="offcanvas-title"><i class="bi bi-journals text-success"></i>总目录</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        {% include 'Notebook/directory/tree/tree.html' %}
+    </div>
+</div>
+
+<!-- 目录树->添加目录 -->
+{% include 'Notebook/directory/tree/new_directory.html' %}

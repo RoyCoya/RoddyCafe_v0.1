@@ -3,24 +3,57 @@
 {% block title_notebook %}主页{% endblock title_notebook%}
 
 {% block content_notebook %}
-<div class="container mt-3">
-    <div class="row text-center">
-        <h2>笔记库</h2>
-    </div>
-    <div class="row d-flex justify-content-between">
-        <div class="col">
-            <i class="bi bi-inboxes text-success"></i>
-            <a class="text-success" href="{% url 'Notebook_directory_all' %}">总目录</a>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col">
-            <i class="bi bi-cone-striped text-warning"></i>待编辑笔记
-            <ul class="list-group">
-                
-            </ul>
-        </div>
-    </div>
+
+<!-- 顶栏 -->
+{% include 'Notebook/homepage/headbar.html' %}
+
+<!-- TODO：笔记搜索 -->
+<div class="container">
+    {% include 'Notebook/note/search/search.html' %}
 </div>
+
+<!-- 待编辑笔记 -->
+<div class="container">
+    <h4 class="text-start mt-3">
+        <i class="bi bi-tools pending align-self-center text-warning" style="font-size: 1.2rem;"></i>
+        待编辑
+    </h4>
+    {% for group in unfinished_notes_groupby_dirs %}
+        <div class="{% if forloop.counter0 > 0 %}mt-2{% endif %}">
+            <div class="text-start ms-3">
+                <a href="{% url 'Notebook_directory_specific' group.directory.id %}">
+                    <i class="bi bi-journal-text text-success"></i>
+                    {{group.directory.name}}
+                </a>
+            </div>
+            <div class="row mt-1">
+                <div class="col">
+                    <ul class="list-group">
+                        {% for note in group.notes %}
+                            <a href="{% url 'Notebook_note_edit' note.id %}" class="list-group-item list-group-item-action border_theme d-flex justify-content-between">
+                                <div class="col-1 text-center">
+                                    <i class="bi bi-file-earmark-richtext" style="font-size:2.1rem"></i>
+                                </div>
+                                <div class="col">
+                                    <div class="ms-2">
+                                        <strong class="col">{{ note.title }}</strong>
+                                    </div>
+                                    <span class="col edit-date ms-2"><small>
+                                        最后编辑：{{ note.editDate}}
+                                    </small></span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+</div>
+
 {% endblock content_notebook %}
+
+{% block js_notebook %}
+<script src="{% static '/Notebook/js/directory/tree.js' %}"></script>
+{% endblock js_notebook %}
