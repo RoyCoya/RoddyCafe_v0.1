@@ -58,12 +58,7 @@ def new(request, directory_id):
         root_dir.first_child = inserted_newDir
         root_dir.save()
     
-    # 如果是从根目录添加，则仍跳回根目录（id给0）。如果是从目录中添加子目录，则跳回该被添加子目录的目录（id为该目录id）
-    if directory_id:
-        dir = directory.objects.get(id=directory_id)
-        return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(dir.id,)))
-    else:
-        return HttpResponseRedirect(reverse('Notebook_directory_all'))
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(new_directory.id,)))
 
 # 删除目录
 # TODO:删除后跳转至父目录（非数据结构的父节点）
