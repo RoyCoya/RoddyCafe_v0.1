@@ -11,14 +11,16 @@ def homepage(request):
     unfinished_notes = note.objects.filter(isPending=True,directory__user=request.user).order_by('-editDate')
     dirs = directory.objects.filter(user=request.user)
     root_dir = dirs[0]
-
+    
     # 按目录对笔记分组
-    dirs = unfinished_notes.values('directory').distinct()
     dir_ids = []
     unfinished_notes_groupby_dir = []
-    for dir in dirs:
-        dir_ids.append(dir['directory'])
-    dir_ids = list(set(dir_ids))
+    for unfinished_note in unfinished_notes:
+        dir_id = unfinished_note.directory.id
+        if dir_id in dir_ids:
+            continue
+        else:
+            dir_ids.append(dir_id)
     for dir_id in dir_ids:
         group = {}
         dir = directory.objects.get(id=dir_id)
@@ -40,13 +42,12 @@ def homepage(request):
         group['parents'] = parents_directories
         group['notes'] = []
         unfinished_notes_groupby_dir.append(group)
-
+    # 组装成dict
     for unfinished_note in unfinished_notes:
         for dir in unfinished_notes_groupby_dir:
             if dir['directory'] == unfinished_note.directory:
                 dir['notes'].append(unfinished_note)
 
-    print(unfinished_notes_groupby_dir)
     context = {
         'unfinished_notes_groupby_dir' : unfinished_notes_groupby_dir,
         'root_dir' : root_dir,
