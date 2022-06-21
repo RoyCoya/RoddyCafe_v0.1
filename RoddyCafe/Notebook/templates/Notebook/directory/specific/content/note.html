@@ -22,7 +22,7 @@
         <div class="col">
             <ul class="list-group shadow">
                 {% for note in notes_pintop %}
-                    {% include 'Notebook/directory/specific/subdirectory_and_note/note_list.html' with note=note %}
+                    {% include 'Notebook/directory/specific/content/note_list.html' with note=note %}
                 {% endfor %}
             </ul>
         </div>
@@ -32,7 +32,7 @@
         <div class="col">
             <ul class="list-group shadow">
                 {% for note in notes_not_pintop %}
-                    {% include 'Notebook/directory/specific/subdirectory_and_note/note_list.html' with note=note %}
+                    {% include 'Notebook/directory/specific/content/note_list.html' with note=note %}
                 {% endfor %}
             </ul>
         </div>
