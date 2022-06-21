@@ -22,7 +22,7 @@ class admin_note(admin.ModelAdmin):
         'title',
         'directory',
         'isPinTop',
-        'isPending',
+        'isUnfinished',
         'createDate',
         'editDate',
 ]

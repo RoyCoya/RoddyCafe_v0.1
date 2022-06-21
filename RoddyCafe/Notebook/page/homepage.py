@@ -8,7 +8,7 @@ from CafeFrame.api.common import is_login
 # 主页
 def homepage(request):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    unfinished_notes = note.objects.filter(isPending=True,directory__user=request.user).order_by('-editDate')
+    unfinished_notes = note.objects.filter(isUnfinished=True,directory__user=request.user).order_by('-editDate')
     dirs = directory.objects.filter(user=request.user)
     root_dir = dirs[0]
     

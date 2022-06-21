@@ -11,7 +11,7 @@
         </small></span>
     </div>
     <div class="col-3 text-end">
-        {% if note.isPending %}
+        {% if note.isUnfinished %}
             <i class="bi bi-tools pending align-self-center me-1" style="font-size: 1.6rem;"></i>
         {% endif %}
         {% if note.isPinTop %}
