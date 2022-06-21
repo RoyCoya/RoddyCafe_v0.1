@@ -9,7 +9,11 @@
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="col mb-3">
-                        <textarea placeholder="描述上限200字" id="form_new_directory_discription" class="form-control" name="directory_discription" type="text" maxlength="200"></textarea>
+                        <textarea placeholder="描述上限200字" 
+                        id="form_new_directory_discription" 
+                        class="form-control" 
+                        name="directory_discription" 
+                        type="text" maxlength="200">{{directory.discription}}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
