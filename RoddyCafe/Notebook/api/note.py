@@ -16,7 +16,7 @@ def new(request,directory_id):
     new_note = note(
         directory = dir,
         user = request.user,
-        title = '新笔记',
+        title = '未命名笔记',
         content = None,
     )
     new_note.save()
