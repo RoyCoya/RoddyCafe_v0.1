@@ -134,6 +134,18 @@ def move(request,dir_to_move_id,parent_id,child_id,is_first_child):
 
     return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(dir_to_move_id, 0)))
 
+# 目录更改名称
+def edit_name(request,directory_id):
+    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    user = request.user
+    dir = directory.objects.get(id=directory_id)
+    if user != dir.user: return HttpResponseForbidden('您无权修改此目录的名称')
+
+    dir.name = request.POST['directory_name']
+    dir.save()
+
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(directory_id, 0)))
+
 # 目录更改描述
 def edit_discription(request,directory_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))

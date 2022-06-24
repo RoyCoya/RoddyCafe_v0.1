@@ -18,6 +18,7 @@ def note_edit(request, note_id, is_from_homepage): return page_note.edit(request
 def api_directory_new(request, directory_id): return api_directory.new(request, directory_id)
 def api_directory_delete(request, directory_id): return api_directory.delete(request, directory_id)
 def api_directory_move(request, dir_to_move_id, parent_id, child_id, is_first_child): return api_directory.move(request, dir_to_move_id, parent_id, child_id, is_first_child)
+def api_directory_edit_name(request, directory_id): return api_directory.edit_name(request, directory_id)
 def api_directory_edit_discription(request, directory_id): return api_directory.edit_discription(request, directory_id)
 
 # 笔记

@@ -19,6 +19,7 @@ apis = [
 	# 目录
 	path('directory/new/<int:directory_id>/', views.api_directory_new, name='api_Notebook_directory_new'),
 	path('directory/<int:directory_id>/delete/', views.api_directory_delete, name='api_Notebook_directory_delete'),
+	path('directory/<int:directory_id>/changename/', views.api_directory_edit_name, name='api_Notebook_directory_edit_name'),
 	path('directory/<int:directory_id>/changediscription/', views.api_directory_edit_discription, name='api_Notebook_directory_edit_discription'),
 	path('directory/<int:dir_to_move_id>/move/parent/<int:parent_id>/child/<int:child_id>/childtype/<int:is_first_child>/', views.api_directory_move, name='api_Notebook_directory_move'),
 

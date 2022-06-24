@@ -31,7 +31,10 @@
 <!-- 弹出式设置面板 -->
 <div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
     <div class="offcanvas-header row border-bottom d-flex justify-content-between">
-        <h4 class="offcanvas-title col-10"><i class="bi bi-journal-text text-success"></i> {{ directory.name }}</h4>
+        <h4 class="offcanvas-title col-10 ms-1">
+            {{ directory.name }}
+            <a class="bi bi-pen ms-2" href="#modal_change_name " style="font-size:1.2rem" data-bs-toggle="modal"></a>
+        </h4>
         <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
@@ -83,5 +86,7 @@
 {% include 'Notebook/directory/tree/move_directory.html' %}
 <!-- 删除目录弹出框 -->
 {% include 'Notebook/directory/tree/delete_directory.html' %}
+<!-- 修改目录名弹出框 -->
+{% include 'Notebook/directory/specific/headbar/edit_name.html' %}
 <!-- 修改目录描述弹出框 -->
 {% include 'Notebook/directory/specific/headbar/edit_description.html' %}
