@@ -12,7 +12,7 @@
 </div>
 
 <!-- 底部tab栏 -->
-<div class="fixed-bottom row bg-light border-top py-2">
+<div class="fixed-bottom row bg-light border-top py-2" {% block hide_bottombar %}{% endblock hide_bottombar %}>
     <a href="{% block life_stream %}{% url 'LifeStream_homepage' %}{% endblock life_stream %}" 
     class="col-3 text-center {% block life_stream_color %}text-secondary{% endblock life_stream_color %}">
         <span class="bi bi-heart-pulse" style="font-size:1.3rem"></span>

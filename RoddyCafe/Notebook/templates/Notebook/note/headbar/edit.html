@@ -12,16 +12,15 @@
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light">
-                <a href="{% if is_from_homepage %}{% url 'Notebook_homepage' %}{% else %}{% url 'Notebook_note_detail' note.id %}{% endif %}" 
-                class="col-2 text-start ps-2">
+                <a id="back" href="#" class="col-2 text-start ps-2">
                     <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                 </a>
                 <span class="col-8 h5 text-center" style="margin: 0px;">
                     <i class="text-success bi bi-pencil-square" style="font-size: 1.3rem;"></i>
                     {{ note.title }}
                 </span>
-                <a id="save" href="#" class="col-2 text-end pe-2">
-                    <i class="text-success bi bi-check-circle" style="font-size: 1.5rem;"></i>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#finishConfirm" class="col-2 text-end pe-2">
+                    <i class="text-success bi bi-check2-circle" style="font-size: 1.5rem;"></i>
                 </a>
             </nav>
         </div>
@@ -37,16 +36,49 @@
     {% csrf_token %}
     <textarea name="note_content_edited" id="note_content"></textarea>
 </form>
+
+<!-- 完成笔记确认 -->
+<div class="modal fade" id="finishConfirm" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success">标记为“已完成”？</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                仍可在笔记查看页面手动设置为“待编辑”状态。
+            </div>
+            <div class="modal-footer">
+                <a id="finish" href="#" class="btn btn-success">确认</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 自动保存弹窗 -->
+<div id="toast_autosave" class="toast align-items-center text-white bg-success border-0 position-fixed bottom-0 end-0 m-2" role="alert" data-bs-autohide="true">
+    <div class="d-flex">
+        <div class="toast-body">
+            自动保存中……
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
 {% endblock content_notebook %}
+
+<!-- 禁用底部跳转栏 -->
+{% block hide_bottombar %}hidden{% endblock hide_bottombar %}
 
 {% block js_notebook %}
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script>
     note_content = `{{ note.content|escape }}`
     url_api_note_save = "{% url 'api_Notebook_note_save' note.id  %}"
-    url_note_detail = "{% url 'Notebook_note_detail' note.id %}"
     url_api_Notebook_wangeditor_upload_img = "{% url 'api_Notebook_note_upload_img' note.id %}"
     url_api_Notebook_wangeditor_upload_video = "{% url 'api_Notebook_note_upload_video' note.id %}"
+    url_back = "{% if is_from_homepage %}{% url 'Notebook_homepage' %}{% else %}{% url 'Notebook_note_detail' note.id %}{% endif %}"
+    url_api_note_switch_pending = "{% url 'api_Notebook_note_switch_pending' note.id %}"
 </script>
 <script src="{% static '/Notebook/js/note/edit.js' %}"></script>
 {% endblock js_notebook %}

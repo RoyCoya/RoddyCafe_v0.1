@@ -1,3 +1,44 @@
+/*
+通用方法
+*/
+// 保存笔记，跳转至url
+$.fn.saveNote = function(url){
+    //自动产生title
+    var titlePriorityCheckList = []
+    titlePriorityCheckList.push($($('#note_content').val()).filter('p').first().text().substr(0,15))
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h5').first().text())
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h4').first().text())
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h3').first().text())
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h2').first().text())
+    titlePriorityCheckList.push($($('#note_content').val()).filter('h1').first().text())
+    finalTitle = '未命名笔记'
+    $.each(titlePriorityCheckList, function (index, value) { 
+         if (value != '') finalTitle = value;
+    });
+    //组装post内容
+    var postData = $('#form_note').serializeArray()
+    postData.push({
+        'name': 'note_title',
+        'value': finalTitle
+    })
+    $.post(
+        url_api_note_save,
+        postData,
+        function () {
+            if (url != 'None') {
+                window.location.replace(url);
+            }
+        },
+    );
+}
+
+// 定时保存
+var toast =  new bootstrap.Toast($("#toast_autosave"))
+var saver = setInterval(() => {
+    $.fn.saveNote('None')
+    toast.show()
+}, 1000 * 60 * 3);
+
 /* 
     wangeditor 相关 
 */
@@ -6,7 +47,7 @@ const csrftoken = getCookie('csrftoken');
 const { createEditor, createToolbar } = window.wangEditor
 //编辑器配置
 const editorConfig = {
-    placeholder : '请输入内容……',
+    placeholder : '返回时笔记将自动保存。点击右上角将笔记标记为“已完成”。',
     autoFocus : true,
     onChange : (editor) => {
         const content = editor.children
@@ -103,27 +144,17 @@ const toolbar = createToolbar({
     页面功能
 */
 //保存笔记修改
-$('#save').click(function (e) {
-    //自动产生title
-    var titlePriorityCheckList = []
-    titlePriorityCheckList.push($($('#note_content').val()).filter('p').first().text().substr(0,15))
-    titlePriorityCheckList.push($($('#note_content').val()).filter('h5').first().text())
-    titlePriorityCheckList.push($($('#note_content').val()).filter('h4').first().text())
-    titlePriorityCheckList.push($($('#note_content').val()).filter('h3').first().text())
-    titlePriorityCheckList.push($($('#note_content').val()).filter('h2').first().text())
-    titlePriorityCheckList.push($($('#note_content').val()).filter('h1').first().text())
-    finalTitle = '未命名笔记'
-    $.each(titlePriorityCheckList, function (index, value) { 
-         if (value != '') finalTitle = value;
+$('#back').click(function (e) {
+    $.fn.saveNote(url_back)
+});
+
+$('#finish').click(function (e) { 
+    $.ajax({
+        type: "post",
+        url: url_api_note_switch_pending,
+        data: {"pending_checked" : false,},
+        dataType: "json",
+        headers:{'X-CSRFToken': csrftoken}
     });
-    //组装post内容
-    var postData = $('#form_note').serializeArray()
-    postData.push({'name': 'note_title','value':finalTitle})
-    $.post(
-        url_api_note_save,
-        postData,
-        function () {
-            window.location.replace(url_note_detail);
-        },
-    );
+    $.fn.saveNote(url_back)
 });
