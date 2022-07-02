@@ -47,7 +47,7 @@ const csrftoken = getCookie('csrftoken');
 const { createEditor, createToolbar } = window.wangEditor
 //编辑器配置
 const editorConfig = {
-    placeholder : '返回时笔记将自动保存。点击右上角将笔记标记为“已完成”。',
+    placeholder : '点击返回即可自动保存笔记。每隔3分钟（可调整）自动保存。',
     autoFocus : true,
     onChange : (editor) => {
         const content = editor.children
@@ -148,13 +148,15 @@ $('#back').click(function (e) {
     $.fn.saveNote(url_back)
 });
 
+//标记为已完成
 $('#finish').click(function (e) { 
     $.ajax({
         type: "post",
         url: url_api_note_switch_pending,
         data: {"pending_checked" : false,},
         dataType: "json",
-        headers:{'X-CSRFToken': csrftoken}
+        headers:{'X-CSRFToken': csrftoken},
+        async:false,
     });
     $.fn.saveNote(url_back)
 });

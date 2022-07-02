@@ -15,7 +15,7 @@
                 <a id="back" href="#" class="col-2 text-start ps-2">
                     <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                 </a>
-                <span class="col-8 h5 text-center" style="margin: 0px;">
+                <span class="col-8 h4 text-center" style="margin: 0px;">
                     <i class="text-success bi bi-pencil-square" style="font-size: 1.3rem;"></i>
                     {{ note.title }}
                 </span>
@@ -42,11 +42,14 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-success">标记为“已完成”？</h5>
+                <h5 class="modal-title text-success">
+                    <i class="bi bi-check2-circle"></i>
+                    标记为“已完成”笔记？
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                仍可在笔记查看页面手动设置为“待编辑”状态。
+                仍可在笔记详情页面手动设置为“<span class="text-warning">未完成</span>”状态。
             </div>
             <div class="modal-footer">
                 <a id="finish" href="#" class="btn btn-success">确认</a>

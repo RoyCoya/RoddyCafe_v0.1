@@ -8,7 +8,7 @@
                     {% if is_from_homepage %}
                         {% url 'Notebook_homepage' %}
                     {% elif parent_dir == root_dir %}
-                        {% url 'Notebook_directory_all' %}
+                        {% url 'Notebook_homepage' %}
                     {% else %}
                         {% url 'Notebook_directory_specific' parent_dir.id 0 %}
                     {% endif %}"
@@ -16,7 +16,7 @@
                         <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                     </a>
                 {% endwith %}
-                <span class="col-8 h5 text-center" style="margin: 0px;">
+                <span class="col-8 h4 text-center" style="margin: 0px;">
                     <i class="text-success bi bi-journal-text" style="font-size: 1.3rem;"></i>
                     {{ directory.name }}
                 </span>

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}主页{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row text-center">
+        <h2>
+            拾心咖啡屋 Roy's Cafe
+        </h2>
+    </div>
+    <a href="{% url 'Notebook_homepage' %}">笔记库</a>
+    <br/>
+    <a href="{% url 'logout' %}">退出登陆</a>
+</div>
+
+<div class="fixed-bottom border-top text-center bg-light">
+    <div class="text-secondary">
+        <small>版本：v0.2 develope</small>
+        <small class="ms-3">
+            备案号：<a href="https://beian.miit.gov.cn/">渝ICP备19014188号-1</a>
+        </small>
+    </div>
+</div>
+{% endblock %}

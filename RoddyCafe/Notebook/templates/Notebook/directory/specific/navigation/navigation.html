@@ -3,7 +3,7 @@
         <div class="col">
             <nav>
                 <ol class="breadcrumb ms-2 mt-2 mb-0">
-                    <li class="breadcrumb-item"><a href="{% url 'Notebook_directory_all' %}">总目录</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'Notebook_homepage' %}">主页</a></li>
                     {% if directory_parents %}
                         {% for dir in directory_parents %}
                             {% if forloop.counter0 == 0 %}
@@ -17,9 +17,13 @@
             </nav>
         </div>
     </div>
+    {% if directory.discription %}
+        <hr class="text-success mt-3">
+        <div class="row">
+            <small class="text-secondary ms-2">
+                <span class="text-success">描述：</span>
+                {{directory.discription}}
+            </small>
+        </div>
+    {% endif %}
 </div>
-{% if directory.discription %}
-    <div class="container my-2 ms-2 text-secondary">
-        <small>{{directory.discription}}</small>
-    </div>
-{% endif %}

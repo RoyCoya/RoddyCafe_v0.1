@@ -1,4 +1,4 @@
-{% extends "cafe.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block title %}用户登录{% endblock %}
 
@@ -37,9 +37,17 @@
             <input type="hidden" name="next" value="{{ next }}">
             <div class="text-end">
                 <button class="btn btn-primary me-2" type="submit">登录</button>
-                <a class="btn btn-danger" href="{% url 'RoddyCafe_entrance' %}">返回</a>
             </div>
         </form>
+    </div>
+</div>
+
+<div class="fixed-bottom border-top text-center bg-light">
+    <div class="text-secondary">
+        <small>版本：v0.2 develope</small>
+        <small class="ms-3">
+            备案号：<a href="https://beian.miit.gov.cn/">渝ICP备19014188号-1</a>
+        </small>
     </div>
 </div>
 {% endblock %}

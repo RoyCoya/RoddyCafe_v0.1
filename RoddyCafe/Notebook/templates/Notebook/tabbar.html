@@ -1,0 +1,35 @@
+<div class="fixed-bottom row bg-light border-top py-2">
+    <a href="{% url 'Notebook_homepage' %}" class="col-3 text-center text-{% if highlight_tab == 1 %}success{% else %}secondary{% endif %}">
+        
+        <span class="bi bi-house" style="font-size:1.3rem">
+        </span>
+        <small class="d-block"><small>主页</small></small>
+    </a>
+    <a href="{% url 'Notebook_todo' %}" class="col-3 position-relative text-center text-{% if highlight_tab == 2 %}success{% else %}secondary{% endif %}">
+        <span class="bi bi-briefcase" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>待办</small></small>
+        {% if todo_count > 0 %}
+            <span class="position-absolute top-0 start-50 ms-4 mt-1 translate-middle badge rounded-pill bg-danger">
+                {{todo_count}}
+            </span>
+        {% endif %}
+    </a>
+    <a href="{% url 'Notebook_share' %}" class="col-3 text-center text-{% if highlight_tab == 3 %}success{% else %}secondary{% endif %}">
+        <span class="bi bi-share" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>共享</small></small>
+        {% if share_count > 0 %}
+            <span class="position-absolute top-0 start-50 ms-4 mt-1 translate-middle badge rounded-pill bg-danger">
+                {{share_count}}
+            </span>
+        {% endif %}
+    </a>
+    <a href="{% url 'Notebook_configurations' %}" class="col-3 text-center text-{% if highlight_tab == 4 %}success{% else %}secondary{% endif %}">
+        <span class="bi bi-gear" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>设置</small></small>
+        {% if update_count > 0 %}
+            <span class="position-absolute top-0 start-50 ms-4 mt-1 translate-middle badge rounded-pill bg-danger">
+                {{update_count}}
+            </span>
+        {% endif %}
+    </a>
+</div>

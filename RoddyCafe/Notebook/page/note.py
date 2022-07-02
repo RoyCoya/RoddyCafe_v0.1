@@ -32,7 +32,6 @@ def new(request, directory_id):
     
     return HttpResponseRedirect(reverse('Notebook_note_edit',args=(new_note(request, dir.id), 0)))
 
-
 # 笔记编辑
 def edit(request, note_id, is_from_homepage):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))

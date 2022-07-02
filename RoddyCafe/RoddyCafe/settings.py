@@ -39,12 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #以下为自建App
-    'AchievementNet.apps.AchievementnetConfig',
     'CafeFrame.apps.CafeframeConfig',
-    'LifeStream.apps.LifestreamConfig',
-    'LumberRoom.apps.LumberroomConfig',
     'Notebook.apps.NotebookConfig',
-    'Warehouse.apps.WarehouseConfig',
 ]
 
 MIDDLEWARE = [

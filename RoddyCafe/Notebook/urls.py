@@ -4,11 +4,13 @@ from . import views
 
 '''页面'''
 pages = [
-	# 目录
+	# 四个主页面：主页、待办、共享、设置
 	path('', views.homepage, name='Notebook_homepage'),
-	path('directory/', views.directory_all, name='Notebook_directory_all'),
+	path('todo/', views.todo, name='Notebook_todo'),
+	path('share/', views.share, name='Notebook_share'),
+	path('configurations/', views.configurations, name='Notebook_configurations'),
+	# 目录和笔记
 	path('directory/<int:directory_id>/is_from_homepage/<int:is_from_homepage>/', views.directory_specific, name='Notebook_directory_specific'),
-	# 笔记
 	path('note/<int:note_id>/', views.note_detail, name='Notebook_note_detail'),
 	path('note/new/<int:directory_id>/', views.note_new, name='Notebook_note_new'),
 	path('note/<int:note_id>/edit/is_from_homepage/<int:is_from_homepage>/', views.note_edit, name='Notebook_note_edit'),

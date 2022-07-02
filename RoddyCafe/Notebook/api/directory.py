@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from CafeFrame.api.common import is_login
 from Notebook.models import *
-from Notebook.api.common import func_getDirsToDelete_list
+from Notebook.api.common import directories_to_delete
 
 # 新增目录
 def new(request, directory_id):
@@ -76,19 +76,19 @@ def delete(request,directory_id):
         parent.save()
         delete_list = [dir]
         if dir.first_child:
-            delete_list = func_getDirsToDelete_list(dir.first_child,delete_list)
+            delete_list = directories_to_delete(dir.first_child,delete_list)
         for dir in delete_list: dir.delete()
     else:
         parent.next_brother = dir.next_brother
         parent.save()
         delete_list = [dir]
         if dir.first_child:
-            delete_list = func_getDirsToDelete_list(dir.first_child,delete_list)
+            delete_list = directories_to_delete(dir.first_child,delete_list)
         for dir in delete_list: dir.delete()      
     
-    # if parent == user_root_dir: return HttpResponseRedirect(reverse('Notebook_directory_all'))
+    # if parent == user_root_dir: return HttpResponseRedirect(reverse('Notebook_homepage'))
     # else: return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(parent.id,)))
-    return HttpResponseRedirect(reverse('Notebook_directory_all'))
+    return HttpResponseRedirect(reverse('Notebook_homepage'))
 
 # 目录移动位置
 def move(request,dir_to_move_id,parent_id,child_id,is_first_child):

@@ -6,17 +6,7 @@ from django.db.models import Q
 from Notebook.models import *
 from CafeFrame.api.common import is_login
 
-# 所有目录
-def all(request):
-    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    dirs = directory.objects.filter(user=request.user)
-    root_dir = dirs[0]
-    context = {
-        'root_dir':root_dir
-    }
-    return render(request,'Notebook/directory/all/all.html',context)
-
-# 目录内笔记列表详情
+# 指定目录
 def specific(request, directory_id, is_from_homepage):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)
