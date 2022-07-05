@@ -25,6 +25,14 @@
     <!-- 子目录、笔记列表 -->
     {% include 'Notebook/directory/specific/content/content.html' %}
 </div>
+
+<!-- 底部tab bar -->
+{% if is_from_todo %}
+    {% include 'Notebook/tabbar.html' with highlight_tab=2 %}
+{% else %}
+    {% include 'Notebook/tabbar.html' with highlight_tab=1 %}
+{% endif %}
+
 {% endblock content_notebook %}
 
 {% block js_notebook %}
