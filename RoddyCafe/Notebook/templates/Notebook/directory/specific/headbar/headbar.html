@@ -5,8 +5,8 @@
             <nav class="navbar navbar-light ">
                 {% with parent_dir=directory_parents|last  %}
                     <a href="
-                    {% if is_from_homepage %}
-                        {% url 'Notebook_homepage' %}
+                    {% if is_from_todo %}
+                        {% url 'Notebook_todo' %}
                     {% elif parent_dir == root_dir %}
                         {% url 'Notebook_homepage' %}
                     {% else %}

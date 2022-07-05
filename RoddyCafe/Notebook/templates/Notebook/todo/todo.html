@@ -18,15 +18,19 @@
 {% endif %}
 
 <!-- 未完成笔记 -->
-{% if unfinished_notes_groupby_dir %}
-    <div class="container mt-3">
-        <h5 class="text-center">
-            <i class="bi bi-tools text-warning"></i>
-            未完成笔记
-        </h5>
+<div class="container mt-3">
+    <h5 class="text-center">
+        <i class="bi bi-tools text-{% if unfinished_notes_groupby_dir %}warning{% else %}success{% endif %}"></i>
+        未完成笔记
+    </h5>
+    {% if unfinished_notes_groupby_dir %}
         {% include 'Notebook/todo/unfinished_notes.html' %}
-    </div>
-{% endif %}
+    {% else %}
+        <div class="alert alert-success" role="alert">
+            <span>所有笔记已完成！</span>
+        </div>
+    {% endif %}
+</div>
 
 <!-- 底部tab bar -->
 {% include 'Notebook/tabbar.html' with highlight_tab=2 %}

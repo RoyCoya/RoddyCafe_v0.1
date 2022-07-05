@@ -10,10 +10,10 @@ pages = [
 	path('share/', views.share, name='Notebook_share'),
 	path('configurations/', views.configurations, name='Notebook_configurations'),
 	# 目录和笔记
-	path('directory/<int:directory_id>/is_from_homepage/<int:is_from_homepage>/', views.directory_specific, name='Notebook_directory_specific'),
+	path('directory/<int:directory_id>/is_from_todo/<int:is_from_todo>/', views.directory_specific, name='Notebook_directory_specific'),
 	path('note/<int:note_id>/', views.note_detail, name='Notebook_note_detail'),
 	path('note/new/<int:directory_id>/', views.note_new, name='Notebook_note_new'),
-	path('note/<int:note_id>/edit/is_from_homepage/<int:is_from_homepage>/', views.note_edit, name='Notebook_note_edit'),
+	path('note/<int:note_id>/edit/is_from_todo/<int:is_from_todo>/', views.note_edit, name='Notebook_note_edit'),
 ]
 
 '''接口'''
