@@ -3,3 +3,5 @@
 
 /* 取消safari选中元素之后的蓝色外框 */
 a:focus, input:focus, p:focus, div:focus{outline:none;}
+/* 取消链接下划线 */
+a{ text-decoration: none; }

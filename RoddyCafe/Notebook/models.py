@@ -26,7 +26,7 @@ class note(models.Model):
     title = models.CharField(blank=True, null=True, max_length=50, verbose_name='笔记标题')
     content = models.TextField(blank=True, null=True, verbose_name='笔记内容')
     isPinTop = models.BooleanField(default=False, verbose_name='置顶')
-    isPending = models.BooleanField(default=False, verbose_name='待编辑')
+    isUnfinished = models.BooleanField(default=True, verbose_name='待编辑')
     createDate = models.DateTimeField(auto_now_add=True, verbose_name='笔记创建时间')
     editDate = models.DateTimeField(auto_now=True, verbose_name='笔记修改时间')
     def __str__(self):

@@ -32,25 +32,11 @@ djangoURLs = [
 cafe = [
     # 基础架构：店铺门口、店内大厅相关
     path('', include('CafeFrame.urls')),
-    # 仓库（资源库，大厅左转）：提供对外开放的下载资源
-    path('warehouse/', include('Warehouse.urls')),
-    # 杂物间：其他小工具（不需要单独做成app的工具）
-    path('lumberroom/', include('LumberRoom.urls')),
-]
-
-# 咖啡屋对内（我自己手动添加的用户白名单）的功能
-employeeRoom = [
-    # 生命流：未来（订阅iOS日历，提供预约）、现在（个人当前状态与信息）、过去（根据现在留下的记录）。
-    path('lifestream/', include('LifeStream.urls')),
-    # 计划与项目：计划管理、项目管理。与“生命流”联合使用，可快速添加生命流中的事项
-    # TODO:计划与项目
     # 笔记本
     path('notebook/', include('Notebook.urls')),
-    # 成就树：安插在员工界面的“我的”（profile）中，与“计划与项目”联合使用。当完成指定的计划和项目后，达成成就。该内容可对外展示
-    path('achievementnet/', include('AchievementNet.urls')),
 ]
 
-urlpatterns = djangoURLs + cafe + employeeRoom
+urlpatterns = djangoURLs + cafe
 
 # 开发时可显示用户文件
 if settings.DEBUG:

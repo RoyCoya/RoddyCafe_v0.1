@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from CafeFrame.api.common import is_login
 from Notebook.models import *
-from Notebook.api.common import func_getDirsToDelete_list
+from Notebook.api.common import directories_to_delete
 
 # 新增目录
 def new(request, directory_id):
@@ -76,19 +76,19 @@ def delete(request,directory_id):
         parent.save()
         delete_list = [dir]
         if dir.first_child:
-            delete_list = func_getDirsToDelete_list(dir.first_child,delete_list)
+            delete_list = directories_to_delete(dir.first_child,delete_list)
         for dir in delete_list: dir.delete()
     else:
         parent.next_brother = dir.next_brother
         parent.save()
         delete_list = [dir]
         if dir.first_child:
-            delete_list = func_getDirsToDelete_list(dir.first_child,delete_list)
+            delete_list = directories_to_delete(dir.first_child,delete_list)
         for dir in delete_list: dir.delete()      
     
-    # if parent == user_root_dir: return HttpResponseRedirect(reverse('Notebook_directory_all'))
+    # if parent == user_root_dir: return HttpResponseRedirect(reverse('Notebook_homepage'))
     # else: return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(parent.id,)))
-    return HttpResponseRedirect(reverse('Notebook_directory_all'))
+    return HttpResponseRedirect(reverse('Notebook_homepage'))
 
 # 目录移动位置
 def move(request,dir_to_move_id,parent_id,child_id,is_first_child):
@@ -133,6 +133,18 @@ def move(request,dir_to_move_id,parent_id,child_id,is_first_child):
     print(target_parent.first_child)
 
     return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(dir_to_move_id, 0)))
+
+# 目录更改名称
+def edit_name(request,directory_id):
+    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    user = request.user
+    dir = directory.objects.get(id=directory_id)
+    if user != dir.user: return HttpResponseForbidden('您无权修改此目录的名称')
+
+    dir.name = request.POST['directory_name']
+    dir.save()
+
+    return HttpResponseRedirect(reverse('Notebook_directory_specific',args=(directory_id, 0)))
 
 # 目录更改描述
 def edit_discription(request,directory_id):

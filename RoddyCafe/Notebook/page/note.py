@@ -32,19 +32,18 @@ def new(request, directory_id):
     
     return HttpResponseRedirect(reverse('Notebook_note_edit',args=(new_note(request, dir.id), 0)))
 
-
 # 笔记编辑
-def edit(request, note_id, is_from_homepage):
+def edit(request, note_id, is_from_todo):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     noteToEdit = note.objects.get(id=note_id)
     user = request.user
     if user != noteToEdit.user: return HttpResponseForbidden('您无权操作该笔记')
     
     # 是否从主页跳转而来，若是，则返回按钮返回至主页
-    from_homepage = True if is_from_homepage else False
+    from_homepage = True if is_from_todo else False
 
     context = {
         'note' : noteToEdit,
-        'is_from_homepage' : from_homepage,
+        'is_from_todo' : from_homepage,
     }
     return render(request,'Notebook/note/headbar/edit.html',context)

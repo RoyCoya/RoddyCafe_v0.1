@@ -16,7 +16,7 @@ def new(request,directory_id):
     new_note = note(
         directory = dir,
         user = request.user,
-        title = '新笔记',
+        title = '未命名笔记',
         content = None,
     )
     new_note.save()
@@ -84,7 +84,7 @@ def switch_pending(request,note_id):
     user = request.user
     if user != note_to_set_pending.user: return HttpResponseForbidden('您无权将此笔记设置为“未编辑”状态')
 
-    note_to_set_pending.isPending = request.POST['pending_checked'].title()
+    note_to_set_pending.isUnfinished = request.POST['pending_checked'].title()
     note_to_set_pending.save()
 
     return HttpResponse("笔记设置未编辑状态成功")

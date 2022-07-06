@@ -1,19 +1,22 @@
-<div class="modal fade" id="modal_change_discription" tabindex="-1">
+<div class="modal fade" id="modal_change_name" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-success" id="exampleModalLabel">目录描述</h5>
+                <h5 class="modal-title text-success" id="exampleModalLabel">目录名</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{% url 'api_Notebook_directory_edit_discription' directory.id %}" method="post">
+            <form
+            action="{% url 'api_Notebook_directory_edit_name' directory.id %}"
+            method="post">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="col mb-3">
-                        <textarea placeholder="描述上限200字" 
-                        id="form_new_directory_discription" 
+                        <input placeholder="不多于20字" 
+                        id="form_new_directory_name" 
                         class="form-control" 
-                        name="directory_discription" 
-                        type="text" maxlength="200">{{directory.discription}}</textarea>
+                        name="directory_name" 
+                        type="text" maxlength="20"
+                        value="{{directory.name}}"></input>
                     </div>
                 </div>
                 <div class="modal-footer">

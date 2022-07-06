@@ -6,18 +6,8 @@ from django.db.models import Q
 from Notebook.models import *
 from CafeFrame.api.common import is_login
 
-# 所有目录
-def all(request):
-    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    dirs = directory.objects.filter(user=request.user)
-    root_dir = dirs[0]
-    context = {
-        'root_dir':root_dir
-    }
-    return render(request,'Notebook/directory/all/all.html',context)
-
-# 目录内笔记列表详情
-def specific(request, directory_id, is_from_homepage):
+# 指定目录
+def specific(request, directory_id, is_from_todo):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     dir = directory.objects.get(id=directory_id)
     user = request.user
@@ -58,7 +48,7 @@ def specific(request, directory_id, is_from_homepage):
     notes_not_pintop = note.objects.filter(directory=dir,isPinTop=False).order_by('title')
     
     # 是否从主页跳转而来，若是，则返回按钮返回至主页
-    from_homepage = True if is_from_homepage else False
+    from_homepage = True if is_from_todo else False
 
     context = {
         'directory' : dir,
@@ -67,6 +57,6 @@ def specific(request, directory_id, is_from_homepage):
         'notes_pintop' : notes_pintop,
         'notes_not_pintop' : notes_not_pintop,
         'root_dir' : root_dir,
-        'is_from_homepage' : from_homepage,
+        'is_from_todo' : from_homepage,
     }
     return render(request,'Notebook/directory/specific/specific.html',context)
