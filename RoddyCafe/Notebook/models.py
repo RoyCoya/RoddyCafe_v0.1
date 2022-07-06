@@ -13,6 +13,7 @@ class directory(models.Model):
     next_brother = models.ForeignKey('self', related_name='directory_next_brother', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='下一个同级目录（右子树）')
     def __str__(self):
         return str(self.name)
+
     class Meta:
         verbose_name = '目录'
         verbose_name_plural = '目录'
@@ -31,6 +32,7 @@ class note(models.Model):
     editDate = models.DateTimeField(auto_now=True, verbose_name='笔记修改时间')
     def __str__(self):
         return str(self.title)
+
     class Meta:
         verbose_name = '笔记'
         verbose_name_plural = '笔记'
@@ -41,6 +43,7 @@ class alert(models.Model):
     note = models.ForeignKey(note, on_delete=models.CASCADE, verbose_name='所属笔记')
     datetime = models.DateTimeField(verbose_name='提醒时间')
     #TODO:重复提醒功能
+
     class Meta:
         verbose_name = '提醒'
         verbose_name_plural = '提醒'
@@ -57,4 +60,8 @@ class note_file(models.Model):
         upload_to=file_path, 
         verbose_name='文件内容'
     )
+
+    class Meta:
+        verbose_name = '文件'
+        verbose_name_plural = '文件'
 

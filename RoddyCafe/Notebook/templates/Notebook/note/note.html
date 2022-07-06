@@ -1,5 +1,6 @@
 {% extends "Notebook/base.html" %}
 {% load static %}
+{% load notebook_global_tags %}
 
 {% block title_notebook %}笔记：{{ note.title }}{% endblock title_notebook %}
 
@@ -20,7 +21,7 @@
 
 {% block js_notebook %}
 <script>
-    note_content = `{{note.content|escape}}`
+    note_content = `{{note.content|escape|escapejs|escapejsString}}`
     url_api_note_switch_pintop = "{% url 'api_Notebook_note_switch_pintop' note.id %}"
     url_api_note_switch_pending = "{% url 'api_Notebook_note_switch_pending' note.id %}"
 </script>
