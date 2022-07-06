@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{% block title_CafeFrame %}{% endblock title_CafeFrame %} | 笔记库
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/Notebook/css/theme.css' %}">
+{% block css_CafeFrame %}{% endblock css_CafeFrame %}
+{% endblock css %}
+
+{% block content %}
+<div class="mb-5 pb-5">
+    {% block content_CafeFrame %}{% endblock content_CafeFrame %}
+</div>
+{% endblock content %}
+
+{% block js %}
+{% block js_CafeFrame %}{% endblock js_CafeFrame %}
+{% endblock js %}

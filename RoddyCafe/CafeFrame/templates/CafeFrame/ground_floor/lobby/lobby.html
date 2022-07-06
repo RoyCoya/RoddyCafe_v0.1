@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'CafeFrame/base.html' %}
 {% load static %}
 
 {% block title %}主页{% endblock %}
@@ -10,9 +10,8 @@
             拾心咖啡屋 Roy's Cafe
         </h2>
     </div>
-    <a href="{% url 'Notebook_homepage' %}">笔记库</a>
-    <br/>
-    <a href="{% url 'logout' %}">退出登陆</a>
+    <a class="btn btn-success" href="{% url 'Notebook_homepage' %}">笔记库</a>
+    <a class="btn btn-danger ms-3" href="{% url 'logout' %}">退出登陆</a>
 </div>
 
 <div class="fixed-bottom border-top text-center bg-light">
