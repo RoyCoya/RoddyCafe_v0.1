@@ -5,6 +5,7 @@ from django.db.models import Q
 
 from Notebook.models import *
 from CafeFrame.api.common import is_login
+from Notebook.api.common import get_notification_count
 
 # 指定目录
 def specific(request, directory_id, is_from_todo):
@@ -50,6 +51,9 @@ def specific(request, directory_id, is_from_todo):
     # 是否从主页跳转而来，若是，则返回按钮返回至主页
     from_homepage = True if is_from_todo else False
 
+    # 拉取底栏的提醒
+    todo_count, share_count = get_notification_count(request.user)
+
     context = {
         'directory' : dir,
         'directory_parents' : parents_directories,
@@ -58,5 +62,7 @@ def specific(request, directory_id, is_from_todo):
         'notes_not_pintop' : notes_not_pintop,
         'root_dir' : root_dir,
         'is_from_todo' : from_homepage,
+        'todo_count' : todo_count,
+        'share_count' : share_count,
     }
     return render(request,'Notebook/directory/specific/specific.html',context)
