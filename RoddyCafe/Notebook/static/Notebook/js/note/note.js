@@ -10,7 +10,10 @@ const csrftoken = getCookie('csrftoken');
 const { createEditor } = window.wangEditor
 //编辑器配置
 const editorConfig = {
-    readOnly : true
+    readOnly : true,
+    onCreated : (editor) => {
+        $('input').removeAttr('disabled');
+    },
 }
 const editor = createEditor({
     selector : '#editor_container',
