@@ -76,8 +76,8 @@ editorConfig.MENU_CONF['uploadVideo'] = {
 const editor = createEditor({
     selector : '#editor_container',
     config : editorConfig,
-    html : note_content.replace(/\&lt;/g,'<').replace(/\&gt;/g,'>').replace(/&#x27;/g,"\'").replace(/\&quot;/g,'"').replace(/&amp;/g,'\&'),
-    mode : 'default',
+    mode: 'simple',
+    html : note_content.replace(/\&lt;/g,'<').replace(/\&gt;/g,'>').replace(/&#x27;/g,"\'").replace(/\&quot;/g,'"').replace(/&amp;/g,'\&')
 })
 //工具栏配置
 const toolbarConfig = {
