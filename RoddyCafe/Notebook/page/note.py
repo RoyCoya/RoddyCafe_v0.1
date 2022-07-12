@@ -8,7 +8,7 @@ from CafeFrame.api.common import is_login
 from Notebook.api.note import new as new_note
 
 # 笔记详情
-def detail(request, note_id):
+def detail(request, note_id, is_from_homepage):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     user = request.user
     noteToView = note.objects.get(id=note_id)
@@ -16,10 +16,12 @@ def detail(request, note_id):
 
     dirs = directory.objects.filter(user=request.user)
     root_dir = dirs[0]
-    
+    from_homepage = True if is_from_homepage else False
+
     context = {
         'note' : noteToView,
-        'root_dir':root_dir,
+        'root_dir' : root_dir,
+        'is_from_homepage' : from_homepage,
     }
     return render(request,'Notebook/note/note.html',context)
 
@@ -39,11 +41,11 @@ def edit(request, note_id, is_from_todo):
     user = request.user
     if user != noteToEdit.user: return HttpResponseForbidden('您无权操作该笔记')
     
-    # 是否从主页跳转而来，若是，则返回按钮返回至主页
-    from_homepage = True if is_from_todo else False
+    # 是否从代办页面跳转而来，若是，则返回按钮返回至代办
+    from_todo = True if is_from_todo else False
 
     context = {
         'note' : noteToEdit,
-        'is_from_todo' : from_homepage,
+        'is_from_todo' : from_todo,
     }
     return render(request,'Notebook/note/headbar/edit.html',context)

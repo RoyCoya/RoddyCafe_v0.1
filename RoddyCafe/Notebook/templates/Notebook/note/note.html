@@ -24,6 +24,7 @@
     note_content = `{{note.content|escape|escapejs|escapejsString}}`
     url_api_note_switch_pintop = "{% url 'api_Notebook_note_switch_pintop' note.id %}"
     url_api_note_switch_pending = "{% url 'api_Notebook_note_switch_pending' note.id %}"
+    url_api_note_switch_shortcut = "{% url 'api_Notebook_note_switch_shortcut' note.id %}"
 </script>
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script src="{% static '/Notebook/js/note/note.js' %}"></script>

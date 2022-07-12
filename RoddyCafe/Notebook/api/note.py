@@ -70,7 +70,7 @@ def switch_pintop(request,note_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     note_to_set_pin = note.objects.get(id=note_id)
     user = request.user
-    if user != note_to_set_pin.user: return HttpResponseForbidden('您无权置顶此笔记')
+    if user != note_to_set_pin.user: return HttpResponseForbidden('您无权设置此笔记的置顶状态')
     
     note_to_set_pin.isPinTop = request.POST['pintop_checked'].title()
     note_to_set_pin.save()
@@ -82,9 +82,21 @@ def switch_pending(request,note_id):
     if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     note_to_set_pending = note.objects.get(id=note_id)
     user = request.user
-    if user != note_to_set_pending.user: return HttpResponseForbidden('您无权将此笔记设置为“未编辑”状态')
+    if user != note_to_set_pending.user: return HttpResponseForbidden('您无权设置此笔记的编辑状态')
 
     note_to_set_pending.isUnfinished = request.POST['pending_checked'].title()
     note_to_set_pending.save()
 
     return HttpResponse("笔记设置未编辑状态成功")
+
+# 笔记切换快捷方式状态
+def switch_shortcut(request,note_id):
+    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    note_to_set_shortcut = note.objects.get(id=note_id)
+    user = request.user
+    if user != note_to_set_shortcut.user: return HttpResponseForbidden('您无权设置此笔记的快捷方式状态')
+
+    note_to_set_shortcut.shortcut = request.POST['shortcut_checked'].title()
+    note_to_set_shortcut.save()
+
+    return HttpResponse("笔记设置快捷方式状态成功")

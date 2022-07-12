@@ -47,7 +47,7 @@ const csrftoken = getCookie('csrftoken');
 const { createEditor, createToolbar } = window.wangEditor
 //编辑器配置
 const editorConfig = {
-    placeholder : '点击返回即可自动保存笔记。每隔3分钟（可调整）自动保存。',
+    placeholder : '点击返回或每隔3分钟将自动保存笔记。',
     autoFocus : true,
     onChange : (editor) => {
         const content = editor.children

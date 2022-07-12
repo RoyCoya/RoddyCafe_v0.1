@@ -45,3 +45,13 @@ $("#switch_pending").click(function (e) {
         headers:{'X-CSRFToken': csrftoken}
     });
 });
+//切换快捷方式状态
+$("#switch_shortcut").click(function (e) { 
+    $.ajax({
+        type: "post",
+        url: url_api_note_switch_shortcut,
+        data: {"shortcut_checked" : this.checked,},
+        dataType: "json",
+        headers:{'X-CSRFToken': csrftoken}
+    });
+});

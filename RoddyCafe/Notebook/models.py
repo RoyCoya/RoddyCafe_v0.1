@@ -30,6 +30,8 @@ class note(models.Model):
     isUnfinished = models.BooleanField(default=True, verbose_name='待编辑')
     createDate = models.DateTimeField(auto_now_add=True, verbose_name='笔记创建时间')
     editDate = models.DateTimeField(auto_now=True, verbose_name='笔记修改时间')
+    shortcut = models.BooleanField(default=False, verbose_name='快捷方式')
+
     def __str__(self):
         return str(self.title)
 
