@@ -20,6 +20,7 @@ $('[id^=insertDir_]').click(function (e) {
     $('#isFormFilled').addClass("bg-success");
     $('#isFormFilled').text("已选择插入点");
     $('[id^=insertDir_]').css('color', '');
+    $('[id^=insertDir_] i').removeClass("text-light");
     $('[id^=insertDir_]').css('background-color', '');
     $('[id^=insertDir_]').find('span').addClass("invisible");
     $(this).css('color', 'white');
