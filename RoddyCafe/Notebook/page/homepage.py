@@ -14,7 +14,6 @@ def homepage(request):
 
     shortcuts = note.objects.filter(user=request.user, shortcut=True).order_by('editDate')
     shortcuts_more = None
-    print(shortcuts.count())
     if len(shortcuts) > 6:
         shortcuts_more= shortcuts[6:]
         shortcuts = shortcuts[0:6]
