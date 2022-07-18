@@ -1,9 +1,4 @@
-from threading import local
 from django import template
-from django.conf import settings
-import datetime
-import pytz
-from requests import ReadTimeout
 
 register = template.Library()
 
