@@ -13,7 +13,7 @@ def configurations(request): return page_configurations.configurations(request)
 def directory_specific(request, directory_id, is_from_todo): return page_directory.specific(request, directory_id, is_from_todo)
 # 笔记
 def note_new(request, directory_id): return page_note.new(request, directory_id)
-def note_detail(request, note_id): return page_note.detail(request, note_id)
+def note_detail(request, note_id, is_from_homepage): return page_note.detail(request, note_id, is_from_homepage)
 def note_edit(request, note_id, is_from_todo): return page_note.edit(request, note_id, is_from_todo)
 
 '''接口'''
@@ -30,6 +30,7 @@ def api_note_edit(request, note_id): return api_note.edit(request, note_id)
 def api_note_move(request, note_id, directory_id): return api_note.move(request, note_id, directory_id)
 def api_note_switch_pintop(request, note_id): return api_note.switch_pintop(request, note_id)
 def api_note_switch_pending(request, note_id): return api_note.switch_pending(request, note_id)
+def api_note_switch_shortcut(requst, note_id): return api_note.switch_shortcut(requst, note_id)
 
 # wangeditor
 def api_wangeditor_upload_img(request, note_id): return api_wangeditor.upload_img(request, note_id)

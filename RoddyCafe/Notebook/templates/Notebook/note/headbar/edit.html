@@ -1,5 +1,6 @@
 {% extends "Notebook/base.html" %}
 {% load static %}
+{% load notebook_global_tags %}
 
 {% block title %}编辑：{{ note.title}}{% endblock title %}
 
@@ -76,11 +77,11 @@
 {% block js_notebook %}
 <script src="{% static '/wangeditor/wangeditor.min.js' %}"></script>
 <script>
-    note_content = `{{ note.content|escape }}`
+    note_content = `{{note.content|escape|escapejs|escapejsString}}`
     url_api_note_save = "{% url 'api_Notebook_note_save' note.id  %}"
     url_api_Notebook_wangeditor_upload_img = "{% url 'api_Notebook_note_upload_img' note.id %}"
     url_api_Notebook_wangeditor_upload_video = "{% url 'api_Notebook_note_upload_video' note.id %}"
-    url_back = "{% if is_from_todo %}{% url 'Notebook_todo' %}{% else %}{% url 'Notebook_note_detail' note.id %}{% endif %}"
+    url_back = "{% if is_from_todo %}{% url 'Notebook_todo' %}{% else %}{% url 'Notebook_note_detail' note.id 0 %}{% endif %}"
     url_api_note_switch_pending = "{% url 'api_Notebook_note_switch_pending' note.id %}"
 </script>
 <script src="{% static '/Notebook/js/note/edit.js' %}"></script>

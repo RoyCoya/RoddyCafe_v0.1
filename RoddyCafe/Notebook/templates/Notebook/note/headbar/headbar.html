@@ -3,10 +3,12 @@
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-light ">
-                <a href="{% url 'Notebook_directory_specific' note.directory.id 0 %}" class="col-2 text-start ps-2">
+                <a
+                href="{% if is_from_homepage %}{% url 'Notebook_homepage' %}{% else %}{% url 'Notebook_directory_specific' note.directory.id 0 %}{% endif %}"
+                class="col-2 text-start ps-2">
                     <i class="text-success bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
                 </a>
-                <span class="col-8 h5 text-center" style="margin: 0px;">
+                <span class="col-8 h5 text-center text-break" style="margin: 0px;">
                     <i class="text-success bi bi-file-earmark-richtext" style="font-size: 1.3rem;"></i>
                     {{note.title}}
                 </span>
@@ -19,9 +21,9 @@
 </div>
 
 <!-- 弹出式设置面板 -->
-<div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 50%;" tabindex="-1" id="toolbarBottom">
+<div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 60%;" tabindex="-1" id="toolbarBottom">
     <div class="offcanvas-header row border-bottom d-flex justify-content-between">
-        <h4 class="offcanvas-title col-10" id="toolbarBottomLabel"><i class="bi bi-file-earmark-richtext text-success"></i> {{ note.title }}</h4>
+        <h4 class="offcanvas-title col-10 text-break" id="toolbarBottomLabel"><i class="bi bi-file-earmark-richtext text-success"></i> {{ note.title }}</h4>
         <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
@@ -63,6 +65,12 @@
                     <div class="form-check form-switch">
                         <label class="form-check-label">待编辑</label>
                         <input id="switch_pending" class="form-check-input" type="checkbox" role="switch" {% if note.isUnfinished %}checked{% endif %}>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label">快捷方式</label>
+                        <input id="switch_shortcut" class="form-check-input" type="checkbox" role="switch" {% if note.shortcut %}checked{% endif %}>
                     </div>
                 </div>
             </ul>

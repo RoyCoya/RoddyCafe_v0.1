@@ -11,7 +11,7 @@ pages = [
 	path('configurations/', views.configurations, name='Notebook_configurations'),
 	# 目录和笔记
 	path('directory/<int:directory_id>/is_from_todo/<int:is_from_todo>/', views.directory_specific, name='Notebook_directory_specific'),
-	path('note/<int:note_id>/', views.note_detail, name='Notebook_note_detail'),
+	path('note/<int:note_id>/is_from_homepage/<int:is_from_homepage>/', views.note_detail, name='Notebook_note_detail'),
 	path('note/new/<int:directory_id>/', views.note_new, name='Notebook_note_new'),
 	path('note/<int:note_id>/edit/is_from_todo/<int:is_from_todo>/', views.note_edit, name='Notebook_note_edit'),
 ]
@@ -31,6 +31,7 @@ apis = [
 	path('note/<int:note_id>/moveto/directory/<int:directory_id>/', views.api_note_move, name='api_Notebook_note_move'),
 	path('note/<int:note_id>/setpintop/', views.api_note_switch_pintop, name='api_Notebook_note_switch_pintop'),
 	path('note/<int:note_id>/setpending/', views.api_note_switch_pending, name='api_Notebook_note_switch_pending'),
+	path('note/<int:note_id>/setshortcut/', views.api_note_switch_shortcut, name='api_Notebook_note_switch_shortcut'),
 	path('note/<int:note_id>/uploadimg/', views.api_wangeditor_upload_img, name='api_Notebook_note_upload_img'),
 	path('note/<int:note_id>/uploadvideo/', views.api_wangeditor_upload_video, name='api_Notebook_note_upload_video'),
 ]

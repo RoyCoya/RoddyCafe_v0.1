@@ -27,7 +27,7 @@ def todo(request):
         parents_directories = []
         directory_parent = None
         try: directory_parent = directory.objects.get(Q(first_child=dir)|Q(next_brother=dir))
-        except Exception as e: print(e)
+        except Exception as e: pass
         dir_temp = dir
         while(directory_parent):
             if dir_temp == directory_parent.first_child:
