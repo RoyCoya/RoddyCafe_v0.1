@@ -9,7 +9,9 @@ from .models import movie
 
 def get_movie_list():
     movie_list = []
-    pointer = movie.objects.get(pre=None)
+    pointer = None
+    try: pointer = movie.objects.get(pre=None)
+    except: return movie_list
     while pointer.next:
         movie_list.append(pointer)
         pointer = pointer.next
@@ -36,6 +38,16 @@ def api_add_movie(request):
     movies = get_movie_list()
     new_rank = int(request.POST['rank']) - 1
     pre = next = None
+    if len(movies) == 0 : 
+        new_movie = movie.objects.create(
+            name = request.POST['name'],
+            remarks = request.POST['remarks'],
+        )
+        try:
+            new_movie.poster = request.FILES['poster']
+            new_movie.save()
+        except Exception as e: print(e)
+        return HttpResponseRedirect(reverse('MovieRank_index',args=()))
     if new_rank <= 0 : next = movies[0]
     elif new_rank <= len(movies) - 1 : pre, next = movies[new_rank - 1], movies[new_rank]
     else : pre = movies[-1]
