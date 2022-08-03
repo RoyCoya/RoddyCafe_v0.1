@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #以下为自建App
     'CafeFrame.apps.CafeframeConfig',
     'Notebook.apps.NotebookConfig',
+    'MovieRank.apps.MovierankConfig',
 ]
 
 MIDDLEWARE = [
