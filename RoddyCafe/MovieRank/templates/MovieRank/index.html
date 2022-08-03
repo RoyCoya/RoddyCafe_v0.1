@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+电影排名
+{% endblock title %}
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+<div class="mb-5 pb-5 container">
+    <div class="sticky-top bg-light border-bottom">
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-light ">
+                    <a
+                    href="{% url 'RoddyCafe_lobby' %}"
+                    class="col-2 text-start ps-2">
+                        <i class="text-primary bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i>
+                    </a>
+                    <span class="col-8 h4 text-center text-break" style="margin: 0px;">
+                        电影排名
+                    </span>
+                    <span class="col-2"></span>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <form class="mb-3" enctype="multipart/form-data" action="{% url 'api_MovieRank_add_movie' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group mt-3">
+            <span class="input-group-text"><span class="text-primary">*</span>排名</span>
+            <input name="rank" type="number" class="form-control" placeholder="排名" required onkeyup="value=value.replace(/[^\d\.]/g,'');if(value<1) value=1;if(value>{{movies|length}}+1)value={{movies|length}}+1;">
+            <span class="input-group-text"><span class="text-primary">*</span>电影名</span>
+            <input name="name" type="text" class="form-control" placeholder="电影名" required>
+        </div>
+        <div class="input-group mt-1 mb-3">
+            <span class="input-group-text">海报图</span>
+            <input name="poster" type="file" class="form-control">
+        </div>
+        <textarea name="remarks" class="form-control mb-2" rows="3" placeholder="影评"></textarea>
+        <div class="text-end">
+            <button class="btn btn-outline-primary" type="submit">新增电影</button>
+        </div>
+    </form>
+    <hr/>
+    <div class="text-center text-secondary"><small>共 {{movies|length}} 项</small></div>
+    {% for movie in movies %}
+        <div class="card border-primary mb-3 mt-2">
+            <a class="card-header" href="#" data-bs-toggle="collapse" data-bs-target="#movie_{{forloop.counter}}">
+                <span class="h4 text-dark">{{forloop.counter}}.《{{movie.name}}》</span>
+            </a>
+            <div class="card-body row collapse" id="movie_{{forloop.counter}}">
+                <div class="col-5 border-end border-primary text-center">
+                    {% if movie.poster %}
+                        <img src="/userfile/{{movie.poster}}" class="img-fluid">
+                    {% else %}
+                        <a href="#" class="text-secondary"><small>无海报图，点击上传（还没做）</small></a>
+                    {% endif %}
+                </div>
+                <div class="col-7">
+                    <strong class="text-primary">影评：</strong>
+                    {% if movie.remarks %}{{movie.remarks|linebreaks}}{% else %}<p>无</p>{% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
+
+{% block js %}
+{% endblock js %}
