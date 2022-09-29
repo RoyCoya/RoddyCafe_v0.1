@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ock0sungl)@@#!3+_v@5f=#=)0idspdppu1cr9x=#2d3vry6q!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','192.168.2.49','localhost','syner.top','47.102.211.223']
 
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     #以下为自建App
     'CafeFrame.apps.CafeframeConfig',
     'Notebook.apps.NotebookConfig',
-    'MovieRank.apps.MovierankConfig',
+    'Ranking.apps.RankingConfig',
 ]
 
 MIDDLEWARE = [
