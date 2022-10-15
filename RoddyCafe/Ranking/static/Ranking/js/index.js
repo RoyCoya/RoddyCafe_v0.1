@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#rank_type option[value=' + type + ']').attr('selected', 'selected');
+    $('#rank_type').val(type);
 });
 
 $("#rank_type").change(function (e) { 
