@@ -26,9 +26,14 @@ SECRET_KEY = 'django-insecure-ock0sungl)@@#!3+_v@5f=#=)0idspdppu1cr9x=#2d3vry6q!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','192.168.2.49','localhost','syner.top','47.102.211.223']
-
-
+ALLOWED_HOSTS = [
+    '127.0.0.1','localhost','0.0.0.0',
+    '172.20.10.2' # iPhone11热点
+    ]
+for i in range(0,255):
+    for j in range(0,255):
+        ALLOWED_HOSTS.append('192.168.' + str(i) + '.' + str(j))
+        
 # Application definition
 
 INSTALLED_APPS = [
