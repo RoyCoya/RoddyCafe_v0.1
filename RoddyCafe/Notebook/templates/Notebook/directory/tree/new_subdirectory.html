@@ -28,7 +28,7 @@
                     <input id="form_new_directory_position" type="hidden" name="directory_position" type="text" {% if directory.first_child %}required {% else %}value='insertDir_{{directory.id}}__left'{% endif %}>
                 </div>
                 <div class="modal-footer">
-                    <button id="new_directory_confirm" class="btn btn-success" type="submit" href="#" hidden>确认</button>
+                    <button id="new_directory_confirm" class="btn btn-success" type="submit" href="#" {% if directory.first_child %}hidden{% endif %}>确认</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                 </div>
             </form>
