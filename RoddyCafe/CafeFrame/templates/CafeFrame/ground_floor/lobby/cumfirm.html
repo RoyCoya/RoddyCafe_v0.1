@@ -1,0 +1,35 @@
+{% load static %}
+{% if user.is_authenticated %}
+    <div class="modal fade" id="cumfirm" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="exampleModalLabel">确认开启？</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img class="img-fluid" src="{% static 'CafeFrame/img/temp/cum.jpg' %}">
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="{% url 'api_CafeFrame_new_mastur' %}">确认</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="modal fade" id="cumfirm" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="exampleModalLabel">请先登陆！</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="{% url 'login' %}">确认</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

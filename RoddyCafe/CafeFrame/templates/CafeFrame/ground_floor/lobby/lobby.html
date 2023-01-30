@@ -1,18 +1,96 @@
 {% extends 'CafeFrame/base.html' %}
 {% load static %}
+{% load lobby_tags %}
 
 {% block title %}主页{% endblock %}
 
 {% block content %}
 <div class="container mt-3">
     <div class="row text-center">
-        <h2>
-            拾心咖啡屋 Roy's Cafe
-        </h2>
+        <h2>拾心咖啡屋 Roy's Cafe</h2>
     </div>
-    <a class="btn btn-success" href="{% url 'Notebook_homepage' %}">笔记库</a>
-    <a class="btn btn-primary text-light ms-3" href="{% url 'Ranking_index' %}">排名工具</a>
-    <a class="btn btn-danger ms-3" href="{% url 'logout' %}">退出登陆</a>
+    {% if user.is_authenticated %}
+        <div class="alert alert-primary d-flex justify-content-between" role="alert">
+            <span>欢迎光临，{{user.username}}</span>
+            <a class="text-danger" href="{% url 'logout' %}">
+                <span class="bi bi-power"></span>
+                退出登陆
+            </a>
+        </div>
+    {% endif %}
+    
+    {% if latest_mastur %}
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="p-4 text-light border border-warning rounded-3" style="background-color:red;">热 烈 祝 贺 Rocky 蓄 力 时 长 已 达 ：</h1>
+                <h1 class="p-4 text-light border border-warning rounded-3" style="background-color:red;">
+                    {{ latest_mastur.createDate|timesince_custom }}
+                </h1>
+            </div>
+            <div class="row mt-3">
+                <div class="col-3 border-end">
+                    <a href="#cumfirm" data-bs-toggle="modal">
+                        <img class="img-fluid" src="{% static 'CafeFrame/img/temp/skill_Liquid NitrogenCannon.png' %}">
+                    </a>
+                </div>
+                <div class="col-9">
+                    {% with skill_percent=latest_mastur.createDate|skill_points:9 %}
+                        {% if skill_percent <= 100 %}
+                            <div class="spinner-grow text-success" role="status">
+                            </div>
+                            <span class="align-self-center">
+                                <span class="text-success">液氮大炮充能中</span>
+                                （{{ skill_percent|floatformat:2 }}/100）
+                            </span>
+                        {% else %}
+                            <span class="bi bi-suit-heart-fill text-danger"></span>
+                            <span class="bi bi-suit-heart-fill text-danger"></span>
+                            <span class="bi bi-suit-heart-fill text-danger"></span>
+                            <strong class="text-warning">充能完毕！</strong>
+                            <span class="bi bi-suit-heart-fill text-danger"></span>
+                            <span class="bi bi-suit-heart-fill text-danger"></span>
+                            <span class="bi bi-suit-heart-fill text-danger"></span>
+                        {% endif %}
+                        <div class="progress ps-0 pe-0 mt-2">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated {% if skill_percent <= 100 %}bg-success{% else %}bg-warning{% endif %}" role="progressbar" style="width: {{ skill_percent|floatformat:0 }}%"></div>
+                        </div>
+                        <small class="text-secondary">（注：点击技能图标释放）</small>
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <p class="mt-2"><strong>特性：</strong>技能未开启时<span class="text-danger">9天</span>内，攻击力逐渐提高至最高<span class="text-primary">+200%</span>，技能结束时重置攻击力。</p>
+                <p class="mt-2"><strong>模组：</strong>完全充能时开启技能，附带直播礼物<span class="text-primary">+100%</span>额外奖励，技能结束时重置。</p>
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+            <hr/>
+            <div class="row">
+                <h3 class="text-center">技能记录</h3>
+                <div class="col">
+                    <ol>
+                        {% for mastur in mastur_records %}
+                            <li>{{mastur.createDate}}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <hr/>
+    <div class="row">
+        <h3 class="text-center">工具栏</h3>
+        <div class="col-6 border-end">
+            <h5>哲予：</h5>
+            <a class="btn btn-success" href="{% url 'Notebook_homepage' %}">笔记库</a>
+            <a class="btn btn-secondary" href="/admin">控制台</a>
+        </div>
+        <div class="col-6">
+            <h5>北辰听雨：</h5>
+            <a class="btn btn-primary text-light ms-3" href="{% url 'Ranking_index' %}">排名工具</a>
+        </div>
+    </div>
 </div>
 
 <div class="fixed-bottom border-top text-center bg-light">
@@ -23,4 +101,7 @@
         </small>
     </div>
 </div>
+
+<!-- 补充内容 -->
+{% include 'CafeFrame/ground_floor/lobby/cumfirm.html' %}
 {% endblock %}
