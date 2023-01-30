@@ -31,4 +31,9 @@ admin.site.register(note,admin_note)
 #笔记提醒
 admin.site.register(alert)
 #用户文件
-admin.site.register(note_file)
+class admin_note_file(admin.ModelAdmin):
+	list_display = [
+		'id',
+        'note',
+]
+admin.site.register(note_file,admin_note_file)
