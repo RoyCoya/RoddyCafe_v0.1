@@ -28,6 +28,7 @@ $('[id^=insertDir_]').click(function (e) {
     $(this).find('span').removeClass("invisible");
     $(this).find('i').addClass("text-light");
     $('#form_new_directory_position').val($(this).attr("id"));
+    $("#new_directory_confirm").removeAttr('hidden','hidden');
 });
 
 //移动目录->选择新目录位置时列表的ui变化
