@@ -4,7 +4,7 @@
 
 {% block css %}
 <style>
-    @font-face { font-family: HanSans; src: url('{% static 'CafeFrame/font/SourceHanSansSC-Heavy.otf' %}'); } 
+    @font-face { font-family: HanSans; src: url('{% static 'CafeFrame/font/SourceHanSansSC-Heavy.ttf' %}'); } 
 </style>
 {% endblock css %}
 
@@ -26,20 +26,20 @@
     {% endif %}
     
     {% if latest_mastur %}
-        <div class="row mb-4 ps-2">
+        <div class="row mb-4">
             <div class="col-12 text-center">
                 <h1 class="p-4 text-light border border-warning rounded-3" style="background-color:red; font-family: HanSans">热 烈 祝 贺 Rocky 蓄 力 时 长 已 达 ：</h1>
                 <h2 class="p-4 text-light border border-warning rounded-3" style="background-color:red; font-family: HanSans">
                     {{ latest_mastur.createDate|timesince_custom }}
                 </h2>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-3 pe-0">
                 <div class="col-3 border-end">
                     <a href="#cumfirm" data-bs-toggle="modal">
                         <img class="img-fluid" src="{% static 'CafeFrame/img/temp/skill_Liquid NitrogenCannon.png' %}">
                     </a>
                 </div>
-                <div class="col-9">
+                <div class="col-9 pe-0">
                     {% with skill_percent=latest_mastur.createDate|skill_points:9 %}
                         {% if skill_percent <= 100 %}
                             <div class="spinner-grow text-success" role="status">
@@ -64,9 +64,9 @@
                     {% endwith %}
                 </div>
             </div>
-            <div class="row mt-3 ps-3">
-                <p class="mt-2"><strong>特性：</strong>技能未开启时<span class="text-danger">9天</span>内，攻击力逐渐提高至最高<span class="text-primary">+200%</span>，技能结束时重置攻击力。</p>
-                <p class="mt-2"><strong>模组：</strong>完全充能时开启技能，附带直播礼物<span class="text-primary">+100%</span>额外奖励，技能结束时重置。</p>
+            <div class="row mt-3 ps-3 pe-0">
+                <p class="mt-2 pe-0"><strong>特性：</strong>技能未开启时<span class="text-danger">9天</span>内，攻击力逐渐提高至最高<span class="text-primary">+200%</span>，技能结束时重置攻击力。</p>
+                <p class="mt-2 pe-0"><strong>模组：</strong>完全充能时开启技能，附带直播礼物<span class="text-primary">+100%</span>额外奖励，技能结束时重置。</p>
             </div>
         </div>
         {% if user.is_authenticated %}
@@ -88,13 +88,15 @@
     <div class="row">
         <h3 class="text-center mb-3">工具栏</h3>
         <div class="col-6 border-end">
-            <h5>哲予：</h5>
+            <strong>哲予：</strong>
+            <br>
             <a class="btn btn-success" href="{% url 'Notebook_homepage' %}">笔记库</a>
             <a class="btn btn-secondary" href="/admin">控制台</a>
         </div>
         <div class="col-6">
-            <h5>北辰听雨：</h5>
-            <a class="btn btn-primary text-light ms-3" href="{% url 'Ranking_index' %}">排名工具</a>
+            <strong>北辰听雨：</strong>
+            <br>
+            <a class="btn btn-primary text-light" href="{% url 'Ranking_index' %}">排名工具</a>
         </div>
     </div>
 </div>
