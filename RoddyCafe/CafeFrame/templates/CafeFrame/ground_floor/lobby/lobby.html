@@ -69,7 +69,7 @@
                 <p class="mt-2 pe-0"><strong>模组：</strong>完全充能时开启技能，附带直播礼物<span class="text-primary">+100%</span>额外奖励，技能结束时重置。</p>
             </div>
         </div>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and user.username == "RockyRoo" or user.username == "RoyCoya" %}
             <hr/>
             <div class="row">
                 <h3 class="text-center">技能记录</h3>
