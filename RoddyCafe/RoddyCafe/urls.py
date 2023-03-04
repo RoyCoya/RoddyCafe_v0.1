@@ -36,6 +36,7 @@ cafe = [
     path('notebook/', include('Notebook.urls')),
     # 工具箱 -> 排名（宋智博）
     path('rank/', include('Ranking.urls')),
+    path('ledger/', include('Ledger.urls')),
 ]
 
 urlpatterns = djangoURLs + cafe

@@ -1,0 +1,17 @@
+{% extends "Ledger/base.html" %}
+{% load static %}
+{% block title_ledger %}设置{% endblock title_ledger%}
+
+{% block content_ledger %}
+
+<!-- 顶栏 -->
+{% include 'Ledger/preference/headbar.html' %}
+开发中……
+预计功能：预算显示模式切换（动态计算每月剩余预算/根据月预算固定）、快捷方式设置
+<!-- 底部tab bar -->
+{% include 'Ledger/tabbar.html' with highlight_tab='preference' %}
+
+{% endblock content_ledger %}
+
+{% block js_ledger %}
+{% endblock js_ledger %}

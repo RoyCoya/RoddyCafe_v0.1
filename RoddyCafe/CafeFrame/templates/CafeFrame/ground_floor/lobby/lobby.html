@@ -36,7 +36,7 @@
             <div class="row mt-3 pe-0">
                 <div class="col-3 border-end">
                     <a href="#cumfirm" data-bs-toggle="modal">
-                        <img class="img-fluid" src="{% static 'CafeFrame/img/temp/skill_Liquid NitrogenCannon.png' %}">
+                        <img class="img-fluid" src="{% static 'CafeFrame/img/temp/skill_Liquid_NitrogenCannon.png' %}">
                     </a>
                 </div>
                 <div class="col-9 pe-0">
@@ -69,34 +69,34 @@
                 <p class="mt-2 pe-0"><strong>模组：</strong>完全充能时开启技能，附带直播礼物<span class="text-primary">+100%</span>额外奖励，技能结束时重置。</p>
             </div>
         </div>
-        {% if user.is_authenticated and user.username == "RockyRoo" or user.username == "RoyCoya" %}
-            <hr/>
-            <div class="row">
-                <h3 class="text-center">技能记录</h3>
-                <div class="col">
-                    <ol>
-                        {% for mastur in mastur_records %}
-                            <li>{{mastur.createDate}}</li>
-                        {% endfor %}
-                    </ol>
-                </div>
-            </div>
-        {% endif %}
     {% endif %}
 
     <hr/>
     <div class="row">
         <h3 class="text-center mb-3">工具栏</h3>
-        <div class="col-6 border-end">
-            <strong>哲予：</strong>
-            <br>
+        <div class="col-12 border-end">
             <a class="btn btn-success" href="{% url 'Notebook_homepage' %}">笔记库</a>
-            <a class="btn btn-secondary" href="/admin">控制台</a>
-        </div>
-        <div class="col-6">
-            <strong>北辰听雨：</strong>
-            <br>
+            <a href="{% url 'Ledger_homepage' %}" class="btn btn-warning">
+                记账本
+            </a>
             <a class="btn btn-primary text-light" href="{% url 'Ranking_index' %}">排名工具</a>
+            {% if user.is_authenticated and user.is_superuser == 1 %}
+                <a class="btn btn-secondary" href="/admin">控制台</a>
+            {% endif %}
+            {% if user.is_authenticated and user.username == "RockyRoo" or user.username == "RoyCoya"%}
+                <a class="btn btn-info" data-bs-toggle="collapse" href="#masturbation_log">
+                    技能记录
+                </a>
+                <div class="row">
+                    <div class="col-12 collapse" id="masturbation_log">
+                        <ol>
+                            {% for mastur in mastur_records %}
+                                <li>{{mastur.createDate}}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

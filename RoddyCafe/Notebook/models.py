@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth import settings
-from django.db.models import F
 
 # 目录
 # 注意：本表采用森林转二叉树的数据结构存储，以便使目录能够手动排序而不用按标题字母等自动排序，且排序顺序存至数据库而非本地

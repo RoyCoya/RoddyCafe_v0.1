@@ -1,0 +1,21 @@
+<!-- 顶部工具栏 -->
+<div class="sticky-top bg-light border-bottom">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-light ">
+                <a href="{% url 'RoddyCafe_lobby' %}" class="col-2 text-start ps-2">
+                    <i class="text-warning bi bi-arrow-left-short" style="font-size: 1.5rem;"></i>
+                    <i class="text-warning bi bi-shop" style="font-size: 1.5rem;"></i>
+                </a>
+                <span class="col-8 h4 text-center" style="margin: 0px;">
+                    {% if current_mode == 'day' %}日{% else %}月{% endif %}账本
+                </span>
+                <a href="{% url 'Ledger_homepage' %}{% if current_mode == 'day' %}?mode=month
+                    {% else %}?mode=day
+                    {% endif %}"
+                    class="col-2 bi bi-{% if current_mode == 'day' %}sun{% else %}moon{% endif %} text-end text-warning" style="font-size: 1.5rem;">
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>

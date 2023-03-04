@@ -1,0 +1,128 @@
+{% load static %}
+<!-- 预算表情 -->
+<div class="col-4 text-center">
+    {% if current_mode == 'day' %}
+        <img class="img-fluid rounded-circle border border-2 shadow-lg border-{% if budget_left_day_ratio >= 75 %}success
+            {% elif budget_left_day_ratio >= 50 %}primary
+            {% elif budget_left_day_ratio >= 25 %}warning
+            {% else %}danger
+            {% endif %}"
+            src="{% if budget_left_day_ratio >= 90 %}{% static 'Ledger/img/homepage/budget/90.png' %}
+            {% elif budget_left_day_ratio >= 80 %}{% static 'Ledger/img/homepage/budget/80.png' %}
+            {% elif budget_left_day_ratio >= 70 %}{% static 'Ledger/img/homepage/budget/70.png' %}
+            {% elif budget_left_day_ratio >= 60 %}{% static 'Ledger/img/homepage/budget/60.png' %}
+            {% elif budget_left_day_ratio >= 50 %}{% static 'Ledger/img/homepage/budget/50.png' %}
+            {% elif budget_left_day_ratio >= 40 %}{% static 'Ledger/img/homepage/budget/40.png' %}
+            {% elif budget_left_day_ratio >= 30 %}{% static 'Ledger/img/homepage/budget/30.png' %}
+            {% elif budget_left_day_ratio >= 20 %}{% static 'Ledger/img/homepage/budget/20.png' %}
+            {% elif budget_left_day_ratio >= 10 %}{% static 'Ledger/img/homepage/budget/10.png' %}
+            {% else %}{% static 'Ledger/img/homepage/budget/0.png' %}
+            {% endif %}">
+    {% else %}
+        <img class="img-fluid rounded-circle border border-2 shadow-lg border-{% if budget_left_month_ratio >= 75 %}success
+            {% elif budget_left_month_ratio >= 50 %}primary
+            {% elif budget_left_month_ratio >= 25 %}warning
+            {% else %}danger
+            {% endif %}"
+            src="{% if budget_left_month_ratio >= 90 %}{% static 'Ledger/img/homepage/budget/90.png' %}
+            {% elif budget_left_month_ratio >= 80 %}{% static 'Ledger/img/homepage/budget/80.png' %}
+            {% elif budget_left_month_ratio >= 70 %}{% static 'Ledger/img/homepage/budget/70.png' %}
+            {% elif budget_left_month_ratio >= 60 %}{% static 'Ledger/img/homepage/budget/60.png' %}
+            {% elif budget_left_month_ratio >= 50 %}{% static 'Ledger/img/homepage/budget/50.png' %}
+            {% elif budget_left_month_ratio >= 40 %}{% static 'Ledger/img/homepage/budget/40.png' %}
+            {% elif budget_left_month_ratio >= 30 %}{% static 'Ledger/img/homepage/budget/30.png' %}
+            {% elif budget_left_month_ratio >= 20 %}{% static 'Ledger/img/homepage/budget/20.png' %}
+            {% elif budget_left_month_ratio >= 10 %}{% static 'Ledger/img/homepage/budget/10.png' %}
+            {% else %}{% static 'Ledger/img/homepage/budget/0.png' %}
+            {% endif %}">
+    {% endif %}
+</div>
+<div class="col-8">
+    <div class="col-12">
+        <strong>当前账本：</strong>
+        <select class="form-select" aria-label="Default select example" disabled>
+            <option value="{{current_book.id}}" selected>默认账本</option>
+            {% for book in books %}
+            <option value="{{book.id}}">{{book.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mt-2 col-12">
+        {% if current_month_budget %}
+            <div class="col-12 d-flex justify-content-between">
+                <span>
+                    {% if current_mode == 'day' %}
+                        <strong class="text-{% if budget_left_day_ratio >= 75 %}success
+                            {% elif budget_left_day_ratio >= 50 %}primary
+                            {% elif budget_left_day_ratio >= 25 %}warning
+                            {% else %}danger
+                            {% endif %}">
+                            预算：
+                        </strong>
+                        <span>
+                            {{budget_left_day}} / {{current_day_budget}} ¥
+                        </span>
+                    {% else %}
+                        <strong class="text-{% if budget_left_month_ratio >= 75 %}success
+                            {% elif budget_left_month_ratio >= 50 %}primary
+                            {% elif budget_left_month_ratio >= 25 %}warning
+                            {% else %}danger
+                            {% endif %}">
+                            预算：
+                        </strong>
+                        <span>
+                            {{budget_left_month}} / {{current_month_budget}} ¥
+                        </span>
+                    {% endif %}
+                </span>
+                {% if current_mode == 'month' %}
+                    <span class="bi bi-gear text-{% if budget_left_month_ratio >= 75 %}success
+                        {% elif budget_left_month_ratio >= 50 %}primary
+                        {% elif budget_left_month_ratio >= 25 %}warning
+                        {% else %}danger
+                        {% endif %}">
+                    </span>
+                {% endif %}
+            </div>
+            <div class="progress" style="height: 25px;">
+                <div role="progressbar" class="progress-bar progress-bar-striped progress-bar-animated 
+                    bg-{% if current_mode == 'day' %}{% if budget_left_day_ratio >= 75 %}success{% elif budget_left_day_ratio >= 50 %}primary{% elif budget_left_day_ratio >= 25 %}warning{% else %}danger{% endif %}
+                        {% else %}{% if budget_left_month_ratio >= 75 %}success{% elif budget_left_month_ratio >= 50 %}primary{% elif budget_left_month_ratio >= 25 %}warning{% else %}danger{% endif %}
+                        {% endif %}" 
+                    style="width: 
+                    {% if current_mode == 'day' %}
+                        {% if budget_left_day_ratio > 100 %}100%
+                        {% elif budget_left_day_ratio < 0 %}0%
+                        {% else %}{{budget_left_day_ratio}}%
+                        {% endif %}
+                    {% else %}
+                        {% if budget_left_month_ratio > 100 %}100%
+                        {% elif budget_left_month_ratio < 0 %}0%
+                        {% else %}{{budget_left_month_ratio}}%
+                        {% endif %}
+                    {% endif %}">
+                    {% if current_mode == 'day' %}{{budget_left_day_ratio}}%
+                    {% else %}{{budget_left_month_ratio}}%
+                    {% endif %}
+                </div>
+                <div role="progressbar" class="progress-bar progress-bar progress-bar-animated 
+                    bg-secondary text-light"
+                    style="width: 
+                    {% if current_mode == 'day' %}
+                        {% if budget_used_day_ratio > 100 %}100%
+                        {% elif budget_used_day_ratio < 0 %}0%
+                        {% else %}{{budget_used_day_ratio}}%
+                        {% endif %}
+                    {% else %}
+                        {% if budget_used_month_ratio > 100 %}100%
+                        {% elif budget_used_month_ratio < 0 %}0%
+                        {% else %}{{budget_used_month_ratio}}%
+                        {% endif %}
+                    {% endif %}">
+                </div>
+            </div>
+        {% else %}
+            <a class="text-warning" href="#">本月未设置预算，点击此处设置</a>
+        {% endif %}
+    </div>
+</div>

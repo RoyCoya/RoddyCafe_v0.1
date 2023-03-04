@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'CafeFrame.apps.CafeframeConfig',
     'Notebook.apps.NotebookConfig',
     'Ranking.apps.RankingConfig',
+    'Ledger.apps.LedgerConfig',
 ]
 
 MIDDLEWARE = [

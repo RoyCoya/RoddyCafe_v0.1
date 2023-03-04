@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import *
-# Register your models here.
 
 #笔记目录
 class admin_directory(admin.ModelAdmin):

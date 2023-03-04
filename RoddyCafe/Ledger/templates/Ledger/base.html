@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{% block title_ledger %}{% endblock title_ledger %} | 记账本
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/Ledger/css/theme.css' %}">
+{% block css_ledger %}{% endblock css_ledger %}
+{% endblock css %}
+
+{% block content %}
+<div class="mb-5 pb-5">
+    {% block content_ledger %}{% endblock content_ledger %}
+</div>
+{% endblock content %}
+
+{% block js %}
+{% block js_ledger %}{% endblock js_ledger %}
+{% endblock js %}

@@ -1,0 +1,45 @@
+<div class="offcanvas offcanvas-bottom" data-bs-focus="false" style="height: 95%;" tabindex="-1" id="new_bill_panel">
+    <div class="offcanvas-header row border-bottom d-flex justify-content-between">
+        <h4 class="offcanvas-title col-10 ms-1">
+            新增收支
+        </h4>
+        <button type="button" class="btn-close me-3" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="container">
+            <div class="row" style="padding-bottom:225px;">
+                <div class="col-12">
+                    <div class="input-group">
+                        <span class="input-group-text">类型：</span>
+                        <select class="form-select" id="bill_type">
+                            <option value="payout">支出</option>
+                            <option value="income">收入</option>
+                        </select>
+                    </div>
+                    <div class="input-group mt-3">
+                        <span class="input-group-text">描述：</span>
+                        <input type="text" class="form-control" maxlength="50" id="bill_remark">
+                    </div>
+                    
+                </div>
+                <div class="col-12 mt-3">
+                    <span class="text-warning fs-3" id="bill_value_span">
+                        <span id="bill_value_type_span">-</span>
+                        <span id="bill_value">0</span> ¥
+                    </span>
+                </div>
+                <div class="col-12 mt-3">
+                    <span id="date_span">1900 年 1 月 1 日</span>
+                    <span id="time_span">00 : 00 : 00</span>
+                </div>
+                <!-- TODO: 收支分类 -->
+                <div class="col-12 mt-3 text-secondary">
+                    * 分类功能还没做完喵。当前分类id：
+                    <span id="classification_id">{% for class in bill_classifications %}{{class.id}}{% endfor %}</span>
+                </div>
+            </div>
+            <!-- 计算面板 -->
+            {% include 'Ledger/homepage/new_bill/calculator.html' %}
+        </div>
+    </div>
+</div>

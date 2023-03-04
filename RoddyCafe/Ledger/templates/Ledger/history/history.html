@@ -1,0 +1,16 @@
+{% extends "Ledger/base.html" %}
+{% load static %}
+{% block title_ledger %}收支记录{% endblock title_ledger%}
+
+{% block content_ledger %}
+
+<!-- 顶栏 -->
+{% include 'Ledger/history/headbar.html' %}
+开发中……
+<!-- 底部tab bar -->
+{% include 'Ledger/tabbar.html' with highlight_tab='history' %}
+
+{% endblock content_ledger %}
+
+{% block js_ledger %}
+{% endblock js_ledger %}

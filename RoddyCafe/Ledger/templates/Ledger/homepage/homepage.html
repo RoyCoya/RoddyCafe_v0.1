@@ -1,0 +1,42 @@
+{% extends "Ledger/base.html" %}
+{% load static %}
+{% block title_ledger %}主页{% endblock title_ledger%}
+{% block content_ledger %}
+
+<!-- 顶栏 -->
+{% include 'Ledger/headbar.html' %}
+
+<div class="container">
+    <div class="row mt-3">
+        <!-- 面板 -->
+        {% include 'Ledger/homepage/panel.html' %}
+        <hr class="w-75 mx-auto mt-4">
+        <!-- 快捷方式 -->
+        {% include 'Ledger/homepage/shortcuts.html' %}
+        <!-- 自动收支 -->
+        {% if current_mode == 'month' %}
+            <hr class="w-75 mx-auto mt-4">
+            {% include 'Ledger/homepage/interval_autobill.html' %}
+        {% endif %}
+        <!-- 账单记录 -->
+        <hr class="w-75 mx-auto mt-4">
+        {% include 'Ledger/homepage/bills.html' %}
+    </div>
+</div>
+
+<!-- 新增记录 offcanvas-->
+{% include 'Ledger/homepage/new_bill/new_bill.html' %}
+
+<!-- 底部 tab bar -->
+{% include 'Ledger/tabbar.html' with highlight_tab='homepage' %}
+
+{% endblock content_ledger %}
+
+{% block js_ledger %}
+<script>
+    var api_bill_submit = "{% url 'api_Ledger_bill_submit' %}"
+</script>
+<script src="{% static '/Ledger/js/homepage/timer.js' %}"></script>
+<script src="{% static '/Ledger/js/homepage/homepage.js' %}"></script>
+<script src="{% static '/Ledger/js/homepage/new_bill.js' %}"></script>
+{% endblock js_ledger %}

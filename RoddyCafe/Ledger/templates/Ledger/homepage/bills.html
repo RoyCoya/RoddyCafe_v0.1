@@ -1,0 +1,69 @@
+<h3 class="text-center">
+    {% if current_mode == 'day' %}今日记录
+    {% else %}本月记录
+    {% endif %}
+</h3>
+<div class="row px-4">
+    <ol class="col-12 list-group list-group-numbered">
+        {% if current_mode == 'day' %}
+            {% if bills_day %}
+                <span class="col-12 text-end">
+                    <strong>支出：</strong>
+                    <span class="text-warning">{{payout_day}} ¥</span>
+                </span>
+                {% for bill in bills_day %}
+                <li class="list-group-item d-flex text-light justify-content-between align-items-start mt-2
+                    bg-{% if bill.value > 0 %}success{% else %}warning{% endif %}">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">
+                            <span class="ms-1">{% if bill.value > 0 %}+{% endif %}{{bill.value}} ¥</span>
+                            {% if bill.remark %}
+                            <span class="ms-1">{{bill.remark}}</span>
+                            {% endif %}
+                        </div>
+                        <span>{{bill.create_time}}</span>
+                    </div>
+                    <span class="badge bg-light text-dark rounded-pill bi bi-{{bill.classification.icon}}"> {{bill.classification.name}}</span>
+                </li>
+                {% endfor %}
+            {% else %}
+            <span class="text-center text-secondary col-12">暂无数据</span>
+            {% endif %}
+        {% else %}
+            {% if bills_month %}
+                <span class="d-flex justify-content-between">
+                    <span>
+                        <strong>月收入：</strong>
+                        <span class="text-success">{{income_month}} ¥</span>
+                    </span>
+                    <span>
+                        <strong>月支出：</strong>
+                        <span class="text-warning">{{payout_month}} ¥</span>
+                    </span>
+                </span>
+                {% for bill in bills_month %}
+                    {% if forloop.counter0 < 15 %}
+                    <li class="list-group-item d-flex text-light justify-content-between align-items-start mt-2
+                        bg-{% if bill.value > 0 %}success{% else %}warning{% endif %}">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <span class="ms-1">{{bill.value}} ¥</span>
+                                {% if bill.remark %}
+                                <span class="ms-1">{{bill.remark}}</span>
+                                {% endif %}
+                            </div>
+                            <span>{{bill.create_time}}</span>
+                        </div>
+                        <span class="badge bg-light text-dark rounded-pill bi bi-{{bill.classification.icon}}"> {{bill.classification.name}}</span>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+            <span class="text-center text-secondary col-12">暂无数据</span>
+            {% endif %}
+        {% endif %}
+    </ol>
+    {% if current_mode == 'month' and bills_month|length > 15 %}
+    <div class="col-12 text-end mt-3">更多 >>></div>
+    {% endif %}
+</div>
