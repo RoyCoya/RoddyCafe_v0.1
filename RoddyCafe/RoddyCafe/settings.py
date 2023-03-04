@@ -28,7 +28,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     '127.0.0.1','localhost','0.0.0.0',
-    '172.20.10.2', # iPhone11热点
     'syner.top', # 服务器
     ]
 for i in range(0,255):

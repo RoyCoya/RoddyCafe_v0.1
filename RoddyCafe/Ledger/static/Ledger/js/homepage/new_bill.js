@@ -64,8 +64,10 @@ $("#calculator_submit").click(function (e) {
             "classification_id" : $("#classification_id").text(),
             "remark" : $("#bill_remark").val(),
         },
+        error : function(){
+            window.location.replace(location)
+        },
         dataType: "json",
         headers:{'X-CSRFToken': csrftoken}
     });
-    window.location.replace(location)
 });
