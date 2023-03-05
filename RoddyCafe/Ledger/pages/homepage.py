@@ -69,7 +69,12 @@ def homepage(request):
         budget_left_month = float(current_month_budget + payout_month)
         budget_left_month_ratio = budget_left_month / current_month_budget * 100
 
-        current_day_budget = float((current_month_budget + payout_month) / calendar.monthrange(current_year, current_month)[1])
+        current_day_budget = float(
+            (current_month_budget + payout_month) / 
+            (calendar.monthrange(current_year, current_month)[1] - 
+                int(datetime.datetime.now().strftime(r'%d')) + 1
+            )
+        )
         budget_left_day = float(current_day_budget + payout_day)
         budget_left_day_ratio = budget_left_day / current_day_budget * 100
         

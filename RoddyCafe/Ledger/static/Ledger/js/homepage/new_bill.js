@@ -64,6 +64,7 @@ $("#calculator_submit").click(function (e) {
             "classification_id" : $("#classification_id").text(),
             "remark" : $("#bill_remark").val(),
         },
+        // TODO:返回不是JSON内容时这里会走error。之后改成JSON
         error : function(){
             window.location.replace(location)
         },
