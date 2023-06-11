@@ -17,7 +17,7 @@
     {% endblock css %}
     <!--/css导入区-->
 </head>
-<body class="bg-light pb-5">
+<body class="{% block body_bg %}bg-light{% endblock body_bg %} pb-5">
 
     <!--正文区-->
     {% block content %}

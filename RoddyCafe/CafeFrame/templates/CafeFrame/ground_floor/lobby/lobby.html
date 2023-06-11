@@ -80,6 +80,7 @@
                 记账本
             </a>
             <a class="btn btn-primary text-light" href="{% url 'Ranking_index' %}">排名工具</a>
+            <a href="{% url 'AFdian_index' %}" class="btn btn-danger">爱发电插件</a>
             {% if user.is_authenticated and user.is_superuser == 1 %}
                 <a class="btn btn-secondary" href="/admin">控制台</a>
             {% endif %}
@@ -113,3 +114,10 @@
 <!-- 补充内容 -->
 {% include 'CafeFrame/ground_floor/lobby/cumfirm.html' %}
 {% endblock %}
+
+{% block js_CafeFrame %}
+<script>
+    var url_AFdian = "{% url 'AFdian_index' %}" + "?"
+</script>
+<script src="{% static '/CafeFrame/js/lobby.js' %}"></script>
+{% endblock js_CafeFrame %}

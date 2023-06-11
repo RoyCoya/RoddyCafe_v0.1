@@ -1,0 +1,39 @@
+{% load static %}
+<div class="modal fade" id="modal_AFdian" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">Auth Token（授权码）：</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">Auth Token：</span>
+                        <input placeholder="教程见下" 
+                        id="form_auth_token" 
+                        class="form-control" 
+                        type="text" maxlength="100">
+                        </input>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button id="set_cookie" class="btn btn-lg btn-danger"> 确认 </button>
+                    <button class="btn btn-lg btn-secondary" data-bs-dismiss="modal"> 取消 </button>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center"><h2>获取教程</h2></div>
+            <div class="container">
+                <ul class="fs-5">
+                    <li>打开爱发电，登录自己的创作者账户</li>
+                    <li>按F12（或浏览器设置中找开发者模式），找到Cookie里的auth_token，以Chrome为例，见下图</li>
+                </ul>
+                <div class="text-center"><img src="{% static 'AFdian/img/auth_token_intro.png' %}" class="img-fluid"></div>
+                <ul class="fs-5">
+                    <li>复制auth_token的值，填入上方并确认</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

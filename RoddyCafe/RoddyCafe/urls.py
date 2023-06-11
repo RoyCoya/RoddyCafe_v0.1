@@ -34,9 +34,13 @@ cafe = [
     path('', include('CafeFrame.urls')),
     # 笔记本
     path('notebook/', include('Notebook.urls')),
-    # 工具箱 -> 排名（宋智博）
+    # 工具箱 
+    # > 排名（宋智博）
+    # > 账本（通用）
+    # > 爱发电插件（Rocky）
     path('rank/', include('Ranking.urls')),
     path('ledger/', include('Ledger.urls')),
+    path('afdian/', include('AFdian.urls')),
 ]
 
 urlpatterns = djangoURLs + cafe

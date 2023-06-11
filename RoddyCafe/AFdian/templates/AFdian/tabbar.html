@@ -1,0 +1,21 @@
+<div class="fixed-bottom row bg-light border-top py-2">
+    <a href="{% url 'Ledger_history' %}" class="col-4 text-center text-{% if highlight_tab == 'history' %}warning{% else %}secondary{% endif %}">
+        <span class="bi bi-clock" style="font-size:1.3rem">
+        </span>
+        <small class="d-block"><small>记录</small></small>
+    </a>
+    {% if highlight_tab == 'homepage' %}
+        <a href="#"  class="col-4 position-relative text-center text-warning" data-bs-toggle="offcanvas" data-bs-target="#new_bill_panel">
+            <span class="bi bi-plus-circle" style="font-size:2rem"></span>
+        </a>
+    {% else %}
+        <a href="{% url 'Ledger_homepage' %}" class="col-4 position-relative text-center text-secondary">
+            <span class="bi bi-coin" style="font-size:1.3rem"></span>
+            <small class="d-block"><small>主页</small></small>
+        </a>
+    {% endif %}
+    <a href="{% url 'Ledger_preference' %}" class="col-4 text-center text-{% if highlight_tab == 'preference' %}warning{% else %}secondary{% endif %}">
+        <span class="bi bi-gear" style="font-size:1.3rem"></span>
+        <small class="d-block"><small>设置</small></small>
+    </a>
+</div>

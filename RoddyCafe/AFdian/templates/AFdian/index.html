@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load global_tags %}
+
+{% block title %}
+爱发电排行插件
+{% endblock title %}
+
+{% block css %}
+<style>@font-face { font-family: siyuan; src: url('{% static '/font/SourceHanSansCN-Bold.otf' %}'); } </style>
+<link rel="stylesheet" href="{% static '/AFdian/css/pill.css' %}">
+{% endblock css %}
+{% block body_bg %}
+{% endblock body_bg %}
+
+{% block content %}
+{% if error_code == 200 %}
+    <div class="mask rounded-pill overflow-hidden">
+        <div id="rank-pill" class="bg-danger shadow rounded-pill d-inline-flex justify-content-between overflow-hidden" style="font-family:siyuan">
+            <img id="rank-avator" src="{% static 'AFdian/img/test2.jpeg' %}" class="align-self-center border border-light border-3 rounded-circle img-fluid align-self-center ms-3">
+            <span id="rank-ID" class="align-self-center text-center overflow-hidden ps-5">这里是用户ID</span>
+            <span id="rank-amount" class="align-self-center text-center pe-3">￥1.</span>
+        </div>
+    </div>
+{% else %}
+<div class="alert alert-danger" role="alert">
+    {% if error_code == 403 %}
+        未保存授权码，<a href="#modal_AFdian" data-bs-toggle="modal">点击此处输入</a>
+    {% elif error_code == 404 %}
+        暂未收到任何爱发电赞助
+    {% elif error_code == 502 %}
+        Auth Token错误或过期。若更新后仍然报错，请联系管理员。<a href="#modal_AFdian" data-bs-toggle="modal">点击此处更新</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if error_code == 403 or 502 %}{% include 'AFdian/auth_token.html' %}{% endif %}
+{% endblock content %}
+
+{% block js %}
+<script src="{% static '/jquery/jquery-cookie.js' %}"></script>
+{% if error_code == 200 %}
+<script>
+    var sponsorships = {% autoescape off %}{{sponsorships|replace_bool_capital}}{% endautoescape %}
+    var bg_blue = 'url("{% static 'AFdian/img/blue.png' %}")'
+    var bg_purple = 'url("{% static 'AFdian/img/purple.png' %}")'
+    var bg_gold = 'url("{% static 'AFdian/img/gold.png' %}")'
+    var bg_colorful = 'url("{% static 'AFdian/img/colorful.png' %}")'
+</script>
+<script src="{% static '/AFdian/js/anamition.js' %}"></script>
+{% endif %}
+<script src="{% static '/AFdian/js/auth_cookie.js' %}"></script>
+{% endblock js %}
