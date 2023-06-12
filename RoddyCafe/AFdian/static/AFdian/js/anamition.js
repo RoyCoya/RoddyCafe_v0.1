@@ -42,16 +42,22 @@ function update_data() {
    $("#rank-ID").text(sponsor_name)
    $("#rank-amount").text("￥" + amount)
 }
+
 $(document).ready(function () {
-   setTimeout(() => { }, 3000);
    update_data()
-   setInterval(() => {
-      i++;
-      if(i >= sponsorships.length) {
-         setTimeout(() => {
-            window.location.reload();
-         }, 3000);
-      }
-      else update_data();
-   }, 3000);
+   setTimeout(() => {
+      $("#rank-pill").css("animation", "pill-move 13s infinite");
+      setInterval(() => {
+         i++;
+         update_data();
+      }, 13000);
+   }, 1000);
+});
+
+$("#rank-pill").on("animationiteration", function () {
+   if(i >= sponsorships.length) {
+      $("#rank-pill").css("animation", "");
+      window.location.reload();
+   }
+   else console.log(0)
 });

@@ -1,8 +1,9 @@
 #rank-pill{
     position: absolute;
+    width:87%;
+    left:100%;
     height:180px;
     z-index: 0;
-    animation: pill-move 3s infinite;
 }
 @keyframes pill-move
 {
