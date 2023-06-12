@@ -2,7 +2,7 @@
     position: absolute;
     height:180px;
     z-index: 0;
-    animation: pill-move 13s infinite;
+    animation: pill-move 3s infinite;
 }
 @keyframes pill-move
 {

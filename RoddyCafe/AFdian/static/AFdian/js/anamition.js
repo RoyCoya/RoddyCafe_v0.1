@@ -43,14 +43,15 @@ function update_data() {
    $("#rank-amount").text("￥" + amount)
 }
 $(document).ready(function () {
+   setTimeout(() => { }, 3000);
    update_data()
    setInterval(() => {
       i++;
       if(i >= sponsorships.length) {
          setTimeout(() => {
             window.location.reload();
-         }, 2000);
+         }, 3000);
       }
       else update_data();
-   }, 13000);
+   }, 3000);
 });
