@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'Notebook.apps.NotebookConfig',
     'Ranking.apps.RankingConfig',
     'Ledger.apps.LedgerConfig',
+    'AFdian.apps.AfdianConfig',
 ]
 
 MIDDLEWARE = [
