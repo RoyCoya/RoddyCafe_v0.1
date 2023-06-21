@@ -1,7 +1,14 @@
 import requests
 import json
-
 from datetime import datetime, timedelta
+
+from django.shortcuts import redirect
+from django.conf import settings
+from django.http import *
+from django.urls import reverse
+
+from AFdian.models import *
+from CafeFrame.api.common import is_login
 
 headers = {
         'authority' : 'afdian.net',
@@ -48,3 +55,16 @@ def get_sponsorships(auth_token):
         if interval.days <= 30: sponsorships.append(s)
     if sponsorships: return sponsorships, 200
     else: return None, 404
+
+def save_auth_token(request):
+    if not is_login(request): return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    try:
+        info = AFD_info.objects.get(user=request.user)
+        info.token = request.POST['auth_token']
+        info.save()
+    except:
+        AFD_info.objects.create(
+            user = request.user,
+            token = request.POST['auth_token']
+        )
+    return HttpResponse("完成")

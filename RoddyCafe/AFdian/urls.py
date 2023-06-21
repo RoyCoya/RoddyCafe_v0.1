@@ -8,7 +8,7 @@ pages = [
 
 '''接口'''
 apis = [
-	# path('new/', views.api_add_item, name='api_Ranking_add_item'),
+	path('save_token/', views.api_save_auth_token, name='api_AFdian_save_auth_token'),
 ]
 
 urlpatterns = pages + apis

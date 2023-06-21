@@ -25,7 +25,7 @@
 {% else %}
 <div class="alert alert-danger" role="alert">
     {% if error_code == 403 %}
-        未保存授权码，<a href="#modal_AFdian" data-bs-toggle="modal">点击此处输入</a>
+        暂无授权码，<a href="#modal_AFdian" data-bs-toggle="modal">点击此处输入</a>
     {% elif error_code == 404 %}
         暂未收到任何爱发电赞助
     {% elif error_code == 502 %}
@@ -49,5 +49,8 @@
 </script>
 <script src="{% static '/AFdian/js/anamition.js' %}"></script>
 {% endif %}
-<script src="{% static '/AFdian/js/auth_cookie.js' %}"></script>
+<script>
+    var url_api_save_auth_token = "{% url 'api_AFdian_save_auth_token' %}"
+</script>
+<script src="{% static '/AFdian/js/auth_token.js' %}"></script>
 {% endblock js %}
