@@ -112,7 +112,7 @@
 </div>
 
 <!-- 补充内容 -->
-{% include 'CafeFrame/ground_floor/lobby/cumfirm.html' %}
+{% include 'CafeFrame/ground_floor/lobby/cumfirm.html' with skill_percent=latest_mastur.createDate|skill_points:9 %}
 {% endblock %}
 
 {% block js_CafeFrame %}

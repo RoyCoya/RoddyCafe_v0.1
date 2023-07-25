@@ -8,7 +8,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center">
+                    {% if skill_percent <= 100 %}
                     <img class="img-fluid" src="{% static 'CafeFrame/img/temp/cum.jpg' %}">
+                    {% else %}
+                    <img class="img-fluid" src="{% static 'CafeFrame/img/temp/cumming.gif' %}">
+                    {% endif %}
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-danger" href="{% url 'api_CafeFrame_new_mastur' %}">确认</a>
